@@ -4,6 +4,7 @@
 #include "Particle.h"
 #include "Force.h"
 #include "SpringForce.h"
+#include "Gravity.h"
 #include "RodConstraint.h"
 #include "CircularWireConstraint.h"
 #include "imageio.h"
@@ -89,6 +90,7 @@ static void init_system(void)
 	// You shoud replace these with a vector generalized forces and one of
 	// constraints...
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist, 1.0, 1.0));
+	fVector.push_back(new Gravity(&pVector, 1.0));
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
 }

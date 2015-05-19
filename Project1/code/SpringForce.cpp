@@ -1,6 +1,7 @@
 #include "SpringForce.h"
 #include <GL/glut.h>
 #include <math.h>
+#include <gfx/vec2.h>
 
 SpringForce::SpringForce(Particle *p1, Particle * p2, double dist, double ks, double kd) :
   m_p1(p1), m_p2(p2), m_dist(dist), m_ks(ks), m_kd(kd) {}
@@ -23,7 +24,7 @@ void SpringForce::act(){
     float distance = sqrt(diffPosition[0] * diffPosition[0] + diffPosition[1] * diffPosition[1]);
     float dotProd = diffSpeed * diffPosition;
 
-    Vec2f result =  (m_ks * (distance - m_dist) + m_kd * (dotProd / distance) ) * (diffPosition / distance);
+    Vec2f result = (m_ks * (distance - m_dist) + m_kd * (dotProd / distance) ) * (diffPosition / distance);
 
     m_p1->m_ForceVector += result;
     m_p2->m_ForceVector -= result;
