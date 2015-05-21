@@ -17,7 +17,7 @@
 /* macros */
 
 /* external definitions (from solver) */
-extern void simulation_step( std::vector<Particle*> pVector, float dt );
+extern void simulation_step( std::vector<Particle*> pVector, std::vector<Force*> fVector, float dt );
 
 /* global variables */
 
@@ -87,12 +87,9 @@ static void init_system(void)
 	pVector.push_back(new Particle(center + offset + offset, 2));
 	pVector.push_back(new Particle(center + offset + offset + offset, 3));
 	
-	// You shoud replace these with a vector generalized forces and one of
-	// constraints...
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist, 1.0, 1.0));
 	for (int i = 0; i < pVector.size(); i++) {
-		// Temporary gravity of 1
-		fVector.push_back(new Gravity(pVector[i], 1.0));
+		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.001)));
 	}
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
@@ -272,7 +269,7 @@ static void reshape_func ( int width, int height )
 
 static void idle_func ( void )
 {
-	if ( dsim ) simulation_step( pVector, dt );
+	if ( dsim ) simulation_step( pVector, fVector, dt );
 	else        {get_from_UI();remap_GUI();}
 
 	glutSetWindow ( win_id );

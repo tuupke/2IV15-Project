@@ -7,7 +7,7 @@
 class Gravity : public Force 
 {
  public:
-  Gravity(Particle *p, double gravity);
+  Gravity(Particle *p, Vec2f gravity);
 
   void draw();
   void act();
@@ -15,5 +15,5 @@ class Gravity : public Force
  private:
 
   Particle * const m_p;
-  double g;
+  Vec2f g;
 };

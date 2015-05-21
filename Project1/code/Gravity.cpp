@@ -2,7 +2,7 @@
 #include "Gravity.h"
 #include <GL/glut.h>
 
-Gravity::Gravity(Particle *p, double gravity) :
+Gravity::Gravity(Particle *p, Vec2f gravity) :
  m_p(p), g(gravity) {}
 
 void Gravity::act()
