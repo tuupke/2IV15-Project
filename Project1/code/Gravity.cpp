@@ -2,14 +2,12 @@
 #include "Gravity.h"
 #include <GL/glut.h>
 
-Gravity::Gravity(std::vector<Particle*> *particles, double gravity) :
- pVector(particles), g(gravity) {}
+Gravity::Gravity(Particle *p, double gravity) :
+ m_p(p), g(gravity) {}
 
 void Gravity::act()
 {
-	for (int i = 0; i < pVector.size(); i++) {
-		pVector[i].m_ForceVector += pVector[i].m_Mass * g;
-	}
+	m_p->m_ForceVector += g * m_p->m_Mass;
 }
 
 void Gravity::draw()

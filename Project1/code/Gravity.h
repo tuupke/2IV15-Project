@@ -7,13 +7,13 @@
 class Gravity : public Force 
 {
  public:
-  Gravity(std::vector<Particle*> *particles, double gravity);
+  Gravity(Particle *p, double gravity);
 
   void draw();
   void act();
 
  private:
 
-  std::vector<Particle*> *pVector;
+  Particle * const m_p;
   double g;
 };

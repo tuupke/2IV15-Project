@@ -83,14 +83,17 @@ static void init_system(void)
 	// Create three particles, attach them to each other, then add a
 	// circular wire constraint to the first.
 
-	pVector.push_back(new Particle(center + offset));
-	pVector.push_back(new Particle(center + offset + offset));
-	pVector.push_back(new Particle(center + offset + offset + offset));
+	pVector.push_back(new Particle(center + offset, 1));
+	pVector.push_back(new Particle(center + offset + offset, 2));
+	pVector.push_back(new Particle(center + offset + offset + offset, 3));
 	
 	// You shoud replace these with a vector generalized forces and one of
 	// constraints...
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist, 1.0, 1.0));
-	fVector.push_back(new Gravity(&pVector, 1.0));
+	for (int i = 0; i < pVector.size(); i++) {
+		// Temporary gravity of 1
+		fVector.push_back(new Gravity(pVector[i], 1.0));
+	}
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
 }
