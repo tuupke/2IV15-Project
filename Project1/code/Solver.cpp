@@ -22,9 +22,9 @@ void simulation_step( std::vector<Particle*> pVector, std::vector<Force*> fVecto
 	
 	for(ii=0; ii<psize; ii++)
 	{
-		pVector[ii]->m_Position += dt*pVector[ii]->m_Velocity;
-		pVector[ii]->m_Velocity = DAMP*pVector[ii]->m_Velocity + Vec2f(RAND,RAND) * 0.005;
-		pVector[ii]->m_Velocity += pVector[ii]->m_ForceVector / pVector[ii]->m_Mass;
+		pVector[ii]->m_Velocity += dt * pVector[ii]->m_ForceVector / pVector[ii]->m_Mass;
+		pVector[ii]->m_Position += dt * pVector[ii]->m_Velocity;
+		//pVector[ii]->m_Velocity = DAMP*pVector[ii]->m_Velocity + Vec2f(RAND,RAND) * 0.005;
 	}
 
 }
