@@ -53,3 +53,7 @@
 *.synctex.gz
 *.DS_Store
 *.pdf
+
+.idea
+CMakeLists.txt
+Project1/code/project1
