@@ -21,11 +21,11 @@ void SpringForce::act(){
     Vec2f diffSpeed = m_p1->m_Velocity - m_p2->m_Velocity;
     Vec2f diffPosition = m_p1->m_Position - m_p2->m_Position;
 
-    float distance = sqrt(diffPosition[0] * diffPosition[0] + diffPosition[1] * diffPosition[1]);
+    float distance = norm(diffPosition);
     float dotProd = diffSpeed * diffPosition;
 
     Vec2f result = (m_ks * (distance - m_dist) + m_kd * (dotProd / distance) ) * (diffPosition / distance);
 
-    m_p1->m_ForceVector += result;
-    m_p2->m_ForceVector -= result;
+    m_p1->m_ForceVector -= result;
+    m_p2->m_ForceVector += result;
 }

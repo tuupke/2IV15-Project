@@ -87,7 +87,7 @@ static void init_system(void)
 	pVector.push_back(new Particle(center + offset + offset, 2));
 	pVector.push_back(new Particle(center + offset + offset + offset, 3));
 	
-	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist, 1.0, 1.0));
+	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist+0.1, 1.0, 1.0));
 	for (int i = 0; i < pVector.size(); i++) {
 		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.001)));
 	}
