@@ -18,6 +18,7 @@
 
 /* external definitions (from solver) */
 extern void simulation_step( std::vector<Particle*> pVector, std::vector<Force*> fVector, float dt );
+int solver = 1; // The solver to use: 1: Euler, 2: Midpoint, 3: Runge-Kutta
 
 /* global variables */
 
@@ -52,6 +53,7 @@ free/clear/allocate simulation data
 static void free_data ( void )
 {
 	pVector.clear();
+
 	if (delete_this_dummy_rod) {
 		delete delete_this_dummy_rod;
 		delete_this_dummy_rod = NULL;
@@ -87,10 +89,11 @@ static void init_system(void)
 	pVector.push_back(new Particle(center + offset + offset, 2));
 	pVector.push_back(new Particle(center + offset + offset + offset, 3));
 	
-	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist+0.1, 1.0, 1.0));
-	for (int i = 0; i < pVector.size(); i++) {
-		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.001)));
-	}
+	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist+0.2, 0.5, 0.1));
+/* 	for (int i = 0; i < pVector.size(); i++) {
+ * 		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.0001)));
+ * 	}
+ */
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
 }
@@ -234,6 +237,39 @@ static void key_func ( unsigned char key, int x, int y )
 		free_data ();
 		exit ( 0 );
 		break;
+	
+	case 'e':
+	case 'E':
+		solver = 1;
+		printf("Solver: Euler\n");
+		break;
+	case 'm':
+	case 'M':
+		solver = 2;
+		printf("Solver: Midpoint\n");
+		break;
+	case 'r':
+	case 'R':
+		solver = 3;
+		printf("Solver: Runge-Kutta 4\n");
+		break;
+
+	case '+':
+		dt += 0.01;
+		printf("dt: %f\n", dt);
+		break;
+	case '-':
+		dt -= 0.01;
+		printf("dt: %f\n", dt);
+		break;
+	case '>':
+		dt += 0.1;
+		printf("dt: %f\n", dt);
+		break;
+	case '<':
+		dt -= 0.1;
+		printf("dt: %f\n", dt);
+		break;
 
 	case ' ':
 		dsim = !dsim;
@@ -348,6 +384,11 @@ int main ( int argc, char ** argv )
 	printf ( "\t Toggle construction/simulation display with the spacebar key\n" );
 	printf ( "\t Dump frames by pressing the 'd' key\n" );
 	printf ( "\t Quit by pressing the 'q' key\n" );
+	printf ( "\t 'e' = Euler\n" );
+	printf ( "\t 'm' = Midpoint\n" );
+	printf ( "\t 'r' = Runge Kutta\n\n" );
+	printf ( "\t '+, >' = Increase dt with 0.01, 0.1\n" );
+	printf ( "\t '-, <' = Decrease dt with 0.01, 0.1\n" );
 
 	dsim = 0;
 	dump_frames = 0;
