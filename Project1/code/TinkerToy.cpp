@@ -4,6 +4,7 @@
 #include "Particle.h"
 #include "Force.h"
 #include "SpringForce.h"
+#include "AngularForce.h"
 #include "Gravity.h"
 #include "RodConstraint.h"
 #include "CircularWireConstraint.h"
@@ -81,6 +82,7 @@ static void init_system(void)
 	const double dist = 0.2;
 	const Vec2f center(0.0, 0.0);
 	const Vec2f offset(dist, 0.0);
+	const Vec2f offset1(0.0, dist);
 
 	// Create three particles, attach them to each other, then add a
 	// circular wire constraint to the first.
@@ -88,8 +90,10 @@ static void init_system(void)
 	pVector.push_back(new Particle(center + offset, 1));
 	pVector.push_back(new Particle(center + offset + offset, 2));
 	pVector.push_back(new Particle(center + offset + offset + offset, 3));
+	pVector.push_back(new Particle(center + offset + offset1, 3));
 	
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist+0.2, 0.5, 0.1));
+	fVector.push_back(new AngularForce(pVector[3], pVector[1], pVector[0], 3.1415926, 0.5, 0.1));
 /* 	for (int i = 0; i < pVector.size(); i++) {
  * 		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.0001)));
  * 	}

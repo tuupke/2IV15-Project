@@ -12,20 +12,24 @@ void AngularForce::draw() {
     glVertex2f(m_p1->m_Position[0], m_p1->m_Position[1]);
     glColor3f(0.6, 0.7, 0.8);
     glVertex2f(m_p2->m_Position[0], m_p2->m_Position[1]);
+    glColor3f(0.6, 0.7, 0.8);
+    glVertex2f(m_p3->m_Position[0], m_p3->m_Position[1]);
     glEnd();
 }
 
 void AngularForce::act() {
 
-    Vec2f G = unitize(m_p1->m_Position - m_p3->m_Position);
-    Vec2f H = unitize(m_p2->m_Position - m_p3->m_Position);
+    Vec2f G = m_p1->m_Position - m_p3->m_Position;
+    Vec2f H = m_p2->m_Position - m_p3->m_Position;
 
-    float D = G[0] * H[0] + G[1] * H[1];
+    unitize(G);
+    unitize(H);
+
+    float D = G*H;
     float arccosD = acos(D);
     float derivD = -1 / sqrt(1 - D * D);
 
     Vec2f result = (-m_ks * arccosD - m_kd * derivD) * derivD;
     m_p1->m_ForceVector += result;
     m_p2->m_ForceVector -= result;
-
 }
