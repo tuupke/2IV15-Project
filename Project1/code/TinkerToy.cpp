@@ -100,7 +100,7 @@ static void init_system(void)
  *   		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.0001)));
  *   	}
  */  
-	mouse_force = new MouseForce(pVector, 0.0, 1.0, 1.0);
+	mouse_force = new MouseForce(pVector, 0.1, 2.0, 1.0);
 	fVector.push_back(mouse_force);
  
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
@@ -288,8 +288,8 @@ static void key_func ( unsigned char key, int x, int y )
 
 static void mouse_func ( int button, int state, int x, int y )
 {
-	float mouse_x = (double)(x - win_x/2)/(double)win_x;
-	float mouse_y = (double)(win_y/2 - y)/(double)win_y;
+	float mouse_x = (double)2*(x - win_x/2)/(double)win_x;
+	float mouse_y = (double)2*(win_y/2 - y)/(double)win_y;
 
 	omx = mx = x;
 	omx = my = y;
@@ -309,8 +309,8 @@ static void mouse_func ( int button, int state, int x, int y )
 
 static void motion_func ( int x, int y )
 {
-	float mouse_x = (double)(x - win_x/2)/(double)win_x;
-	float mouse_y = (double)(win_y/2 - y)/(double)win_y;
+	float mouse_x = (double)2*(x - win_x/2)/(double)win_x;
+	float mouse_y = (double)2*(win_y/2 - y)/(double)win_y;
 	mx = x;
 	my = y;
 
