@@ -5,6 +5,7 @@
 #include "Force.h"
 #include "SpringForce.h"
 #include "AngularForce.h"
+#include "MouseForce.h"
 #include "Gravity.h"
 #include "RodConstraint.h"
 #include "CircularWireConstraint.h"
@@ -43,6 +44,7 @@ static int hmx, hmy;
 static std::vector<Force*> fVector;
 static RodConstraint * delete_this_dummy_rod = NULL;
 static CircularWireConstraint * delete_this_dummy_wire = NULL;
+static MouseForce * mouse_force = NULL;
 
 
 /*
@@ -86,7 +88,7 @@ static void init_system(void)
 
 	// Create three particles, attach them to each other, then add a
 	// circular wire constraint to the first.
-
+	
 	pVector.push_back(new Particle(center + offset, 1));
 	pVector.push_back(new Particle(center + offset + offset, 2));
 	pVector.push_back(new Particle(center + offset + offset + offset, 3));
@@ -94,10 +96,13 @@ static void init_system(void)
 	
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], dist+0.2, 0.5, 0.1));
 //	fVector.push_back(new AngularForce(pVector[3], pVector[1], pVector[0], 3.1415926, 0.5, 0.1));
-/* 	for (int i = 0; i < pVector.size(); i++) {
- * 		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.0001)));
- * 	}
- */
+/*  	for (int i = 0; i < pVector.size(); i++) {
+ *   		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.0001)));
+ *   	}
+ */  
+	mouse_force = new MouseForce(pVector, 0.0, 1.0, 1.0);
+	fVector.push_back(mouse_force);
+ 
 	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
 }
@@ -283,6 +288,9 @@ static void key_func ( unsigned char key, int x, int y )
 
 static void mouse_func ( int button, int state, int x, int y )
 {
+	float mouse_x = (double)(x - win_x/2)/(double)win_x;
+	float mouse_y = (double)(win_y/2 - y)/(double)win_y;
+
 	omx = mx = x;
 	omx = my = y;
 
@@ -290,12 +298,23 @@ static void mouse_func ( int button, int state, int x, int y )
 	if(mouse_down[button]) mouse_release[button] = state == GLUT_UP;
 	if(mouse_down[button]) mouse_shiftclick[button] = glutGetModifiers()==GLUT_ACTIVE_SHIFT;
 	mouse_down[button] = state == GLUT_DOWN;
+
+	if (state == GLUT_UP) {
+		mouse_force->disable();
+	}
+	if (state == GLUT_DOWN) {
+		mouse_force->enable(mouse_x, mouse_y);
+	}
 }
 
 static void motion_func ( int x, int y )
 {
+	float mouse_x = (double)(x - win_x/2)/(double)win_x;
+	float mouse_y = (double)(win_y/2 - y)/(double)win_y;
 	mx = x;
 	my = y;
+
+	mouse_force->enable(mouse_x, mouse_y);
 }
 
 static void reshape_func ( int width, int height )
