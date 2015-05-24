@@ -17,3 +17,17 @@ class Gravity : public Force
   Particle * const m_p;
   Vec2f g;
 };
+
+class Drag : public Force 
+{
+ public:
+  Drag(Particle *p, float drag);
+
+  void draw();
+  void act();
+
+ private:
+
+  Particle * const m_p;
+  float m_kd;
+};
