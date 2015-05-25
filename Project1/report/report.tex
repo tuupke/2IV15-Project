@@ -17,20 +17,20 @@
 \newcommand{\scg}{Simulation in Computer Graphics}
 
 \fancypagestyle{plain}{%
-\fancyhf{}
-\fancyhead[LO,RE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
-\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \scg}
-\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
-\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
+	\fancyhf{}
+	\fancyhead[LO,RE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
+	\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \scg}
+	\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
+	\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
 }
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[RO,LE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
 \fancyhead[LO,RE]{\sffamily\bfseries\large 2IV15 Simulation in Computer Graphics}
-\fancyfoot[LO,RE]{\sffamily\bfseries\large department of mathematics and computer science}
+\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
 \fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -89,22 +89,75 @@ Equations 1 and 2 can be written in short as follows:
 	\dot{y} &= \begin{pmatrix}v\\F(x, v)/m\end{pmatrix} = G(y) = \begin{pmatrix}G1\\G2\end{pmatrix}
 \end{align}
 Approximating this system using explicit Euler results in the following steps:
-\begin{align*}
+\begin{align}
 	y'(t+h) &= y'(t) + hG(y'(t))
-\end{align*}
+\end{align}
 in which $h$ is a single time-step. In our system this solving method is implemented by calculating all the forces present in the system at the current time step, and then calculating \[x'(t+h) = x'(t) + h\cdot v'(t)\] and \[v'(t+h) = v'(t) + h\cdot F(x'(t), v'(t))/m.\] This method has an error of $O(h^2)$. 
-To get a feeling for the effect of the timestep on the stability of a system, we used a scene with two particles, 0.2 units apart, coupled by one spring. The particles have a mass of 1 unit and the spring has a rest length $\mathbf{r}$ of 0.4, a $k_s$ of 0.5 and a $k_d$ of 0.1.
+To get a feeling for the effect of the timestep on the stability of a system, we used a scene with two particles, 0.2 units apart, coupled by one spring. The particles have a mass of 1 unit and the spring has a rest length $\mathbf{r}$ of 0.4, a $k_s$ of 0.5 and a $k_d$ of 0.1. Results are shown in Table \ref{Euler}
+
+%TODO: add test with constraints
 \begin{table}[h]
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Timestep} & \textbf{Convergent} & \textbf{Remark}                 \\ \hline
-0.05              & Yes                 &                                 \\ \hline
-0.10              & Yes                 &                                 \\ \hline
-0.15              & Yes                 & Converges only after many steps \\ \hline
-0.20              & No                  &                                 \\ \hline
-\end{tabular}
+	\caption{Stability of the Euler solver for different time steps}
+	\label{Euler}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		\textbf{Timestep} & \textbf{Convergent} \\ \hline
+		0.05              & Yes                 \\ \hline
+		0.10              & Yes                 \\ \hline
+		0.15              & Yes, slowly         \\ \hline
+		0.20              & No                  \\ \hline
+	\end{tabular}
 \end{table}
 
+\subsection{Midpoint}
+The Midpoint method is only slightly more complicated than the Euler method. Analogous to equation 9, the formula for the Midpoint method looks as follows:
+\begin{align}
+	y'(t+h) &= y'(t) + h\cdot G\biggl(y'(t)+\frac{h}{2}G(y'(t))\biggr)
+\end{align}
+In our implementation we calculate a temporary position for the particles, from which we calculate new forces, which we use to find the second order approximation of the next position and velocity. This means that to get higher precision the number of calculations double. The error of the Midpoint method is $O(h^3)$.
+To find the limits on the timestep for the Midpoint method we used the same test setup as with the Euler method. Results can be seen in Table \ref{Midpoint}. It is clear that the Midpoint method is stable for much larger timesteps, which offsets the higher computational complexity.
+\begin{table}[h]
+	\caption{Stability of the Midpoint solver for different time steps}
+	\label{Midpoint}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Timestep} & \textbf{Convergent} \\ \hline
+		0.2               & Yes                 \\ \hline
+		0.4               & Yes                 \\ \hline
+		0.6               & Yes                 \\ \hline
+		0.8               & Yes                 \\ \hline
+		1.0               & Yes                 \\ \hline
+		1.1               & Yes                 \\ \hline
+		1.2               & No                  \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsection{Runge Kutta 4}
+4th order Runge Kutta (RK4) delivers the best trade-off between calculation stages and total accumulated error (which, for RK4 is $O(h^4)$). RK4 is calculated in the following stages:
+\begin{align}
+	k_1 &= G(y'(t))\\
+	k_2 &= G(y'(t)+\frac{1}{2}hk_1)\\
+	k_3 &= G(y'(t)+\frac{1}{2}hk_2)\\
+	k_3 &= G(y'(t)+hk_3)\\
+	y'(t+h) &= y'(t) + \frac{h}{6}[k_1+2k_2+2k_3+k_4]
+\end{align}
+This is implemented in the same way as the Midpoint method, but with four stages instead of two.
+To evaluate RK4 performance, the same setup is used as for the Euler method. Results of the experiment are shown in Table \ref{RK4}. It is clear that RK4 performs best for large timesteps.
+\begin{table}[h]
+	\caption{Stability of the RK4 solver for different time steps}
+	\label{RK4}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Timestep} & \textbf{Convergent} \\ \hline
+		0.5               & Yes                 \\ \hline
+		1.0               & Yes                 \\ \hline
+		1.5               & Yes                 \\ \hline
+		2.0               & Yes                 \\ \hline
+		2.5               & Yes                 \\ \hline
+		2.9               & Yes, slowly         \\ \hline
+		3.0               & No                  \\ \hline
+	\end{tabular}
+\end{table}
 
 \section{Interaction}
 
