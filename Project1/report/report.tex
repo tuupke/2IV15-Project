@@ -52,26 +52,29 @@
 This paper describes our implementation of a particle system that provides generalized force and constraint structures, a number of numerical integration schemes, basic cloth simulation and interaction with the particles in the system.
 
 \section{Generalized force structure}
-Particles are defined as having a position, a velocity, a mass and a force accumulator. Every simulation step, the current position and velocity are updated by calculating all the forces that act on a specific particle, and then solving the following differential equations:
+Particles are defined as having a position $\mathbf{x}$, a velocity $\mathbf{v}$, a mass $m$ and a force accumulator $\mathbf{F}(\mathbf{x, v})$. Every simulation step, the current position and velocity are updated by calculating all the forces that act on a specific particle, and then solving the following differential equations:
 \begin{align}
 	\dot{\mathbf{x}} &= \mathbf{v}\\
 	\dot{\mathbf{v}} &= \mathbf{a} = \mathbf{F}(\mathbf{x},\mathbf{v})/m
 \end{align}
 Every force inherits from a general \texttt{class Force} and implements the \texttt{Force::act()} method. All the forces in the system are stored in a \texttt{std::vector<Force*>}, which is iterated over during a simulation step. During such a step, the force accumulators in all the particles are set to zero, after which \texttt{Force::act()} is called for every force in the system. Once all the forces have been calculated and added to the relevant force accumulators, one of the numerical solving functions (Section \ref{Numerical_schemes}) is used to calculate the next state of the system.
 \subsection{GravityForce}
-Gravity is calculated by multiplying the mass of a particle with a gravitational constant. In our implementation, a \texttt{Gravity} object acts on one single particle, which means that an object is added for every particle in the scene.
+Gravity is calculated by multiplying the mass of a particle with a gravitational constant. In our implementation, a \texttt{Gravity} object acts on one single particle, which means that an object is added for every particle in the system.
 \subsection{SpringForce}
-A \texttt{SpringForce} is a force that is defined by a rest length $\mathbf{r}$, a spring constant $k_s$ and a damping constant $k_d$. The resulting force is a function of the relative position $\mathbf{l = p1 - p2}$ and velocity $\mathbf{\dot{l} = v1 - v2}$ of the particles and the specification of the spring, as shown in formula \ref{springforce}. 
-
+A \texttt{SpringForce} is a force that is defined by a rest length $\mathbf{r}$, a spring constant $k_s$ and a damping constant $k_d$. The resulting force is a function of the relative position $\mathbf{l = p1 - p2}$ and velocity $\mathbf{\dot{l} = v1 - v2}$ of the particles and the specification of the spring, as shown in formula \ref{springforce}.
 \begin{align} \label{springforce}
 	\mathbf{f_{p1}} &= \bigg[k_s(|\mathbf{l}| - \mathbf{r}) + k_d \frac{\dot{\mathbf{l}}\cdot \mathbf{l}}{|\mathbf{l}|}\bigg]\frac{\mathbf{l}}{|\mathbf{l}|}\\
 	\mathbf{f_{p2}} &= -\mathbf{f_{p1}}
 \end{align}
-
-A \texttt{SpringForce} object is added for every pair of particles in the scene that is connected by a spring.
+A \texttt{SpringForce} object is added for every pair of particles in the system that is connected by a spring.
 
 \subsection{AngularForce}
-An \texttt{AngularForce} object acts like a spring force on a triplet of particles $(\textbf{p1, p2, p3})$, pulling the particles so that the angle between $\textbf{p1} - \textbf{p2}$ and $\textbf{p2} - \textbf{p3}$ approaches some rest angle $\alpha_{rest}$. This can be used to build a basic hair-simulation.
+An \texttt{AngularForce} object acts like a spring force on a triplet of particles $(\mathbf{p1, p2, p3})$, pulling the particles so that the angle $\phi = \cos^{-1}\bigl(\frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}||\mathbf{b}|}\bigr)$ between $\mathbf{a} = \mathbf{p1} - \mathbf{p2} $ and $\mathbf{b} = \mathbf{p3} - \mathbf{p2}$ approaches some rest angle $\phi_r$. This can be used to build a basic hair-simulation. The force is calculated using the following formulas:
+\begin{align}
+	\mathbf{f_{p1}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & -1 \\ 1 & 0\end{matrix} \biggr) \frac{\mathbf{a}}{|\mathbf{a}|} - k_d (\dot{\mathbf{a}})\\
+	\mathbf{f_{p2}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & 1 \\ -1 & 0\end{matrix} \biggr) \frac{\mathbf{b}}{|\mathbf{b}|} - k_d (\dot{\mathbf{b}})
+\end{align}
+The two formulas above are similar to the formula for a \texttt{SpringForce}, except for the addition of the two matrices. These matrices are needed in order to make the angular force perpendicular to $\mathbf{a}$ and $\mathbf{b}$.
 
 \section{Generalized constraint structure}
 
