@@ -11,9 +11,9 @@ void MouseForce::draw()
 	if (enabled) {
 		glBegin( GL_LINES );
 		for (int i = 0; i < pVector.size(); i++) {
-			glColor3f(0.6, 0.7, 0.8);
+			glColor3f(0.0, 0.0, 1.0);
 			glVertex2f( pVector[i]->m_Position[0], pVector[i]->m_Position[1] );
-			glColor3f(0.6, 0.7, 0.8);
+			glColor3f(0.0, 0.0, 1.0);
 			glVertex2f( mousePos[0], mousePos[1] );
 		}
 		glEnd();
