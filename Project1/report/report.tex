@@ -52,6 +52,7 @@
 This paper describes our implementation of a particle system that provides generalized force and constraint structures, a number of numerical integration schemes, basic cloth simulation and interaction with the particles in the system.
 
 \section{Generalized force structure}
+\label{force_structure}
 Particles are defined as having a position $\mathbf{x}$, a velocity $\mathbf{v}$, a mass $m$ and a force accumulator $\mathbf{F}(\mathbf{x, v})$. Every simulation step, the current position and velocity are updated by calculating all the forces that act on a specific particle, and then solving the following differential equations:
 \begin{align}
 	\dot{\mathbf{x}} &= \mathbf{v}\\
@@ -69,17 +70,41 @@ A \texttt{SpringForce} is a force that is defined by a rest length $\mathbf{r}$,
 A \texttt{SpringForce} object is added for every pair of particles in the system that is connected by a spring.
 
 \subsection{AngularForce}
-An \texttt{AngularForce} object acts like a spring force on a triplet of particles $(\mathbf{p1, p2, p3})$, pulling the particles so that the angle $\phi = \cos^{-1}\bigl(\frac{\mathbf{a} \cdot \mathbf{b}}{|\mathbf{a}||\mathbf{b}|}\bigr)$ between $\mathbf{a} = \mathbf{p1} - \mathbf{p2} $ and $\mathbf{b} = \mathbf{p3} - \mathbf{p2}$ approaches some rest angle $\phi_r$. This can be used to build a basic hair-simulation. The force is calculated using the following formulas:
+An \texttt{AngularForce} object acts like a spring force on a triplet of particles $(\mathbf{p1, p2, p3})$, pulling the particles so that the angle $\phi = \cos^{-1}\bigl(\frac{\mathbf{l} \cdot \mathbf{m}}{|\mathbf{l}||\mathbf{m}|}\bigr)$ between $\mathbf{l} = \mathbf{p1} - \mathbf{p2} $ and $\mathbf{m} = \mathbf{p3} - \mathbf{p2}$ approaches some rest angle $\phi_r$. This can be used to build a basic hair-simulation. The force is calculated using the following formulas:
 \begin{align}
-	\mathbf{f_{p1}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & -1 \\ 1 & 0\end{matrix} \biggr) \frac{\mathbf{a}}{|\mathbf{a}|} - k_d (\dot{\mathbf{a}})\\
-	\mathbf{f_{p2}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & 1 \\ -1 & 0\end{matrix} \biggr) \frac{\mathbf{b}}{|\mathbf{b}|} - k_d (\dot{\mathbf{b}})
+	\mathbf{f_{p1}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & -1 \\ 1 & 0\end{matrix} \biggr) \frac{\mathbf{l}}{|\mathbf{l}|} - k_d (\dot{\mathbf{l}})\\
+	\mathbf{f_{p2}} &= k_s (\phi - \phi_r) \biggl(\begin{matrix} 0 & 1 \\ -1 & 0\end{matrix} \biggr) \frac{\mathbf{m}}{|\mathbf{m}|} - k_d (\dot{\mathbf{m}})
 \end{align}
-The two formulas above are similar to the formula for a \texttt{SpringForce}, except for the addition of the two matrices. These matrices are needed in order to make the angular force perpendicular to $\mathbf{a}$ and $\mathbf{b}$.
+The two formulas above are similar to the formula for a \texttt{SpringForce}, except for the addition of the two matrices. These matrices are needed in order to make the angular force perpendicular to $\mathbf{l}$ and $\mathbf{m}$.
 
 \section{Generalized constraint structure}
 
 \section{Numerical integration schemes}
 \label{Numerical_schemes}
+To approximate the solutions to the differential equations shown in section \ref{force_structure}, several numerical methods can be used in our application.
+\subsection{Euler}
+Equations 1 and 2 can be written in short as follows:
+\begin{align}
+	y &= \begin{pmatrix}x\\v\end{pmatrix}\\
+	\dot{y} &= \begin{pmatrix}v\\F(x, v)/m\end{pmatrix} = G(y) = \begin{pmatrix}G1\\G2\end{pmatrix}
+\end{align}
+Approximating this system using explicit Euler results in the following steps:
+\begin{align*}
+	y'(t+h) &= y'(t) + hG(y'(t))
+\end{align*}
+in which $h$ is a single time-step. In our system this solving method is implemented by calculating all the forces present in the system at the current time step, and then calculating \[x'(t+h) = x'(t) + h\cdot v'(t)\] and \[v'(t+h) = v'(t) + h\cdot F(x'(t), v'(t))/m.\] This method has an error of $O(h^2)$. 
+To get a feeling for the effect of the timestep on the stability of a system, we used a scene with two particles, 0.2 units apart, coupled by one spring. The particles have a mass of 1 unit and the spring has a rest length $\mathbf{r}$ of 0.4, a $k_s$ of 0.5 and a $k_d$ of 0.1.
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Timestep} & \textbf{Convergent} & \textbf{Remark}                 \\ \hline
+0.05              & Yes                 &                                 \\ \hline
+0.10              & Yes                 &                                 \\ \hline
+0.15              & Yes                 & Converges only after many steps \\ \hline
+0.20              & No                  &                                 \\ \hline
+\end{tabular}
+\end{table}
+
 
 \section{Interaction}
 
