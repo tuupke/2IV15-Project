@@ -42,21 +42,18 @@ void AngularForce::act()
 	else if (D <= -1.0)
 		arccosD = pi;
 		
-	// acos(d) only works for 0* < d < 180*, so check the sign of the determinant
-	// to find whether the angle is greater or less than 180*
 	float determinant = (G[0] * H[1] - H[0] * G[1]);
 	if (determinant < 0)
 		angle = m_angle - arccosD;
 	else
 		angle = arccosD - m_angle;
 
-//	std::cout << D << "\t|\t" << arccosD << "\t|\t" << angle << std::endl;
-
 	Vec2f dvel12 = m_p1->m_Velocity - m_p2->m_Velocity;
 	Vec2f dvel32 = m_p3->m_Velocity - m_p2->m_Velocity;
 
 	m_p1->m_ForceVector[0] -= (m_ks * angle * G[1]/len12) + (m_kd * dvel12[0]);
 	m_p1->m_ForceVector[1] += (m_ks * angle * G[0]/len12) - (m_kd * dvel12[1]);
+
 	m_p3->m_ForceVector[0] += (m_ks * angle * H[1]/len32) - (m_kd * dvel32[0]);
 	m_p3->m_ForceVector[1] -= (m_ks * angle * H[0]/len32) + (m_kd * dvel32[1]);
 }
