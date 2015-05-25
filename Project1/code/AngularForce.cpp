@@ -50,7 +50,7 @@ void AngularForce::act()
 	else
 		angle = arccosD - m_angle;
 
-	std::cout << D << "\t|\t" << arccosD << "\t|\t" << angle << std::endl;
+//	std::cout << D << "\t|\t" << arccosD << "\t|\t" << angle << std::endl;
 
 	Vec2f dvel12 = m_p1->m_Velocity - m_p2->m_Velocity;
 	Vec2f dvel32 = m_p3->m_Velocity - m_p2->m_Velocity;
