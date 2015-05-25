@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,11pt]{article}
+\documentclass[a4paper,twoside,11pt,twocolumn]{article}
 \usepackage{a4wide,graphicx,fancyhdr,amsmath,amssymb,float,longtable, chronology}
 \usepackage{algorithmic}
 \usepackage{hyperref}
@@ -14,13 +14,13 @@
 \newcommand{\ch}{\mathcal{CH}}
 \everymath{\displaystyle}
 \newcommand{\solution}[1]{\noindent{\bf Solution to Exercise #1:}}
-\newcommand{\rts}{Real-Time Systems}
+\newcommand{\scg}{Simulation in Computer Graphics}
 
 \fancypagestyle{plain}{%
 \fancyhf{}
 \fancyhead[LO,RE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
-\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \rts}
-\fancyfoot[LO,RE]{\sffamily\bfseries\large department of mathematics and computer science}
+\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \scg}
+\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
 \fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -37,7 +37,7 @@
 
 %-------------------------------- Title ----------------------------------
 
-\title{\sffamily\bfseries 2IV15 \rts\ - Project 1}
+\title{\sffamily\bfseries 2IV15 \scg\ - Project 1}
 \author{Arno Tiemersma \qquad Student number: 0716959 \\{\tt a.w.g.tiemersma@student.tue.nl}\\ \\Mart Pluijmaekers \qquad Student number: 0753117 \\{\tt m.h.l.pluijmaekers@student.tue.nl}}
 
 \date{\today}
@@ -46,7 +46,38 @@
 
 \begin{document}
 \maketitle
-\tableofcontents
-\newpage
+%\tableofcontents
+%\newpage
+\section{Introduction}
+This paper describes our implementation of a particle system that provides generalized force and constraint structures, a number of numerical integration schemes, basic cloth simulation and interaction with the particles in the system.
+
+\section{Generalized force structure}
+Particles are defined as having a position, a velocity, a mass and a force accumulator. Every simulation step, the current position and velocity are updated by calculating all the forces that act on a specific particle, and then solving the following differential equations:
+\begin{align}
+	\dot{\mathbf{x}} &= \mathbf{v}\\
+	\dot{\mathbf{v}} &= \mathbf{a} = \mathbf{F}(\mathbf{x},\mathbf{v})/m
+\end{align}
+Every force inherits from a general \texttt{class Force} and implements the \texttt{Force::act()} method. All the forces in the system are stored in a \texttt{std::vector<Force*>}, which is iterated over during a simulation step. During such a step, the force accumulators in all the particles are set to zero, after which \texttt{Force::act()} is called for every force in the system. Once all the forces have been calculated and added to the relevant force accumulators, one of the numerical solving functions (Section \ref{Numerical_schemes}) is used to calculate the next state of the system.
+\subsection{GravityForce}
+Gravity is calculated by multiplying the mass of a particle with a gravitational constant. In our implementation, a \texttt{Gravity} object acts on one single particle, which means that an object is added for every particle in the scene.
+\subsection{SpringForce}
+A \texttt{SpringForce} is a force that is defined by a rest length $\mathbf{r}$, a spring constant $k_s$ and a damping constant $k_d$. The resulting force is a function of the relative position $\mathbf{l = p1 - p2}$ and velocity $\mathbf{\dot{l} = v1 - v2}$ of the particles and the specification of the spring, as shown in formula \ref{springforce}. 
+
+\begin{align} \label{springforce}
+	\mathbf{f_{p1}} &= \bigg[k_s(|\mathbf{l}| - \mathbf{r}) + k_d \frac{\dot{\mathbf{l}}\cdot \mathbf{l}}{|\mathbf{l}|}\bigg]\frac{\mathbf{l}}{|\mathbf{l}|}\\
+	\mathbf{f_{p2}} &= -\mathbf{f_{p1}}
+\end{align}
+
+A \texttt{SpringForce} object is added for every pair of particles in the scene that is connected by a spring.
+
+\subsection{AngularForce}
+An \texttt{AngularForce} object acts like a spring force on a triplet of particles $(\textbf{p1, p2, p3})$, pulling the particles so that the angle between $\textbf{p1} - \textbf{p2}$ and $\textbf{p2} - \textbf{p3}$ approaches some rest angle $\alpha_{rest}$. This can be used to build a basic hair-simulation.
+
+\section{Generalized constraint structure}
+
+\section{Numerical integration schemes}
+\label{Numerical_schemes}
+
+\section{Interaction}
 
 \end{document}
