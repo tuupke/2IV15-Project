@@ -39,7 +39,7 @@ double vecSqrLen(int n, double v[])
   return vecDot(n, v, v);
 }
 
-double ConjGrad(int n, implicitMatrix *A, double x[], double b[], 
+double ConjGrad(int n, implicitMatrix *A, double x[], double b[],
 		double epsilon,	// how low should we go?
 		int    *steps)
 {
