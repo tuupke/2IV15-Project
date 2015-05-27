@@ -3,7 +3,6 @@
 #include "include/gfx/vec2.h"
 #include "linearSolver.cpp"
 
-
 #define iVector Vec2f
 
 using namespace std;
@@ -30,7 +29,7 @@ std::vector< std::vector< float > > multiply(std::vector< std::vector< float > >
 }
 
 std::vector< float > multiply(std::vector< float > A, float b) {
-    std::vector< float > Return = std::vector< float >(A.size());
+    std::vector< float > Return = std::vector< float >(A.size(), 0);
 
     for (int i = 0; i < A.size(); i++) {
         Return[i] = A[i] * b;
@@ -40,7 +39,7 @@ std::vector< float > multiply(std::vector< float > A, float b) {
 }
 
 std::vector< float > multiply(std::vector< float > A, int b) {
-    std::vector< float > Return = std::vector< float >(A.size());
+    std::vector< float > Return = std::vector< float >(A.size(), 0);
 
     for (int i = 0; i < A.size(); i++) {
         Return[i] = A[i] * b;
@@ -50,7 +49,7 @@ std::vector< float > multiply(std::vector< float > A, int b) {
 }
 
 std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector< float > B) {
-    std::vector< float > Return = std::vector< float >(A[0].size());
+    std::vector< float > Return = std::vector< float >(A[0].size(), 0);
     for (int y = 0; y < A[0].size(); y++) {
         float result = 0;
 
@@ -65,14 +64,13 @@ std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector
 }
 
 std::vector< float > subtract(std::vector< float > A, std::vector< float > B) {
-    std::vector< float > Return = vector< float >(A.size());
+    std::vector< float > Return = vector< float >(A.size(), 0);
     for (int i = 0; i < A.size(); i++) {
         Return[i] = A[i] - B[i];
     }
 
     return Return;
 }
-
 
 void solve(std::vector< Particle * > particles, std::vector< Constraint * > constraints, float Ks, float Kd) {
 
@@ -86,8 +84,8 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
 
     float def = 0;
 
-    std::vector< float > qD = vector< float >(innerSize, 0);
-    std::vector< float > Q = vector< float >(innerSize, 0);
+    std::vector< float > qD = vector< float >(innerSize, def);
+    std::vector< float > Q = vector< float >(innerSize, def);
     std::vector< std::vector< float > > M = std::vector< std::vector< float > >(innerSize,
                                                                                 std::vector< float >(innerSize, def));
     std::vector< std::vector< float > > W = std::vector< std::vector< float > >(innerSize,
@@ -101,6 +99,7 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
             W[i + d][i + d] = 1 / p->m_Mass;
             Q[i + d] = p->m_ForceVector[d];
             qD[i + d] = p->m_Velocity[d];
+            cout << "Velocity component: " << p->m_Velocity[d] << endl;
         }
     }
 
@@ -129,6 +128,7 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
                 JD[i][particle + d] = jD[h][d];
                 J[i][particle + d] = j[h][d];
                 Jt[particle + d][i] = j[h][d];
+                cout << "Jt " << particle + d << " " << i << " " << j[h][d] << endl;
             }
         }
     }
@@ -170,9 +170,10 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
         Particle *p = particles[i];
         int index = dimensions * i;
         for (int d = 0; d < dimensions; d++) {
-            if(d==1) {
-                cout << d << " " << p->m_ForceVector[d] << " " << Qh[index + d] << endl;
+            if (d == 1) {
+                cout << "d " << d << " " << p->m_ForceVector[d] << " " << Qh[index + d] << endl;
             }
+
             p->m_ForceVector[d] += Qh[index + d];
         }
     }
