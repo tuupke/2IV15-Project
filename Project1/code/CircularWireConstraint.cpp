@@ -1,6 +1,7 @@
 #include "CircularWireConstraint.h"
 #include <GL/glut.h>
 
+#define iVector Vec2f
 #define PI 3.1415926535897932384626433832795
 
 static void draw_circle(const Vec2f &vect, float radius) {
@@ -12,21 +13,23 @@ static void draw_circle(const Vec2f &vect, float radius) {
     }
     glEnd();
 }
+/*, std::vector<int> ids) :
+        m_p1(p1), m_p2(p2), m_dist(dist), m_ids(ids) { }*/
 
-CircularWireConstraint::CircularWireConstraint(Particle *p, const Vec2f &center, const double radius) :
-        m_p(p), m_center(center), m_radius(radius) { }
+CircularWireConstraint::CircularWireConstraint(Particle *p, const Vec2f &center, const double radius, std::vector<int> ids) :
+        m_p(p), m_center(center), m_radius(radius), m_ids(ids) { }
 
 void CircularWireConstraint::draw() {
     draw_circle(m_center, m_radius);
 }
 
-int CircularWireConstraint::calcC(){
+float CircularWireConstraint::calcC(){
     Vec2f posdif = (m_p->m_Position - m_center);
     float C = (posdif[0] * posdif[0] + posdif[1] * posdif[1] - m_radius*m_radius);
     return C;
 }
 
-int CircularWireConstraint::calcCD(){
+float CircularWireConstraint::calcCD(){
     Vec2f posdif = (m_p->m_Position - m_center) * 2;
     Vec2f veldif = (m_p->m_Velocity) * 2;
     float CDot = posdif[0] * veldif[0] + posdif[1] * veldif[1];
@@ -50,5 +53,5 @@ std::vector<iVector> CircularWireConstraint::jD(){
 }
 
 std::vector<int> CircularWireConstraint::getParticleIDs(){
-    return std::vector<int>();
+    return m_ids;
 }

@@ -140,7 +140,6 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     vector< float > KdCd = multiply(CD, Kd);
 
     vector< float > JWJtL = subtract(subtract(subtract(JDqD, JWQ), KsC), KdCd);
-    std::vector< double > JWJtLDVector(JWJtL.begin(), JWJtL.end());
 
     double JWJtLD[JWJtL.size()];
     std::copy(JWJtL.begin(), JWJtL.end(), JWJtLD);

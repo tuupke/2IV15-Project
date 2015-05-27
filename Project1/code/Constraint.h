@@ -9,9 +9,9 @@ public:
 
     virtual void draw() = 0;
 
-    virtual int calcC() = 0;
+    virtual float calcC() = 0;
 
-    virtual int calcCD() = 0;
+    virtual float calcCD() = 0;
 
     virtual std::vector<iVector> j() = 0;
     virtual std::vector<iVector> jD() = 0;

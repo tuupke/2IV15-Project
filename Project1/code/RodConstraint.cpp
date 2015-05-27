@@ -3,8 +3,8 @@
 
 #define iVector Vec2f
 
-RodConstraint::RodConstraint(Particle *p1, Particle *p2, double dist) :
-        m_p1(p1), m_p2(p2), m_dist(dist) { }
+RodConstraint::RodConstraint(Particle *p1, Particle *p2, double dist, std::vector<int> ids) :
+        m_p1(p1), m_p2(p2), m_dist(dist), m_ids(ids) { }
 
 void RodConstraint::draw() {
     glBegin(GL_LINES);
@@ -15,13 +15,13 @@ void RodConstraint::draw() {
     glEnd();
 }
 
-int RodConstraint::calcC() {
+float RodConstraint::calcC() {
     Vec2f posdif = m_p1->m_Position - m_p2->m_Position;
     float C = (posdif[0] * posdif[0] + posdif[1] * posdif[1] - m_dist * m_dist);
     return C;
 }
 
-int RodConstraint::calcCD() {
+float RodConstraint::calcCD() {
     Vec2f posdif = (m_p1->m_Position - m_p2->m_Position) * 2;
     Vec2f veldif = (m_p1->m_Velocity - m_p2->m_Velocity) * 2;
     return posdif[0] * veldif[0] + posdif[1] * veldif[1];
@@ -44,5 +44,5 @@ std::vector< iVector > RodConstraint::jD() {
 }
 
 std::vector< int > RodConstraint::getParticleIDs() {
-    return std::vector< int >();
+    return m_ids;
 }

@@ -2,18 +2,19 @@
 
 #include "Particle.h"
 #include "Constraint.h"
+#include <vector>
 
 #define iVector Vec2f
 
 class RodConstraint : public Constraint {
 public:
-    RodConstraint(Particle *p1, Particle *p2, double dist);
+    RodConstraint(Particle *p1, Particle *p2, double dist, std::vector<int> ids);
 
     void draw();
 
-    int calcC();
+    float calcC();
 
-    int calcCD();
+    float calcCD();
 
     std::vector<iVector> j();
     std::vector<iVector> jD();
@@ -23,5 +24,6 @@ private:
 
     Particle *const m_p1;
     Particle *const m_p2;
+    std::vector<int> m_ids;
     double const m_dist;
 };

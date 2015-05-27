@@ -2,6 +2,7 @@
 #include "Force.h"
 #include "Constraint.h"
 #include <gfx/vec2.h>
+#include "ConstraintSolver.h"
 
 #include <vector>
 
@@ -19,7 +20,8 @@ void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVecto
 #define DAMP 0.98f
 #define RAND (((rand()%2000)/1000.f)-1.f)
 
-void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt) {
+void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {
+    solve(pVector, constraints, 60.0f, 5.0f);
     if (solver == 1)
         Euler(pVector, fVector, dt);
     if (solver == 2)
@@ -123,9 +125,6 @@ void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVecto
     }
 }
 
-
-#include "ConstraintSolver.h"
-
 void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVector) {
     int fsize = fVector.size();
     int psize = pVector.size();
@@ -138,8 +137,5 @@ void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVecto
         fVector[i]->act();
     }
 
-    // void solve(std::vector<Particle *> particles, std::vector<Constraint> constraints, float Ks, float Kd) {
-    std::vector< Constraint * > constraints;
-    solve(pVector, constraints, 60.0f, 5.0f);
 
 }

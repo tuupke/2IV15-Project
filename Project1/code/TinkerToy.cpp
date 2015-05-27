@@ -19,7 +19,7 @@
 /* macros */
 
 /* external definitions (from solver) */
-extern void simulation_step( std::vector<Particle*> pVector, std::vector<Force*> fVector, float dt );
+extern void simulation_step( std::vector<Particle*> pVector, std::vector<Force*> fVector, float dt, std::vector<Constraint*> fConstraint);
 int solver = 1; // The solver to use: 1: Euler, 2: Midpoint, 3: Runge-Kutta
 
 /* global variables */
@@ -42,6 +42,7 @@ static int omx, omy, mx, my;
 static int hmx, hmy;
 
 static std::vector<Force*> fVector;
+static std::vector<Constraint*> fConstraint;
 static RodConstraint * delete_this_dummy_rod = NULL;
 static CircularWireConstraint * delete_this_dummy_wire = NULL;
 static MouseForce * mouse_force = NULL;
@@ -63,6 +64,7 @@ static void free_data ( void )
 	}
 
 	fVector.clear();
+	fConstraint.clear();
 
 	if (delete_this_dummy_wire) {
 		delete delete_this_dummy_wire;
@@ -97,6 +99,9 @@ static void init_system(void)
 	fVector.push_back(new SpringForce(pVector[0], pVector[1], 2*dist, 0.5, 0.1));
 //	fVector.push_back(new SpringForce(pVector[3], pVector[0], dist, 0.5, 0.1));
 //	fVector.push_back(new AngularForce(pVector[3], pVector[0], pVector[1], 0.2*3.14159265, 0.5, 1.0));
+
+	std::vector<int> ids(0);
+	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
 //  		fVector.push_back(new Drag(pVector[i], 0.10));
@@ -330,7 +335,7 @@ static void reshape_func ( int width, int height )
 
 static void idle_func ( void )
 {
-	if ( dsim ) simulation_step( pVector, fVector, dt );
+	if ( dsim ) simulation_step( pVector, fVector, dt, fConstraint );
 	else        {get_from_UI();remap_GUI();}
 
 	glutSetWindow ( win_id );
