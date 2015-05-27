@@ -13,8 +13,10 @@
 
 #include <vector>
 #include <stdlib.h>
-#include <stdio.h>
+//#include <stdio.h>
+#include <cstdio>
 #include <GL/glut.h>
+#include <cmath>
 
 /* macros */
 
@@ -81,6 +83,55 @@ static void clear_data ( void )
 	}
 }
 
+static void create_grid(int size, bool diagonals)
+{
+	float screen_size = 1.8;
+	float ks_xy = 0.5;
+	float ks_diag = 0.7;
+	float particle_weight = 1.0;
+	Vec2f position;
+
+	pVector.clear();
+
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size; x++) {
+			position = Vec2f((screen_size/(size-1)*x) - 0.9, (screen_size/(size-1)*y) - 0.9);
+			pVector.push_back(new Particle(position, particle_weight));
+		}
+	}
+	// X-springs
+	for (int y = 0; y < size; y++) {
+		for (int x = 0; x < size-1; x++) {
+			fVector.push_back(new SpringForce(pVector[x + y*size], 
+							  pVector[x+1 + y*size], 
+							  screen_size/(size-1), ks_xy, 0.5));
+		}
+	}
+	// Y-springs
+	for (int y = 0; y < size-1; y++) {
+		for (int x = 0; x < size; x++) {
+			fVector.push_back(new SpringForce(pVector[x + y*size], 
+							  pVector[x + (y+1)*size], 
+							  screen_size/(size-1), ks_xy, 0.5));
+		}
+	}
+	// diagonal springs
+	if (diagonals) {
+		for (int y = 0; y < size-1; y++) {
+			for (int x = 0; x < size-1; x++) {
+				fVector.push_back(new SpringForce(pVector[x + y*size], 
+								  pVector[x+1 + (y+1)*size], 
+								  sqrt(2*pow((screen_size/(size-1)), 2)), 
+								  ks_diag, 0.5));
+				fVector.push_back(new SpringForce(pVector[x+1 + y*size], 
+								  pVector[x + (y+1)*size], 
+								  sqrt(2*pow((screen_size/(size-1)), 2)), 
+								  ks_diag, 0.5));
+			}
+		}
+	}
+}
+
 static void init_system(void)
 {
 	const double dist = 0.2;
@@ -100,15 +151,23 @@ static void init_system(void)
 //	fVector.push_back(new SpringForce(pVector[3], pVector[0], dist, 0.5, 0.1));
 //	fVector.push_back(new AngularForce(pVector[3], pVector[0], pVector[1], 0.2*3.14159265, 0.5, 1.0));
 
+	char choice;
+	std::cout << "Diagonal springs? [y]/n" << std::endl;
+	std::cin >> choice;
+
+	bool diagonals = !(choice == 'n');
+
+	create_grid(10, diagonals);
+
 	std::vector<int> ids;
 	ids.push_back(0);
-	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
+//	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
-//  		fVector.push_back(new Drag(pVector[i], 0.10));
+  		fVector.push_back(new Drag(pVector[i], 0.10));
   	}
   
-	mouse_force = new MouseForce(pVector, 0.1, 0.50, 1.0);
+	mouse_force = new MouseForce(pVector, 0.05, 0.30, 1.5, 0.2);
 	fVector.push_back(mouse_force);
  
 //	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
@@ -192,7 +251,7 @@ static void get_from_UI ()
 {
 	int i, j;
 	// int size, flag;
-	int hi, hj;
+//	int hi, hj;
 	// float x, y;
 	if ( !mouse_down[0] && !mouse_down[2] && !mouse_release[0] 
 	&& !mouse_shiftclick[0] && !mouse_shiftclick[2] ) return;
@@ -209,8 +268,8 @@ static void get_from_UI ()
 	if ( mouse_down[2] ) {
 	}
 
-	hi = (int)((       hmx /(float)win_x)*N);
-	hj = (int)(((win_y-hmy)/(float)win_y)*N);
+//	hi = (int)((       hmx /(float)win_x)*N);
+//	hj = (int)(((win_y-hmy)/(float)win_y)*N);
 
 	if( mouse_release[0] ) {
 	}
@@ -287,6 +346,18 @@ static void key_func ( unsigned char key, int x, int y )
 		dt -= 0.1;
 		printf("dt: %f\n", dt);
 		break;
+
+	case 'a':
+	case 'A':
+		mouse_force->m_radius += 0.05;
+		printf("radius: %f\n", mouse_force->m_radius);
+		break;
+	case 'z':
+	case 'Z':
+		mouse_force->m_radius -= 0.05;
+		printf("radius: %f\n", mouse_force->m_radius);
+		break;
+
 
 	case ' ':
 		dsim = !dsim;
@@ -420,6 +491,7 @@ int main ( int argc, char ** argv )
 	printf ( "\t 'r' = Runge Kutta\n\n" );
 	printf ( "\t '+, >' = Increase dt with 0.01, 0.1\n" );
 	printf ( "\t '-, <' = Decrease dt with 0.01, 0.1\n" );
+	printf ( "\t 'a, z' = Increase, decrease mouse radius\n" );
 
 	dsim = 0;
 	dump_frames = 0;

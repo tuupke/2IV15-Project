@@ -7,12 +7,13 @@
 class MouseForce : public Force 
 {
 public:
-	MouseForce(std::vector<Particle*> particles, double dist, double ks, double kd);
+	MouseForce(std::vector<Particle*> particles, double dist, double ks, double kd, double radius);
 
 	void draw();
 	void act();
 	void enable(float x, float y);
 	void disable();
+	double m_radius;
 
 private:
 
