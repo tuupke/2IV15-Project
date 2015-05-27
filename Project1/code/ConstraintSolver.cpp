@@ -15,10 +15,10 @@ std::vector< std::vector< float > > multiply(std::vector< std::vector< float > >
 
     for (int i = 0; i < A.size(); i++) {
         for (int j = 0; j < B[0].size(); j++) {
-            int res = 0;
+            float res = 0;
 
-            for (int k = 0; k < A.size(); k++) {
-                res += A[k][i] * B[j][k];
+            for (int k = 0; k < B.size(); k++) {
+                res += A[i][k] * B[k][j];
             }
 
             Result[i][j] = res;
@@ -40,11 +40,11 @@ std::vector< float > multiply(std::vector< float > A, float b) {
 
 std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector< float > B) {
     std::vector< float > Return = std::vector< float >(B.size());
-    for (int i = 0; i < B.size(); i++) {
-        int result = 0;
+    for (int i = 0; i < A.size(); i++) {
+        float result = 0;
 
         for (int j = 0; j < B.size(); j++) {
-            result += A[j][i] * B[j];
+            result += A[i][j] * B[j];
         }
 
         Return[i] = result;
@@ -74,8 +74,8 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     int innerSize = dimensions * particles.size();
 
     // Initialize all required arrays;
-    std::vector< float > qD = vector< float >(innerSize);
-    std::vector< float > Q = vector< float >(innerSize);
+    std::vector< float > qD = vector< float >(innerSize, 0);
+    std::vector< float > Q = vector< float >(innerSize, 0);
     std::vector< std::vector< float > > M = std::vector< std::vector< float > >(innerSize,
                                                                                 std::vector< float >(innerSize, 0));
     std::vector< std::vector< float > > W = std::vector< std::vector< float > >(innerSize,
@@ -131,9 +131,13 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
 
     JWJt = multiply(JW, Jt);
 
-    vector< float > JDqD = vector< float >(qD.size());
-    vector< float > JWQ = vector< float >(Q.size());
-    JDqD = multiply(multiply(JD, qD), -1);
+    vector< float > JDqD = vector< float >(qD.size(),0);
+    vector< float > JWQ = vector< float >(Q.size(),0);
+    JDqD = multiply(JD, qD);
+    JDqD = multiply(JDqD, -1);
+//    JDqD = multiply(
+//            multiply(JD, qD)
+//            , -1);
     JWQ = multiply(JW, Q);
 
     vector< float > KsC = multiply(C, Ks);

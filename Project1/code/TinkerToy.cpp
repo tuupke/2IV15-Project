@@ -100,7 +100,8 @@ static void init_system(void)
 //	fVector.push_back(new SpringForce(pVector[3], pVector[0], dist, 0.5, 0.1));
 //	fVector.push_back(new AngularForce(pVector[3], pVector[0], pVector[1], 0.2*3.14159265, 0.5, 1.0));
 
-	std::vector<int> ids(0);
+	std::vector<int> ids;
+	ids.push_back(0);
 	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
