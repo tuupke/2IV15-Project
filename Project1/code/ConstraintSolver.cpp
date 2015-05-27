@@ -105,8 +105,8 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
 
     for (int i = 0; i < constraints.size(); i++) {
         Constraint *c = constraints[i];
-        C[i] = c->calcC();
-        CD[i] = c->calcCD();
+        C.push_back(c->calcC());
+        CD.push_back(c->calcCD());
         vector< iVector > j = c->j();
         vector< iVector > jD = c->jD();
         vector< int > pIDs = c->getParticleIDs();
