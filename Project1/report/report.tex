@@ -114,7 +114,7 @@ The Midpoint method is only slightly more complicated than the Euler method. Ana
 \begin{align}
 	\mathbf{y}'(t+h) &= \mathbf{y}'(t) + h\cdot \mathbf{G}\biggl(\mathbf{y}'(t)+\frac{h}{2}\mathbf{G}(\mathbf{y}'(t))\biggr)
 \end{align}
-In our implementation we calculate a temporary position for the particles, from which we calculate new forces, which we use to find the second order approximation of the next position and velocity. This means that to get higher precision the number of calculations double. The error of the Midpoint method is $O(h^3)$.
+In our implementation we calculate a temporary position for the particles, from which we calculate new forces, which we use to find the second order approximation of the next position and velocity. This means that to get higher precision the number of calculations doubles. The error of the Midpoint method is $O(h^3)$.
 To find the limits on the timestep for the Midpoint method we used the same test setup as with the Euler method. Results can be seen in Table \ref{Midpoint}. It is clear that the Midpoint method is stable for much larger timesteps, which offsets the higher computational complexity.
 \begin{table}[h]
 	\caption{Stability of the Midpoint solver for different time steps}
