@@ -17,4 +17,6 @@ public:
 	Vec2f m_Velocity;
 	Vec2f m_ForceVector;
 	float m_Mass;
+	bool m_Fixed;
 };
+

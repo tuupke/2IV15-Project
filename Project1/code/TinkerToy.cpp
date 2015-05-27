@@ -86,9 +86,9 @@ static void clear_data ( void )
 static void create_grid(int size, bool diagonals)
 {
 	float screen_size = 1.8;
-	float ks_xy = 0.5;
-	float ks_diag = 0.7;
-	float particle_weight = 1.0;
+	float ks_xy = 0.7;
+	float ks_diag = 1.0;
+	float particle_weight = 0.8;
 	Vec2f position;
 
 	pVector.clear();
@@ -96,7 +96,12 @@ static void create_grid(int size, bool diagonals)
 	for (int y = 0; y < size; y++) {
 		for (int x = 0; x < size; x++) {
 			position = Vec2f((screen_size/(size-1)*x) - 0.9, (screen_size/(size-1)*y) - 0.9);
-			pVector.push_back(new Particle(position, particle_weight));
+			if (y == size-1 && (x == 0 || x == size-1)) {
+				pVector.push_back(new Particle(position, particle_weight));
+				pVector.back()->m_Fixed = true;
+			}
+			else
+				pVector.push_back(new Particle(position, particle_weight));
 		}
 	}
 	// X-springs
@@ -157,11 +162,11 @@ static void init_system(void)
 
 	bool diagonals = !(choice == 'n');
 
-//	create_grid(10, diagonals);
+	create_grid(10, diagonals);
 
 	std::vector<int> ids;
 	ids.push_back(0);
-	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
+//	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
   		fVector.push_back(new Drag(pVector[i], 0.10));
@@ -170,7 +175,7 @@ static void init_system(void)
 
   	}
   
-	mouse_force = new MouseForce(pVector, 0.05, 0.30, 1.5, 0.2);
+	mouse_force = new MouseForce(pVector, 0.1, 1.0, 1.0, 0.6);
 	fVector.push_back(mouse_force);
  
 //	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);

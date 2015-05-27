@@ -137,7 +137,11 @@ void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVecto
         fVector[i]->act();
     }
 
-    solve(pVector, constraints, 60.0f, 5.0f);
+    for (int i = 0; i < psize; i++) {
+	    if (pVector[i]->m_Fixed)
+		    pVector[i]->m_ForceVector = Vec2f(0, 0);
+    }
 
+    solve(pVector, constraints, 60.0f, 5.0f);
 
 }
