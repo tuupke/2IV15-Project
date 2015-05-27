@@ -25,21 +25,19 @@ float RodConstraint::calcCD() {
     Vec2f posdif = (m_p1->m_Position - m_p2->m_Position) * 2;
     Vec2f veldif = (m_p1->m_Velocity - m_p2->m_Velocity) * 2;
     return posdif[0] * veldif[0] + posdif[1] * veldif[1];
-//    float CDot = vecDotNew(2 * posdif, 2 * veldif);
-//    return CDot;
 }
 
 std::vector< iVector > RodConstraint::j() {
     std::vector <iVector> J;
-    J.push_back(2.0 * (m_p1->m_Position - m_p2->m_Position));
-    J.push_back(2.0 * (m_p2->m_Position - m_p1->m_Position));
+    J.push_back((m_p1->m_Position - m_p2->m_Position) * 2);
+    J.push_back((m_p2->m_Position - m_p1->m_Position) * 2);
     return J;
 }
 
 std::vector< iVector > RodConstraint::jD() {
     std::vector <iVector> JDot;
-    JDot.push_back(2.0 * (m_p1->m_Velocity - m_p2->m_Velocity));
-    JDot.push_back(2.0 * (m_p2->m_Velocity - m_p1->m_Velocity));
+    JDot.push_back((m_p1->m_Velocity - m_p2->m_Velocity) * 2);
+    JDot.push_back((m_p2->m_Velocity - m_p1->m_Velocity) * 2);
     return JDot;
 }
 

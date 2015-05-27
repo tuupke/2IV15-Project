@@ -11,17 +11,18 @@ using namespace std;
 std::vector< std::vector< float > > multiply(std::vector< std::vector< float > > A,
                                              std::vector< std::vector< float > > B) {
     std::vector< std::vector< float > > Result = std::vector< std::vector< float > >(A.size(),
-                                                                                     vector< float >(B[0].size()));
+                                                                                     vector< float >(B[0].size(), 0));
 
-    for (int i = 0; i < A.size(); i++) {
-        for (int j = 0; j < B[0].size(); j++) {
+    for (int y = 0; y < A[0].size(); y++) {
+        for (int x = 0; x < A.size(); x++) {
             float res = 0;
 
-            for (int k = 0; k < B.size(); k++) {
-                res += A[i][k] * B[k][j];
+            for (int k = 0; k < A.size(); k++) {
+
+                res += A[k][y] * B[x][k];
             }
 
-            Result[i][j] = res;
+            Result[x][y] = res;
         }
     }
 
@@ -38,16 +39,26 @@ std::vector< float > multiply(std::vector< float > A, float b) {
     return Return;
 }
 
-std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector< float > B) {
-    std::vector< float > Return = std::vector< float >(B.size());
+std::vector< float > multiply(std::vector< float > A, int b) {
+    std::vector< float > Return = std::vector< float >(A.size());
+
     for (int i = 0; i < A.size(); i++) {
+        Return[i] = A[i] * b;
+    }
+
+    return Return;
+}
+
+std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector< float > B) {
+    std::vector< float > Return = std::vector< float >(A[0].size());
+    for (int y = 0; y < A[0].size(); y++) {
         float result = 0;
 
-        for (int j = 0; j < B.size(); j++) {
-            result += A[i][j] * B[j];
+        for (int j = 0; j < A.size(); j++) {
+            result += A[j][y] * B[j];
         }
 
-        Return[i] = result;
+        Return[y] = result;
     }
 
     return Return;
@@ -73,13 +84,14 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     // Calculate the size of the arrays
     int innerSize = dimensions * particles.size();
 
-    // Initialize all required arrays;
+    float def = 0;
+
     std::vector< float > qD = vector< float >(innerSize, 0);
     std::vector< float > Q = vector< float >(innerSize, 0);
     std::vector< std::vector< float > > M = std::vector< std::vector< float > >(innerSize,
-                                                                                std::vector< float >(innerSize, 0));
+                                                                                std::vector< float >(innerSize, def));
     std::vector< std::vector< float > > W = std::vector< std::vector< float > >(innerSize,
-                                                                                std::vector< float >(innerSize, 0));
+                                                                                std::vector< float >(innerSize, def));
 
     for (int i = 0; i < particles.size() * dimensions; i += dimensions) {
         Particle *p = particles[i / dimensions];
@@ -97,12 +109,11 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     vector< float > C = vector< float >();
     vector< float > CD = vector< float >();
     std::vector< std::vector< float > > J = std::vector< std::vector< float > >(cSize,
-                                                                                std::vector< float >(innerSize, 0));
+                                                                                std::vector< float >(innerSize, def));
     std::vector< std::vector< float > > Jt = std::vector< std::vector< float > >(innerSize,
-                                                                                 std::vector< float >(cSize, 0));
+                                                                                 std::vector< float >(cSize, def));
     std::vector< std::vector< float > > JD = std::vector< std::vector< float > >(cSize,
-                                                                                 std::vector< float >(innerSize, 0));
-
+                                                                                 std::vector< float >(innerSize, def));
     for (int i = 0; i < constraints.size(); i++) {
         Constraint *c = constraints[i];
         C.push_back(c->calcC());
@@ -115,29 +126,26 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
 
             int particle = pIDs[h] * dimensions;
             for (int d = 0; d < dimensions; d++) {
-                JD[i][particle] = jD[h][d];
-                J[i][particle] = j[h][d];
-                Jt[particle][i] = j[h][d];
+                JD[i][particle + d] = jD[h][d];
+                J[i][particle + d] = j[h][d];
+                Jt[particle + d][i] = j[h][d];
             }
         }
     }
 
     std::vector< std::vector< float > > JW = std::vector< std::vector< float > >(cSize,
-                                                                                 std::vector< float >(innerSize, 0));
+                                                                                 std::vector< float >(innerSize, def));
     std::vector< std::vector< float > > JWJt = std::vector< std::vector< float > >(cSize,
-                                                                                   std::vector< float >(innerSize, 0));
+                                                                                   std::vector< float >(innerSize,
+                                                                                                        def));
 
     JW = multiply(J, W);
 
     JWJt = multiply(JW, Jt);
 
-    vector< float > JDqD = vector< float >(qD.size(),0);
-    vector< float > JWQ = vector< float >(Q.size(),0);
-    JDqD = multiply(JD, qD);
-    JDqD = multiply(JDqD, -1);
-//    JDqD = multiply(
-//            multiply(JD, qD)
-//            , -1);
+    vector< float > JDqD = vector< float >(qD.size(), def);
+    vector< float > JWQ = vector< float >(Q.size(), def);
+    JDqD = multiply(multiply(JD, qD), -1);
     JWQ = multiply(JW, Q);
 
     vector< float > KsC = multiply(C, Ks);
@@ -149,8 +157,7 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     std::copy(JWJtL.begin(), JWJtL.end(), JWJtLD);
 
     implicitMatrix *iJWJT = new implicitMatrix(&JWJt);
-    double l[constraints.size()];// = double[constraints.size()];
-
+    double l[constraints.size()];
 
     int numberOfSteps = 100;
 
@@ -163,10 +170,10 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
         Particle *p = particles[i];
         int index = dimensions * i;
         for (int d = 0; d < dimensions; d++) {
-            p->m_ForceVector += Qh[index + d];
+            if(d==1) {
+                cout << d << " " << p->m_ForceVector[d] << " " << Qh[index + d] << endl;
+            }
+            p->m_ForceVector[d] += Qh[index + d];
         }
     }
 }
-
-
-

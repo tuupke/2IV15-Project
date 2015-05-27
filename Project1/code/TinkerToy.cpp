@@ -142,12 +142,12 @@ static void init_system(void)
 	// Create three particles, attach them to each other, then add a
 	// circular wire constraint to the first.
 	
-	pVector.push_back(new Particle(center + offset, 1));
-	pVector.push_back(new Particle(center + offset + offset, 1));
+	pVector.push_back(new Particle(center - offset, 1));
+//	pVector.push_back(new Particle(center + offset + offset, 1));
 //	pVector.push_back(new Particle(center + offset + offset + offset, 2));
 //	pVector.push_back(new Particle(center + offset + offset1, 2));
 	
-	fVector.push_back(new SpringForce(pVector[0], pVector[1], 2*dist, 0.5, 0.1));
+//	fVector.push_back(new SpringForce(pVector[0], pVector[1], 2*dist, 0.5, 0.1));
 //	fVector.push_back(new SpringForce(pVector[3], pVector[0], dist, 0.5, 0.1));
 //	fVector.push_back(new AngularForce(pVector[3], pVector[0], pVector[1], 0.2*3.14159265, 0.5, 1.0));
 
@@ -165,6 +165,9 @@ static void init_system(void)
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
   		fVector.push_back(new Drag(pVector[i], 0.10));
+  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
+//  		fVector.push_back(new Drag(pVector[i], 0.10));
+
   	}
   
 	mouse_force = new MouseForce(pVector, 0.05, 0.30, 1.5, 0.2);
@@ -234,11 +237,9 @@ static void draw_forces ( void )
 
 static void draw_constraints ( void )
 {
-	// change this to iteration over full set
-	if (delete_this_dummy_rod)
-		delete_this_dummy_rod->draw();
-	if (delete_this_dummy_wire)
-		delete_this_dummy_wire->draw();
+	for(int i = 0; i < fConstraint.size(); i++){
+		fConstraint[i]->draw();
+	}
 }
 
 /*

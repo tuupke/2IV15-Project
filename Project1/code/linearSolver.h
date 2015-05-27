@@ -23,7 +23,7 @@ public:
             int res = 0;
 
             for (int j = 0; j < m[0].size(); j++) {
-                res += (*m)[i][j] * x[j];
+                res += (*m)[j][i] * x[j];
             }
 
             r[i] = res;
