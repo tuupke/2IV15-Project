@@ -157,11 +157,11 @@ static void init_system(void)
 
 	bool diagonals = !(choice == 'n');
 
-	create_grid(10, diagonals);
+//	create_grid(10, diagonals);
 
 	std::vector<int> ids;
 	ids.push_back(0);
-//	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
+	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
  	for (int i = 0; i < pVector.size(); i++) {
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
   		fVector.push_back(new Drag(pVector[i], 0.10));
