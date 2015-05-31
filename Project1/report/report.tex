@@ -138,7 +138,7 @@ The 4th order Runge Kutta (RK4) delivers the best trade-off between calculation 
 	\mathbf{k_1} &= \mathbf{G}(\mathbf{y}'(t))\\
 	\mathbf{k_2} &= \mathbf{G}(\mathbf{y}'(t)+\frac{1}{2}h\mathbf{k_1})\\
 	\mathbf{k_3} &= \mathbf{G}(\mathbf{y}'(t)+\frac{1}{2}h\mathbf{k_2})\\
-	\mathbf{k_3} &= \mathbf{G}(\mathbf{y}'(t)+h\mathbf{k_3})\\
+	\mathbf{k_4} &= \mathbf{G}(\mathbf{y}'(t)+h\mathbf{k_3})\\
 	\mathbf{y}'(t+h) &= \mathbf{y}'(t) + \frac{h}{6}[\mathbf{k_1}+2\mathbf{k_2}+2\mathbf{k_3}+\mathbf{k_4}]
 \end{align}
 This scheme is implemented in the same way as the Midpoint method, but with four stages instead of two.
