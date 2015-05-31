@@ -142,7 +142,7 @@ The 4th order Runge Kutta (RK4) delivers the best trade-off between calculation 
 	\mathbf{y}'(t+h) &= \mathbf{y}'(t) + \frac{h}{6}[\mathbf{k_1}+2\mathbf{k_2}+2\mathbf{k_3}+\mathbf{k_4}]
 \end{align}
 This scheme is implemented in the same way as the Midpoint method, but with four stages instead of two.
-To evaluate RK4 performance, the same setup is used as for the Euler method. Results of the experiment are shown in Table \ref{RK4}. It is clear that RK4 performs best for large timesteps.
+To evaluate RK4 performance, the same setup is used as for the Euler method. Results of the experiment are shown in Table \ref{RK4}. It is clear that RK4 performs best for large timesteps. Because this is the most stable scheme and computational load is not an issue, we used this solver as the default solver in our later experiments with cloth and constraints.
 \begin{table}[h]
 	\caption{Stability of the RK4 solver for different time steps}
 	\label{RK4}
@@ -161,5 +161,10 @@ To evaluate RK4 performance, the same setup is used as for the Euler method. Res
 
 \section{Interaction}
 To interact with the particles, a special kind of \texttt{SpringForce} is defined. This force is only activated when one of the mouse-buttons is pressed, and acts as several springs between the current location of the mouse and the particles that are within a circular area defined by a variable radius. The force is calculated similar to a normal \texttt{SpringForce}, with the location of the mouse pointer as $\mathbf{p2}$.
+
+\section{2D Cloth Simulation}
+% TODO: Add images
+To simulate 2-dimensional cloth, we implemented a function that generates a square grid of particles, interconnected by springs in the x and y-directions. Optionally, diagonal springs can be added. The two upper particles are fixed in the upper corners of the screen. A grid without diagonal springs behaves almost like cloth, with exception of shear forces, which make the grid collapse. This can be resolved by adding diagonal springs, which make the behavior of the cloth more natural. One downside of this simple model is that it can get 'stuck' in a local minimum. This could be mitigated by adding connectivity between a particle with particles more at distance, outside of the direct neighbors.
+The mass of the particles also affects the behavior of the cloth. When the mass is too big relative to the tension of the springs, the cloth stretches too much vertically to look realistic. When the springs are too string compared to the mass of the particles, the simulation becomes numerically instable.
 
 \end{document}
