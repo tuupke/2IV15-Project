@@ -1,5 +1,5 @@
 \documentclass[a4paper,twoside,11pt,twocolumn]{article}
-\usepackage{a4wide,graphicx,fancyhdr,amsmath,amssymb,float,longtable, chronology}
+\usepackage{a4wide,graphicx,fancyhdr,amsmath,amssymb,float,longtable,chronology,caption,subcaption}
 \usepackage{algorithmic}
 \usepackage{hyperref}
 \usepackage{url}
@@ -163,8 +163,43 @@ To evaluate RK4 performance, the same setup is used as for the Euler method. Res
 To interact with the particles, a special kind of \texttt{SpringForce} is defined. This force is only activated when one of the mouse-buttons is pressed, and acts as several springs between the current location of the mouse and the particles that are within a circular area defined by a variable radius. The force is calculated similar to a normal \texttt{SpringForce}, with the location of the mouse pointer as $\mathbf{p2}$.
 
 \section{2D Cloth Simulation}
-% TODO: Add images
-To simulate 2-dimensional cloth, we implemented a function that generates a square grid of particles, interconnected by springs in the x and y-directions. Optionally, diagonal springs can be added. The two upper particles are fixed in the upper corners of the screen. A grid without diagonal springs behaves almost like cloth, with exception of shear forces, which make the grid collapse. This can be resolved by adding diagonal springs, which make the behavior of the cloth more natural. One downside of this simple model is that it can get 'stuck' in a local minimum. This could be mitigated by adding connectivity between a particle with particles more at distance, outside of the direct neighbors.
+\begin{figure*}[t]
+	\centering
+	\begin{subfigure}[b]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{grid_start}
+		\caption{Initial situation}
+		\label{grid_start}
+	\end{subfigure}
+	~~
+	\begin{subfigure}[b]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{grid_rest}
+		\caption{Stable situation}
+		\label{grid_rest}
+	\end{subfigure}
+	\caption{Cloth without diagonal springs}
+	\label{grid}
+\end{figure*}
+To simulate 2-dimensional cloth, we implemented a function that generates a square grid of particles, interconnected by springs in the x and y-directions. Optionally, diagonal springs can be added. The two upper particles are fixed in the upper corners of the screen. A grid without diagonal springs as seen in Figure~\ref{grid} behaves almost like cloth, with exception of shear forces, which make the grid collapse. This can be resolved by adding diagonal springs, which make the behavior of the cloth more natural. This is shown in Figure~\ref{diag}. One downside of this simple model is that it can get 'stuck' in a local minimum. This could be mitigated by adding connectivity between a particle with particles more at distance, outside of the direct neighbors.
 The mass of the particles also affects the behavior of the cloth. When the mass is too big relative to the tension of the springs, the cloth stretches too much vertically to look realistic. When the springs are too string compared to the mass of the particles, the simulation becomes numerically instable.
-
+\begin{figure*}[b]
+	\centering
+	\begin{subfigure}[b]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{diag_start}
+		\caption{Initial situation}
+		\label{diag_start}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{diag_rest}
+		\caption{Stable situation}
+		\label{diag_rest}
+	\end{subfigure}
+	\caption{Cloth without diagonal springs}
+	\label{diag}
+\end{figure*}
+\begin{figure}[h]
+	\includegraphics[width=0.4\textwidth]{diag_localmin}
+	\caption{Cloth stuck in a local minimum}
+	\label{diag_localmin}
+\end{figure}
 \end{document}
