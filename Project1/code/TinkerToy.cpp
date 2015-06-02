@@ -25,6 +25,7 @@ extern void simulation_step( std::vector<Particle*> pVector, std::vector<Force*>
 int solver = 1; // The solver to use: 1: Euler, 2: Midpoint, 3: Runge-Kutta
 
 /* global variables */
+static void remap_GUI();
 
 static int N;
 static float dt, d;
@@ -88,7 +89,7 @@ static void create_grid(int size, bool diagonals)
 	float screen_size = 1.8;
 	float ks_xy = 0.7;
 	float ks_diag = 1.0;
-	float particle_weight = 0.8;
+	float particle_weight = 0.2;
 	Vec2f position;
 
 	pVector.clear();
@@ -162,7 +163,7 @@ static void init_system(void)
 
 	bool diagonals = !(choice == 'n');
 
-	create_grid(10, diagonals);
+	create_grid(20, diagonals);
 
 	std::vector<int> ids;
 	ids.push_back(0);
@@ -180,6 +181,8 @@ static void init_system(void)
  
 //	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 //	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
+//
+	remap_GUI();
 }
 
 /*
@@ -414,7 +417,8 @@ static void reshape_func ( int width, int height )
 static void idle_func ( void )
 {
 	if ( dsim ) simulation_step( pVector, fVector, dt, fConstraint );
-	else        {get_from_UI();remap_GUI();}
+//	else        {get_from_UI();remap_GUI();}
+	else        {get_from_UI();}
 
 	glutSetWindow ( win_id );
 	glutPostRedisplay ();
@@ -489,8 +493,9 @@ int main ( int argc, char ** argv )
 	}
 
 	printf ( "\n\nHow to use this application:\n\n" );
-	printf ( "\t Toggle construction/simulation display with the spacebar key\n" );
+	printf ( "\t Toggle play/pause with the spacebar key\n" );
 	printf ( "\t Dump frames by pressing the 'd' key\n" );
+	printf ( "\t Reset scene by pressing the 'c' key\n" );
 	printf ( "\t Quit by pressing the 'q' key\n" );
 	printf ( "\t 'e' = Euler\n" );
 	printf ( "\t 'm' = Midpoint\n" );
