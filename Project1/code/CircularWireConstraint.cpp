@@ -24,28 +24,24 @@ void CircularWireConstraint::draw() {
 
 float CircularWireConstraint::calcC() {
     iVector diff = (m_p->m_Position - m_center);
-    float C = (diff[0] * diff[0] + diff[1] * diff[1] - m_radius * m_radius);
-    return C;
+    return diff[0] * diff[0] + diff[1] * diff[1] - m_radius * m_radius;
 }
 
 float CircularWireConstraint::calcCD() {
     iVector pDiff = (m_p->m_Position - m_center) * 2;
-    iVector vDiff = (m_p->m_Velocity) * 2;
-    float CDot = pDiff[0] * vDiff[0] + pDiff[1] * vDiff[1];
-    return CDot;
+    iVector vDiff = (m_p->m_Velocity);
+    return pDiff[0] * vDiff[0] + pDiff[1] * vDiff[1];
 }
 
 std::vector< iVector > CircularWireConstraint::j() {
     std::vector< iVector > J;
-    iVector pDiff = (m_p->m_Position - m_center) * 2;
-    J.push_back(pDiff);
+    J.push_back((m_p->m_Position - m_center) * 2);
     return J;
 }
 
 std::vector< iVector > CircularWireConstraint::jD() {
     std::vector< iVector > JDot;
-    iVector vDiff = (m_p->m_Velocity) * 2;
-    JDot.push_back(vDiff);
+    JDot.push_back((m_p->m_Velocity) * 2);
     return JDot;
 }
 

@@ -99,7 +99,6 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
             W[i + d][i + d] = 1 / p->m_Mass;
             Q[i + d] = p->m_ForceVector[d];
             qD[i + d] = p->m_Velocity[d];
-            cout << "Velocity component: " << p->m_Velocity[d] << endl;
         }
     }
 
@@ -115,6 +114,10 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
                                                                                  std::vector< float >(innerSize, def));
     for (int i = 0; i < constraints.size(); i++) {
         Constraint *c = constraints[i];
+//        iVector vC = c->calcC();
+//        iVector vCD = c->calcCD();
+
+//        cout << "Constraint y-C: "<< vC[1] << " y-CD: " << vCD[1] << endl;
         C.push_back(c->calcC());
         CD.push_back(c->calcCD());
         vector< iVector > j = c->j();
@@ -122,13 +125,12 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
         vector< int > pIDs = c->getParticleIDs();
 
         for (int h = 0; h < pIDs.size(); h++) {
-
+//            cout << "Constrained particle J: " << j[0][1] << " JD: " << jD[0][1] << endl;
             int particle = pIDs[h] * dimensions;
             for (int d = 0; d < dimensions; d++) {
                 JD[i][particle + d] = jD[h][d];
                 J[i][particle + d] = j[h][d];
                 Jt[particle + d][i] = j[h][d];
-                cout << "Jt " << particle + d << " " << i << " " << j[h][d] << endl;
             }
         }
     }
@@ -159,22 +161,20 @@ void solve(std::vector< Particle * > particles, std::vector< Constraint * > cons
     implicitMatrix *iJWJT = new implicitMatrix(&JWJt);
     double l[constraints.size()];
 
-    int numberOfSteps = 100;
+    int numberOfSteps = 1000;
 
     ConjGrad(constraints.size(), iJWJT, l, JWJtLD, 1.0f / 1000.0f, &numberOfSteps);
 
     std::vector< float > lambda(l, l + sizeof l / sizeof l[0]);
 
-    vector< float > Qh = multiply(Jt, lambda);
+    vector< float > Qh = multiply(J, lambda);
     for (int i = 0; i < particles.size(); i++) {
         Particle *p = particles[i];
         int index = dimensions * i;
         for (int d = 0; d < dimensions; d++) {
-            if (d == 1) {
-                cout << "d " << d << " " << p->m_ForceVector[d] << " " << Qh[index + d] << endl;
-            }
 
             p->m_ForceVector[d] += Qh[index + d];
+
         }
     }
 }
