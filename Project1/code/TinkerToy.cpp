@@ -27,6 +27,7 @@ extern void simulation_step(std::vector< Particle * > pVector, std::vector< Forc
 int solver = 1; // The solver to use: 1: Euler, 2: Midpoint, 3: Runge-Kutta
 
 /* global variables */
+static void remap_GUI();
 
 static int N;
 static float dt, d;
@@ -200,6 +201,7 @@ static void init_system(void) {
     ids.push_back(0);
 	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
     for (int i = 0; i < pVector.size(); i++) {
+
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));
         fVector.push_back(new Drag(pVector[i], 0.10));
         fVector.push_back(new Gravity(pVector[i], Vec2f(0, -0.01)));
@@ -212,6 +214,8 @@ static void init_system(void) {
 
 //	delete_this_dummy_rod = new RodConstraint(pVector[1], pVector[2], dist);
 //	delete_this_dummy_wire = new CircularWireConstraint(pVector[0], center, dist);
+//
+	remap_GUI();
 }
 
 /*
