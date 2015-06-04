@@ -147,6 +147,8 @@ static void init_system(void) {
     // circular wire constraint to the first.
 
 	pVector.push_back(new Particle(center - offset, 1));
+    pVector.push_back(new Particle(center - 2 * offset, 1));
+    pVector.push_back(new Particle(center - 3 * offset, 1));
 //	pVector.push_back(new Particle(center + offset + offset, 1));
 //	pVector.push_back(new Particle(center + offset + offset + offset, 2));
 //	pVector.push_back(new Particle(center + offset + offset1, 2));
@@ -200,6 +202,14 @@ static void init_system(void) {
     std::vector< int > ids;
     ids.push_back(0);
 	fConstraint.push_back(new CircularWireConstraint(pVector[0], center, dist, ids));
+    ids.push_back(1);
+    fConstraint.push_back(new RodConstraint(pVector[0], pVector[1], dist, ids));
+    ids.push_back(2);
+    ids.erase (ids.begin());
+    fConstraint.push_back(new RodConstraint(pVector[1], pVector[2], dist, ids));
+    ids.erase (ids.begin());
+    fConstraint.push_back(new CircularWireConstraint(pVector[2], (center-3*offset)+offset1, dist, ids));
+
     for (int i = 0; i < pVector.size(); i++) {
 
 //  		fVector.push_back(new Gravity(pVector[i], Vec2f(0,-0.01)));

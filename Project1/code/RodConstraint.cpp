@@ -1,8 +1,6 @@
 #include "RodConstraint.h"
 #include <GL/glut.h>
 
-#define iVector Vec2f
-
 RodConstraint::RodConstraint(Particle *p1, Particle *p2, double dist, std::vector<int> ids) :
         m_p1(p1), m_p2(p2), m_dist(dist), m_ids(ids) { }
 
@@ -16,31 +14,42 @@ void RodConstraint::draw() {
 }
 
 float RodConstraint::calcC() {
-    Vec2f posdif = m_p1->m_Position - m_p2->m_Position;
-    float C = (posdif[0] * posdif[0] + posdif[1] * posdif[1] - m_dist * m_dist);
-    return C;
+
+    iVector posdif = m_p1->m_Position - m_p2->m_Position;
+
+    return  (posdif[0] * posdif[0] + posdif[1] * posdif[1] - m_dist * m_dist);
 }
 
 float RodConstraint::calcCD() {
-    Vec2f posdif = (m_p1->m_Position - m_p2->m_Position) * 2;
-    Vec2f veldif = (m_p1->m_Velocity - m_p2->m_Velocity) * 2;
-    return posdif[0] * veldif[0] + posdif[1] * veldif[1];
+
+    iVector pDiff = (m_p1->m_Position - m_p2->m_Position) * 2;
+    iVector vDiff = (m_p1->m_Velocity - m_p2->m_Velocity) * 2;
+
+    return pDiff[0] * vDiff[0] + pDiff[1] * vDiff[1];
 }
 
 std::vector< iVector > RodConstraint::j() {
-    std::vector <iVector> J;
-    J.push_back((m_p1->m_Position - m_p2->m_Position) * 2);
-    J.push_back((m_p2->m_Position - m_p1->m_Position) * 2);
-    return J;
+
+    std::vector <iVector> j;
+
+    j.push_back((m_p1->m_Position - m_p2->m_Position) * 2);
+    j.push_back((m_p2->m_Position - m_p1->m_Position) * 2);
+
+    return j;
 }
 
 std::vector< iVector > RodConstraint::jD() {
-    std::vector <iVector> JDot;
-    JDot.push_back((m_p1->m_Velocity - m_p2->m_Velocity) * 2);
-    JDot.push_back((m_p2->m_Velocity - m_p1->m_Velocity) * 2);
-    return JDot;
+
+    std::vector <iVector> jD;
+
+    jD.push_back((m_p1->m_Velocity - m_p2->m_Velocity) * 2);
+    jD.push_back((m_p2->m_Velocity - m_p1->m_Velocity) * 2);
+
+    return jD;
 }
 
 std::vector< int > RodConstraint::getParticleIDs() {
+
     return m_ids;
+
 }

@@ -23,26 +23,34 @@ void CircularWireConstraint::draw() {
 }
 
 float CircularWireConstraint::calcC() {
+
     iVector diff = (m_p->m_Position - m_center);
+
     return diff[0] * diff[0] + diff[1] * diff[1] - m_radius * m_radius;
 }
 
 float CircularWireConstraint::calcCD() {
+
     iVector pDiff = (m_p->m_Position - m_center) * 2;
     iVector vDiff = (m_p->m_Velocity);
+
     return pDiff[0] * vDiff[0] + pDiff[1] * vDiff[1];
 }
 
 std::vector< iVector > CircularWireConstraint::j() {
-    std::vector< iVector > J;
-    J.push_back((m_p->m_Position - m_center) * 2);
-    return J;
+    std::vector< iVector > j;
+
+    j.push_back((m_p->m_Position - m_center) * 2);
+
+    return j;
 }
 
 std::vector< iVector > CircularWireConstraint::jD() {
-    std::vector< iVector > JDot;
-    JDot.push_back((m_p->m_Velocity) * 2);
-    return JDot;
+    std::vector< iVector > jD;
+
+    jD.push_back(m_p->m_Velocity * 2);
+
+    return jD;
 }
 
 std::vector< int > CircularWireConstraint::getParticleIDs() {

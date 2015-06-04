@@ -78,6 +78,18 @@ An \texttt{AngularForce} object acts like a spring force on a triplet of particl
 The two formulas above are similar to the formula for a \texttt{SpringForce}, except for the addition of the two matrices. These matrices are needed in order to make the angular force perpendicular to $\mathbf{l}$ and $\mathbf{m}$.
 
 \section{Generalized constraint structure}
+In a real-life simulation it is not only forces that make the simulation life-like, but also constraints. Therefor we implemented a generalized constraint structure as described by Andrew Witkin\cite{url:pixar} using a Conjugate Gradient solver to compute the required $\lambda$ vector. Each constraint implements a \emph{Constraint} interface which provides all the general methods required for computing the constraint. 
+
+More specifically, it describes methods for calculating the Constraint value, the position derived Constraint value, the Jacobian of the constraint and the position derived Jacobian, all of which are required for the constraint solver. The derivations are listed separately for every implemented constraint.
+
+\subsection{CircularWireConstraint}
+A CircularWireConstraint constraints a particle to a fixed position through a solid rod. This means that the constrained particle will always be at fixed distance from the specified point and its movements will describe an arc around the specified fixed point.
+
+\subsection{RodConstraint}
+A RodConstraint is similar to a CircularWireConstraint in that it constraints 2 particles to have a set distance between them at all times. The difference however is that none of the particles are fixed and therefore the constraint behaves as a rod.
+
+\subsection{FixedConstraint}
+The FixedConstraint is simply a particle that is fixed to a specific position, this however is not a normal constraint. Instead of using the constraintsolver to compute the required forces to negate any movement of this particle, we simply set the force acting on the constraint particle to 0 meaning that the constraint does not have to be taken into account when calling the constraint solver.
 
 \section{Numerical integration schemes}
 \label{Numerical_schemes}
@@ -202,4 +214,12 @@ The mass of the particles also affects the behavior of the cloth. When the mass 
 	\caption{Cloth stuck in a local minimum}
 	\label{diag_localmin}
 \end{figure}
+
+
+\begin{thebibliography}{9}
+ \bibitem{url:pixar}
+ Witkin, Andrew. \emph{''Physically Based Modeling - Constrained Dynamics.''} SIGGRAPH 2001 Course Notes. 2001. \url{http://www.pixar.com/companyinfo/research/pbm2001/pdf/notesf.pdf}
+\end{thebibliography}
+
+
 \end{document}
