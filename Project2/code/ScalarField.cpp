@@ -31,18 +31,26 @@ void
 ScalarField::TimeStep(ScalarField *a_SrcField, VectorField *VelocityField)
 {
 	AddField(a_SrcField);
-	//Advection(VelocityField);
+	Advection(VelocityField);
+/*
+  	add_source ( N, x, x0, dt );
+	SWAP ( x0, x );
+ 	diffuse ( N, 0, x, x0, diff, dt );
+	SWAP ( x0, x );
+ 	advect ( N, 0, x, x0, u, v, dt );
+ */
+
 
 	/*****************************************/
 	/************* DELETE THIS ***************/
-	static float change = .001f;
+	/*static float change = .001f;
 	change += .001f;
 	float schange = 0.005f*sin(change);
 	schange += 1.f;
 
 	ITER_DIM
 		m_Field[IX_DIM(i,j)] *=	schange;
-	ENDITER_DIM
+	ENDITER_DIM*/
 	/************* DELETE THIS ***************/
 	/*****************************************/
 }
