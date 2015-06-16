@@ -8,7 +8,7 @@ public:
 	ScalarField(ScalarField *CopyField);
 	virtual ~ScalarField(void);
 
-	void	TimeStep(ScalarField *a_SrcField, VectorField *VelocityField);
+	void	TimeStep(ScalarField *a_SrcField, ScalarField *a_PrevField, VectorField *VelocityField);
 	void	AddField(ScalarField *a_SrcField);
 
 	float	&operator[](int i)       { return m_Field[i]; }

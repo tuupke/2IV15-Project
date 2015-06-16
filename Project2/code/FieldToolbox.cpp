@@ -39,9 +39,7 @@ FieldToolbox::LinearSolver(float a, float c, VectorField *SolutionField) {
 
     Vec2f *oldField = SolutionField->m_Field;
     SolutionField->m_Field = new Vec2f[(m_NumCells + 2) * (m_NumCells + 2)];
-    for (int in = 0;
-    in < (m_NumCells + 2) * (m_NumCells + 2);
-    in++) {
+    for (int in = 0; in < (m_NumCells + 2) * (m_NumCells + 2); in++) {
         (*SolutionField)[in][0] = 0.f;
         (*SolutionField)[in][1] = 0.f;
     }

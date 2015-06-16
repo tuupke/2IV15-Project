@@ -271,7 +271,7 @@ static void idle_func ( void )
 {
 	get_from_UI( PrevDensityField, PrevVelocityField );
 	VelocityField->TimeStep( VelocityField, PrevVelocityField );
-	DensityField->TimeStep( PrevDensityField, VelocityField );
+	DensityField->TimeStep(DensityField, PrevDensityField, VelocityField );
 	
 	glutSetWindow ( win_id );
 	glutPostRedisplay ();

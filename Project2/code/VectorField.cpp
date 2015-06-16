@@ -1,6 +1,7 @@
 #include "VectorField.h"
 #include "FieldToolbox.h"
-#define IX(i,j) ((i)+(N+2)*(j))
+
+#define IX(i, j) ((i)+(N+2)*(j))
 #define CREATE_DIM1 (new Vec2f[(a_NumCells+2)*(a_NumCells+2)])
 #define CREATE_DIM2 (new Vec2f[(CopyField->m_NumCells+2)*(CopyField->m_NumCells+2)])
 #define CREATE_DIM  (new Vec2f[(m_NumCells+2)*(m_NumCells+2)])
@@ -45,20 +46,38 @@ void set_bnd(int b, VectorField *vect, int lr) {
 
 void lin_solve(int b, VectorField *x, VectorField *x0, int lr, int lrx, float a, float c) {
 
-    int N = x->m_NumCells;
+    int N = x0->m_NumCells;
 
     for (int k = 0; k < 20; k++) {
         for (int i = 1; i <= N; i++) {
             for (int j = 1; j <= N; j++) {
                 x->m_Field[IX(i, j)][lr] = (x0->m_Field[IX(i, j)][lrx] + a *
-                                                       (x->m_Field[IX(i - 1, j)][lr] + x->m_Field[IX(i + 1, j)][lr] +
-                                                        x->m_Field[IX(i, j - 1)][lr] +
-                                                        x->m_Field[IX(i, j + 1)][lr])) / c;
+                                                                         (x->m_Field[IX(i - 1, j)][lr] +
+                                                                          x->m_Field[IX(i + 1, j)][lr] +
+                                                                          x->m_Field[IX(i, j - 1)][lr] +
+                                                                          x->m_Field[IX(i, j + 1)][lr])) / c;
             }
         }
         set_bnd(b, x, lr);
     }
 }
+/*
+ void lin_solve ( int N, int b, float * x, float * x0, float a, float c )
+{
+	int i, j, k;
+
+	for ( k=0 ; k<20 ; k++ ) {
+		FOR_EACH_CELL
+			x[IX(i,j)] = (x0[IX(i,j)] + a*
+			    (
+			        x[IX(i-1,j)]
+			        +x[IX(i+1,j)]
+			        +x[IX(i,j-1)]
+			        +x[IX(i,j+1)])) / c;
+		END_FOR
+		set_bnd ( N, b, x );
+	}
+ */
 
 // N, u, v, u0, v0
 // int N, float * u, float * v, float * p, float * div
@@ -136,7 +155,7 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
     AddField(VelocityField);
 
     int N = a_SrcField->m_NumCells;
-    float a = a_SrcField->m_Dt * a_SrcField->m_Viscosity * N * N;
+    float a = VelocityField->m_Dt * VelocityField->m_Viscosity * N * N;
 
     // SWAP()
     lin_solve(1, VelocityField, a_SrcField, 0, 0, a, 1 + 4 * a);
