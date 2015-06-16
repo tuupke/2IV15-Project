@@ -270,7 +270,7 @@ static void reshape_func ( int width, int height )
 static void idle_func ( void )
 {
 	get_from_UI( PrevDensityField, PrevVelocityField );
-	VelocityField->TimeStep( PrevVelocityField, VelocityField );
+	VelocityField->TimeStep( VelocityField, PrevVelocityField );
 	DensityField->TimeStep( PrevDensityField, VelocityField );
 	
 	glutSetWindow ( win_id );
@@ -284,7 +284,6 @@ static void display_func ( void )
 	if ( dvel ) draw_velocity ();
 	else		draw_density ();
 	
-
 	post_display ();
 }
 
