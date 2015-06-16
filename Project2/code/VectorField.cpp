@@ -1,5 +1,6 @@
 #include "VectorField.h"
 #include "FieldToolbox.h"
+#include <stdio.h>
 
 #define IX(i, j) ((i)+(N+2)*(j))
 #define CREATE_DIM1 (new Vec2f[(a_NumCells+2)*(a_NumCells+2)])
@@ -32,15 +33,15 @@ void set_bnd(int b, VectorField *vect, int lr) {
     int N = vect->m_NumCells;
 
     for (int i = 1; i <= N; i++) {
-        vect->m_Field[IX(0, i)][lr] =     b == 1 ? -vect->m_Field[IX(1, i)][lr] : vect->m_Field[IX(1, i)][lr];
+        vect->m_Field[IX(0, i)][lr] = b == 1 ? -vect->m_Field[IX(1, i)][lr] : vect->m_Field[IX(1, i)][lr];
         vect->m_Field[IX(N + 1, i)][lr] = b == 1 ? -vect->m_Field[IX(N, i)][lr] : vect->m_Field[IX(N, i)][lr];
-        vect->m_Field[IX(i, 0)][lr] =     b == 2 ? -vect->m_Field[IX(i, 1)][lr] : vect->m_Field[IX(i, 1)][lr];
+        vect->m_Field[IX(i, 0)][lr] = b == 2 ? -vect->m_Field[IX(i, 1)][lr] : vect->m_Field[IX(i, 1)][lr];
         vect->m_Field[IX(i, N + 1)][lr] = b == 2 ? -vect->m_Field[IX(i, N)][lr] : vect->m_Field[IX(i, N)][lr];
     }
 
-    vect->m_Field[IX(0, 0)][lr]         = 0.5f * (vect->m_Field[IX(1, 0)][lr] + vect->m_Field[IX(0, 1)][lr]);
-    vect->m_Field[IX(0, N + 1)][lr]     = 0.5f * (vect->m_Field[IX(1, N + 1)][lr] + vect->m_Field[IX(0, N)][lr]);
-    vect->m_Field[IX(N + 1, 0)][lr]     = 0.5f * (vect->m_Field[IX(N, 0)][lr] + vect->m_Field[IX(N + 1, 1)][lr]);
+    vect->m_Field[IX(0, 0)][lr] = 0.5f * (vect->m_Field[IX(1, 0)][lr] + vect->m_Field[IX(0, 1)][lr]);
+    vect->m_Field[IX(0, N + 1)][lr] = 0.5f * (vect->m_Field[IX(1, N + 1)][lr] + vect->m_Field[IX(0, N)][lr]);
+    vect->m_Field[IX(N + 1, 0)][lr] = 0.5f * (vect->m_Field[IX(N, 0)][lr] + vect->m_Field[IX(N + 1, 1)][lr]);
     vect->m_Field[IX(N + 1, N + 1)][lr] = 0.5f * (vect->m_Field[IX(N, N + 1)][lr] + vect->m_Field[IX(N + 1, N)][lr]);
 }
 
@@ -108,11 +109,11 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
             float x = i - dt0 * C->m_Field[IX(i, j)][lrC];
             float y = j - dt0 * D->m_Field[IX(i, j)][lrD];
 
-            x = std::max(x, 0.5f);
-            x = std::min(x, N + 0.5f);
+            if (x < 0.5f) x = 0.5f;
+            if (x > N + 0.5f) x = N + 0.5f;
 
-            y = std::max(y, 0.5f);
-            y = std::min(y, N + 0.5f);
+            if (y < 0.5f) y = 0.5f;
+            if (y > N + 0.5f) y = N + 0.5f;
 
             int i0 = (int) x;
             int i1 = i0 + 1;
@@ -124,10 +125,9 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
             float s0 = 1 - s1;
             float t1 = y - j0;
             float t0 = 1 - t1;
+
             A->m_Field[IX(i, j)][lrA] = s0 * (t0 * B->m_Field[IX(i0, j0)][lrB] + t1 * B->m_Field[IX(i0, j1)][lrB]) +
                                         s1 * (t0 * B->m_Field[IX(i1, j0)][lrB] + t1 * B->m_Field[IX(i1, j1)][lrB]);
-//            A->m_Field[IX(i, j)][lrA] = s0 * (t0 * B->m_Field[IX(i0, j0)][lrB] + t1 * B->m_Field[IX(i0, j1)][lrB]) +
-//                                        s1 * (t0 * B->m_Field[IX(i1, j0)][lrB] + t1 * B->m_Field[IX(i1, j1)][lrB]);
         }
     }
     set_bnd(b, A, lrA);
@@ -139,7 +139,7 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
     AddField(VelocityField);
 
     int N = a_SrcField->m_NumCells;
-    float a = a_SrcField->m_Dt * a_SrcField->m_Viscosity * N * N;
+    float a = a_SrcField->m_Dt * VelocityField->m_Viscosity * N * N;
 
     // SWAP()
     lin_solve(1, VelocityField, a_SrcField, 0, 0, a, 1 + 4 * a);
