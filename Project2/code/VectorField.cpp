@@ -31,16 +31,16 @@ VectorField::~VectorField(void) {
 void set_bnd(int b, VectorField *vect, int lr) {
     int N = vect->m_NumCells;
 
-    for (int i = 1; i <= vect->m_NumCells; i++) {
-        vect->m_Field[IX(0, i)][lr] = b == 1 ? -vect->m_Field[IX(1, i)][lr] : vect->m_Field[IX(1, i)][lr];
+    for (int i = 1; i <= N; i++) {
+        vect->m_Field[IX(0, i)][lr] =     b == 1 ? -vect->m_Field[IX(1, i)][lr] : vect->m_Field[IX(1, i)][lr];
         vect->m_Field[IX(N + 1, i)][lr] = b == 1 ? -vect->m_Field[IX(N, i)][lr] : vect->m_Field[IX(N, i)][lr];
-        vect->m_Field[IX(i, 0)][lr] = b == 2 ? -vect->m_Field[IX(i, 1)][lr] : vect->m_Field[IX(i, 1)][lr];
+        vect->m_Field[IX(i, 0)][lr] =     b == 2 ? -vect->m_Field[IX(i, 1)][lr] : vect->m_Field[IX(i, 1)][lr];
         vect->m_Field[IX(i, N + 1)][lr] = b == 2 ? -vect->m_Field[IX(i, N)][lr] : vect->m_Field[IX(i, N)][lr];
     }
 
-    vect->m_Field[IX(0, 0)][lr] = 0.5f * (vect->m_Field[IX(1, 0)][lr] + vect->m_Field[IX(0, 1)][lr]);
-    vect->m_Field[IX(0, N + 1)][lr] = 0.5f * (vect->m_Field[IX(1, N + 1)][lr] + vect->m_Field[IX(0, N)][lr]);
-    vect->m_Field[IX(N + 1, 0)][lr] = 0.5f * (vect->m_Field[IX(N, 0)][lr] + vect->m_Field[IX(N + 1, 1)][lr]);
+    vect->m_Field[IX(0, 0)][lr]         = 0.5f * (vect->m_Field[IX(1, 0)][lr] + vect->m_Field[IX(0, 1)][lr]);
+    vect->m_Field[IX(0, N + 1)][lr]     = 0.5f * (vect->m_Field[IX(1, N + 1)][lr] + vect->m_Field[IX(0, N)][lr]);
+    vect->m_Field[IX(N + 1, 0)][lr]     = 0.5f * (vect->m_Field[IX(N, 0)][lr] + vect->m_Field[IX(N + 1, 1)][lr]);
     vect->m_Field[IX(N + 1, N + 1)][lr] = 0.5f * (vect->m_Field[IX(N, N + 1)][lr] + vect->m_Field[IX(N + 1, N)][lr]);
 }
 
@@ -61,23 +61,6 @@ void lin_solve(int b, VectorField *x, VectorField *x0, int lr, int lrx, float a,
         set_bnd(b, x, lr);
     }
 }
-/*
- void lin_solve ( int N, int b, float * x, float * x0, float a, float c )
-{
-	int i, j, k;
-
-	for ( k=0 ; k<20 ; k++ ) {
-		FOR_EACH_CELL
-			x[IX(i,j)] = (x0[IX(i,j)] + a*
-			    (
-			        x[IX(i-1,j)]
-			        +x[IX(i+1,j)]
-			        +x[IX(i,j-1)]
-			        +x[IX(i,j+1)])) / c;
-		END_FOR
-		set_bnd ( N, b, x );
-	}
- */
 
 // N, u, v, u0, v0
 // int N, float * u, float * v, float * p, float * div
@@ -90,8 +73,8 @@ void project(VectorField *a_SrcField, VectorField *VelocityField) {
                     -0.5f * (
                             a_SrcField->m_Field[IX(i + 1, j)][0]
                             - a_SrcField->m_Field[IX(i - 1, j)][0]
-                            + a_SrcField->m_Field[IX(i + 1, j)][1]
-                            - a_SrcField->m_Field[IX(i - 1, j)][1]
+                            + a_SrcField->m_Field[IX(i, j + 1)][1]
+                            - a_SrcField->m_Field[IX(i, j - 1)][1]
                     ) / N;
             VelocityField->m_Field[IX(i, j)][0] = 0;
         }
@@ -104,9 +87,9 @@ void project(VectorField *a_SrcField, VectorField *VelocityField) {
 
     for (int i = 1; i <= N; i++) {
         for (int j = 1; j <= N; j++) {
-            a_SrcField->m_Field[IX(i + 1, j)][0] -=
+            a_SrcField->m_Field[IX(i, j)][0] -=
                     0.5f * N * (VelocityField->m_Field[IX(i + 1, j)][0] - VelocityField->m_Field[IX(i - 1, j)][0]);
-            a_SrcField->m_Field[IX(i + 1, j)][1] -=
+            a_SrcField->m_Field[IX(i, j)][1] -=
                     0.5f * N * (VelocityField->m_Field[IX(i, j + 1)][0] - VelocityField->m_Field[IX(i, j - 1)][0]);
         }
     }
@@ -137,13 +120,14 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
             int j0 = (int) y;
             int j1 = j0 + 1;
 
-            int s1 = x - i0;
-            int s0 = 1 - s1;
-            int t1 = y - j0;
-            int t0 = 1 - t1;
-
+            float s1 = x - i0;
+            float s0 = 1 - s1;
+            float t1 = y - j0;
+            float t0 = 1 - t1;
             A->m_Field[IX(i, j)][lrA] = s0 * (t0 * B->m_Field[IX(i0, j0)][lrB] + t1 * B->m_Field[IX(i0, j1)][lrB]) +
                                         s1 * (t0 * B->m_Field[IX(i1, j0)][lrB] + t1 * B->m_Field[IX(i1, j1)][lrB]);
+//            A->m_Field[IX(i, j)][lrA] = s0 * (t0 * B->m_Field[IX(i0, j0)][lrB] + t1 * B->m_Field[IX(i0, j1)][lrB]) +
+//                                        s1 * (t0 * B->m_Field[IX(i1, j0)][lrB] + t1 * B->m_Field[IX(i1, j1)][lrB]);
         }
     }
     set_bnd(b, A, lrA);
@@ -155,7 +139,7 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
     AddField(VelocityField);
 
     int N = a_SrcField->m_NumCells;
-    float a = VelocityField->m_Dt * VelocityField->m_Viscosity * N * N;
+    float a = a_SrcField->m_Dt * a_SrcField->m_Viscosity * N * N;
 
     // SWAP()
     lin_solve(1, VelocityField, a_SrcField, 0, 0, a, 1 + 4 * a);
@@ -164,10 +148,21 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
     project(VelocityField, a_SrcField);
     // SWAP()
 
-    advect(1, a_SrcField, VelocityField, VelocityField, VelocityField, 0, 0, 0, 1, VelocityField->m_Dt);
-    advect(2, a_SrcField, VelocityField, VelocityField, VelocityField, 1, 1, 0, 1, VelocityField->m_Dt);
+    advect(1, a_SrcField, VelocityField, VelocityField, VelocityField, 0, 0, 0, 1, a_SrcField->m_Dt);
+    advect(2, a_SrcField, VelocityField, VelocityField, VelocityField, 1, 1, 0, 1, a_SrcField->m_Dt);
 
     project(a_SrcField, VelocityField);
+
+    /*
+    add_source ( N, u, u0, dt );
+	add_source ( N, v, v0, dt );
+	diffuse ( N, 1, u0, u, visc, dt );
+	diffuse ( N, 2, v0, v, visc, dt );
+	project ( N, u0, v0, u, v );
+	advect ( N, 1, u, u0, u0, v0, dt );
+	advect ( N, 2, v, v0, u0, v0, dt );
+	project ( N, u, v, u0, v0 );
+     */
 }
 
 void

@@ -255,7 +255,7 @@ static void idle_func ( void )
 {
 	get_from_UI ( dens_prev, u_prev, v_prev );
 	vel_step ( N, u, v, u_prev, v_prev, visc, dt );
-	dens_step ( N, dens, dens_prev, u, v, diff, dt );
+	//dens_step ( N, dens, dens_prev, u, v, diff, dt );
 
 	glutSetWindow ( win_id );
 	glutPostRedisplay ();

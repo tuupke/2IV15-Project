@@ -81,10 +81,10 @@ void advect(int b, ScalarField *A, ScalarField *B, VectorField *C, VectorField *
             int j0 = (int) y;
             int j1 = j0 + 1;
 
-            int s1 = x - i0;
-            int s0 = 1 - s1;
-            int t1 = y - j0;
-            int t0 = 1 - t1;
+            float s1 = x - i0;
+            float s0 = 1 - s1;
+            float t1 = y - j0;
+            float t0 = 1 - t1;
 
             A->m_Field[IX(i, j)] = s0 * (t0 * B->m_Field[IX(i0, j0)] + t1 * B->m_Field[IX(i0, j1)]) +
                                    s1 * (t0 * B->m_Field[IX(i1, j0)] + t1 * B->m_Field[IX(i1, j1)]);

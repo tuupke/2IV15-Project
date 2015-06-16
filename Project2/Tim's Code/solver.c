@@ -60,7 +60,7 @@ void advect ( int N, int b, float * d, float * d0, float * u, float * v, float d
 	set_bnd ( N, b, d );
 }
 
-void project ( int N, float * u, float * v, float * p, float * div )
+void project ( int N, float * u, float * v, float * p, float *div )
 {
 	int i, j;
 
@@ -82,18 +82,19 @@ void project ( int N, float * u, float * v, float * p, float * div )
 void dens_step ( int N, float * x, float * x0, float * u, float * v, float diff, float dt )
 {
 	add_source ( N, x, x0, dt );
-	SWAP ( x0, x ); diffuse ( N, 0, x, x0, diff, dt );
-	SWAP ( x0, x ); advect ( N, 0, x, x0, u, v, dt );
+    diffuse ( N, 0, x0, x, diff, dt );
+	advect ( N, 0, x0, x, u, v, dt );
 }
 
 void vel_step ( int N, float * u, float * v, float * u0, float * v0, float visc, float dt )
 {
-	add_source ( N, u, u0, dt ); add_source ( N, v, v0, dt );
-	SWAP ( u0, u ); diffuse ( N, 1, u, u0, visc, dt );
-	SWAP ( v0, v ); diffuse ( N, 2, v, v0, visc, dt );
-	project ( N, u, v, u0, v0 );
-	SWAP ( u0, u ); SWAP ( v0, v );
-	advect ( N, 1, u, u0, u0, v0, dt ); advect ( N, 2, v, v0, u0, v0, dt );
+	add_source ( N, u, u0, dt );
+	add_source ( N, v, v0, dt );
+	diffuse ( N, 1, u0, u, visc, dt );
+	diffuse ( N, 2, v0, v, visc, dt );
+	project ( N, u0, v0, u, v );
+	advect ( N, 1, u, u0, u0, v0, dt );
+	advect ( N, 2, v, v0, u0, v0, dt );
 	project ( N, u, v, u0, v0 );
 }
 
