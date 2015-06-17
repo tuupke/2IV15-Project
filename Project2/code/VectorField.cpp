@@ -1,6 +1,7 @@
 #include "VectorField.h"
 #include "FieldToolbox.h"
 #include <stdio.h>
+#include <math.h>
 
 #define IX(i, j) ((i)+(N+2)*(j))
 #define CREATE_DIM1 (new Vec2f[(a_NumCells+2)*(a_NumCells+2)])
@@ -133,11 +134,60 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
     set_bnd(b, A, lrA);
 }
 
+void vorticityConfinement(VectorField *slachtoffer) {
+
+    int N = slachtoffer->m_NumCells;
+    float *forces = new float[(N + 2) * (N + 2)]();
+    int *sign = new int[(N + 2) * (N + 2)]();
+
+    for (int i = 1; i <= N; i++) {
+        for (int j = 1; j <= N; j++) {
+            float dudy = (slachtoffer->m_Field[IX(i, j + 1)][0] - slachtoffer->m_Field[IX(i, j - 1)][0]) / 2;
+            float dvdx = (slachtoffer->m_Field[IX(i + 1, j)][1] - slachtoffer->m_Field[IX(i - 1, j)][1]) / 2;
+
+            float toStore = dvdx - dudy;
+            forces[IX(i, j)] = abs(toStore);
+
+            sign[IX(i, j)] = toStore < 0 ? -1 : 1;
+//            std::cout << "Sign " << sign[IX(i,j)] << " toStore" << toStore << std::endl;
+
+        }
+    }
+
+    for (int i = 1; i <= N; i++) {
+        for (int j = 1; j <= N; j++) {
+
+            float dwdx = (forces[IX(i + 1, j)] - forces[IX(i - 1, j)]) * 0.5f;
+            float dwdy = (forces[IX(i, j + 1)] - forces[IX(i, j - 1)]) * 0.5f;
+
+            float length = sqrt(dwdx * dwdx + dwdy * dwdy);
+
+            if(length != 0){
+                dwdx /= length;
+                dwdy /= length;
+            }
+//                dwdx /= 0.0000001f;
+//                dwdy /= 0.0000001f;
+//            }
+
+            float v = sign[IX(i, j)] * forces[IX(i, j)];
+
+            slachtoffer->m_Field[IX(i, j)][0] = dwdy * -v;
+            slachtoffer->m_Field[IX(i, j)][1] = dwdx * v;
+//            Fvc_x[IX(i, j)] = dwdy * -v;
+//            Fvc_y[IX(i, j)] = dwdx *  v;
+        }
+    }
+
+    free(forces);
+}
+
 void
 VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
 //    AddField(a_SrcField);
     AddField(VelocityField);
 
+//    vorticityConfinement(VelocityField);
     int N = a_SrcField->m_NumCells;
     float a = a_SrcField->m_Dt * VelocityField->m_Viscosity * N * N;
 
@@ -151,18 +201,8 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
     advect(1, a_SrcField, VelocityField, VelocityField, VelocityField, 0, 0, 0, 1, a_SrcField->m_Dt);
     advect(2, a_SrcField, VelocityField, VelocityField, VelocityField, 1, 1, 0, 1, a_SrcField->m_Dt);
 
-    project(a_SrcField, VelocityField);
 
-    /*
-    add_source ( N, u, u0, dt );
-	add_source ( N, v, v0, dt );
-	diffuse ( N, 1, u0, u, visc, dt );
-	diffuse ( N, 2, v0, v, visc, dt );
-	project ( N, u0, v0, u, v );
-	advect ( N, 1, u, u0, u0, v0, dt );
-	advect ( N, 2, v, v0, u0, v0, dt );
-	project ( N, u, v, u0, v0 );
-     */
+    project(a_SrcField, VelocityField);
 }
 
 void

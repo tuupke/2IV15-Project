@@ -63,9 +63,9 @@ static void clear_data ( void )
 static int allocate_data ( void )
 {
 	FieldToolbox::Create();
-	VelocityField	  = new VectorField(N, visc, dt);
+	VelocityField     = new VectorField(N, visc, dt);
 	PrevVelocityField = new VectorField(N, visc, dt);
-	DensityField	  = new ScalarField(N, diff, dt);
+	DensityField      = new ScalarField(N, diff, dt);
 	PrevDensityField  = new ScalarField(N, diff, dt);
 
 	if ( !VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField ) {
@@ -217,26 +217,26 @@ static void key_func ( unsigned char key, int x, int y )
 {
 	switch ( key )
 	{
-	case 'c':
-	case 'C':
-		clear_data ();
-		break;
+		case 'c':
+		case 'C':
+			clear_data ();
+			break;
 
-	case 'd':
-	case 'D':
-		dump_frames = !dump_frames;
-		break;
+		case 'd':
+		case 'D':
+			dump_frames = !dump_frames;
+			break;
 
-	case 'q':
-	case 'Q':
-		free_data ();
-		exit ( 0 );
-		break;
+		case 'q':
+		case 'Q':
+			free_data ();
+			exit ( 0 );
+			break;
 
-	case 'v':
-	case 'V':
-		dvel = !dvel;
-		break;
+		case 'v':
+		case 'V':
+			dvel = !dvel;
+			break;
 	}
 }
 
@@ -271,8 +271,8 @@ static void idle_func ( void )
 {
 	get_from_UI( PrevDensityField, PrevVelocityField );
 	VelocityField->TimeStep( VelocityField, PrevVelocityField );
-	DensityField->TimeStep(DensityField, PrevDensityField, VelocityField );
-	
+	DensityField->TimeStep( DensityField, PrevDensityField, VelocityField );
+
 	glutSetWindow ( win_id );
 	glutPostRedisplay ();
 }
@@ -282,8 +282,9 @@ static void display_func ( void )
 	pre_display ();
 
 	if ( dvel ) draw_velocity ();
-	else		draw_density ();
-	
+	else        draw_density ();
+
+
 	post_display ();
 }
 
@@ -329,10 +330,10 @@ int main ( int argc, char ** argv )
 {
 	glutInit ( &argc, argv );
 
-	if ( argc != 1 && argc != 6 ) {
+	if ( argc != 1 && argc != 7 ) {
 		fprintf ( stderr, "usage : %s N dt diff visc force source\n", argv[0] );
 		fprintf ( stderr, "where:\n" );\
-			fprintf ( stderr, "\t N      : grid resolution\n" );
+            fprintf ( stderr, "\t N      : grid resolution\n" );
 		fprintf ( stderr, "\t dt     : time step\n" );
 		fprintf ( stderr, "\t diff   : diffusion rate of the density\n" );
 		fprintf ( stderr, "\t visc   : viscosity of the fluid\n" );
@@ -349,7 +350,7 @@ int main ( int argc, char ** argv )
 		force = 5.0f;
 		source = 100.0f;
 		fprintf ( stderr, "Using defaults : N=%d dt=%g diff=%g visc=%g force = %g source=%g\n",
-			N, dt, diff, visc, force, source );
+				  N, dt, diff, visc, force, source );
 	} else {
 		N = atoi(argv[1]);
 		dt = atof(argv[2]);
@@ -379,5 +380,3 @@ int main ( int argc, char ** argv )
 
 	exit ( 0 );
 }
-
-
