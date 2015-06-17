@@ -135,7 +135,7 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
 
 void
 VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
-    AddField(a_SrcField);
+//    AddField(a_SrcField);
     AddField(VelocityField);
 
     int N = a_SrcField->m_NumCells;
