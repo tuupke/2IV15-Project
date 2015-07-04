@@ -282,7 +282,7 @@ static void reshape_func(int width, int height) {
 static void idle_func ( void )
 {
 	get_from_UI( PrevDensityField, PrevVelocityField );
-	VelocityField->TimeStep( VelocityField, PrevVelocityField );
+	VelocityField->TimeStep( VelocityField, PrevVelocityField, bodies);
 	DensityField->TimeStep( DensityField, PrevDensityField, VelocityField );
 	simulation_step(pVector, fVector, dt, fConstraint, VelocityField);
 
