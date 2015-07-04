@@ -187,7 +187,7 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
 //    AddField(a_SrcField);
     AddField(VelocityField);
 
-//    vorticityConfinement(VelocityField);
+    vorticityConfinement(VelocityField);
     int N = a_SrcField->m_NumCells;
     float a = a_SrcField->m_Dt * VelocityField->m_Viscosity * N * N;
 
