@@ -9,6 +9,7 @@
 #define ENDITER_DIM  }}
 #define IX(i, j) ((i)+(N+2)*(j))
 
+
 ScalarField::ScalarField(int a_NumCells, float a_Viscosity, float a_Dt)
         : m_NumCells(a_NumCells), m_Field(CREATE_DIM1), m_Viscosity(a_Viscosity), m_Dt(a_Dt) {
     for (int i = 0; i < (m_NumCells + 2) * (m_NumCells + 2); i++)

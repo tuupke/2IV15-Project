@@ -135,7 +135,6 @@ void advect(int b, VectorField *A, VectorField *B, VectorField *C, VectorField *
 }
 
 void vorticityConfinement(VectorField *slachtoffer) {
-
     int N = slachtoffer->m_NumCells;
     float *forces = new float[(N + 2) * (N + 2)]();
     int *sign = new int[(N + 2) * (N + 2)]();
@@ -149,7 +148,6 @@ void vorticityConfinement(VectorField *slachtoffer) {
             forces[IX(i, j)] = abs(toStore);
 
             sign[IX(i, j)] = toStore < 0 ? -1 : 1;
-//            std::cout << "Sign " << sign[IX(i,j)] << " toStore" << toStore << std::endl;
 
         }
     }
@@ -166,16 +164,11 @@ void vorticityConfinement(VectorField *slachtoffer) {
                 dwdx /= length;
                 dwdy /= length;
             }
-//                dwdx /= 0.0000001f;
-//                dwdy /= 0.0000001f;
-//            }
 
             float v = sign[IX(i, j)] * forces[IX(i, j)];
 
             slachtoffer->m_Field[IX(i, j)][0] = dwdy * -v;
             slachtoffer->m_Field[IX(i, j)][1] = dwdx * v;
-//            Fvc_x[IX(i, j)] = dwdy * -v;
-//            Fvc_y[IX(i, j)] = dwdx *  v;
         }
     }
 
@@ -183,11 +176,10 @@ void vorticityConfinement(VectorField *slachtoffer) {
 }
 
 void
-VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
-//    AddField(a_SrcField);
+VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField, std::vector<RigidBody*> &bodies) {
     AddField(VelocityField);
 
-//    vorticityConfinement(VelocityField);
+    vorticityConfinement(VelocityField);
     int N = a_SrcField->m_NumCells;
     float a = a_SrcField->m_Dt * VelocityField->m_Viscosity * N * N;
 
@@ -203,6 +195,10 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField) {
 
 
     project(a_SrcField, VelocityField);
+
+    for(int i = 0; i < bodies.size(); i++){
+        bodies[i]->act(a_SrcField, VelocityField);
+    }
 }
 
 void
