@@ -94,8 +94,7 @@ void advect(int b, ScalarField *A, ScalarField *B, VectorField *C, VectorField *
     set_bnd(b, A);
 }
 
-void//                                 x                        x0                      (u,v)
-ScalarField::TimeStep(ScalarField *a_SrcField, ScalarField *a_PrevField, VectorField *VelocityField) {
+void ScalarField::TimeStep(ScalarField *a_SrcField, ScalarField *a_PrevField, VectorField *VelocityField) {
 
     AddField(a_PrevField);
 
@@ -110,8 +109,7 @@ ScalarField::TimeStep(ScalarField *a_SrcField, ScalarField *a_PrevField, VectorF
     advect(0, a_SrcField, a_PrevField, VelocityField, VelocityField, 0, 1, a_SrcField->m_Dt);
 }
 
-void
-ScalarField::AddField(ScalarField *a_SrcField) {
+void ScalarField::AddField(ScalarField *a_SrcField) {
     for (int i = 0; i < ((m_NumCells + 2) * (m_NumCells + 2)); i++) {
         m_Field[i] += m_Dt * ((*a_SrcField)[i]);
     }
