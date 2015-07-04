@@ -6,6 +6,12 @@
 #include "ScalarField.h"
 #include "VectorField.h"
 #include "FieldToolbox.h"
+#include "particles/Particle.h"
+#include "particles/Force.h"
+#include "particles/SpringForce.h"
+#include "particles/Gravity.h"
+#include "particles/RodConstraint.h"
+#include "particles/CircularWireConstraint.h"
 #include "imageio.h"
 
 #include <stdlib.h>
@@ -13,7 +19,6 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <vector>
-
 
 /* macros */
 
@@ -37,6 +42,12 @@ static int win_id;
 static int win_x, win_y;
 static int mouse_down[3];
 static int omx, omy, mx, my;
+
+extern void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > fConstraint, VectorField *VelocityField);
+
+static std::vector< Particle * > pVector;
+static std::vector< Force * > fVector;
+static std::vector< Constraint * > fConstraint;
 
 
 /*
@@ -80,7 +91,6 @@ static int allocate_data(void) {
 
     return (1);
 }
-
 
 /*
 ----------------------------------------------------------------------
@@ -269,13 +279,12 @@ static void reshape_func(int width, int height) {
     win_y = height;
 }
 
-static void idle_func(void) {
-    get_from_UI(PrevDensityField, PrevVelocityField);
-    int N = PrevDensityField->m_NumCells;
-    PrevVelocityField->m_Field[IX(20,40)] = Vec2f(0.0f, 0.0f);
-    VelocityField->m_Field[IX(20,40)] = Vec2f(0.0f, 0.0f);
-    VelocityField->TimeStep(VelocityField, PrevVelocityField, bodies);
-    DensityField->TimeStep(DensityField, PrevDensityField, VelocityField);
+static void idle_func ( void )
+{
+	get_from_UI( PrevDensityField, PrevVelocityField );
+	VelocityField->TimeStep( VelocityField, PrevVelocityField );
+	DensityField->TimeStep( DensityField, PrevDensityField, VelocityField );
+	simulation_step(pVector, fVector, dt, fConstraint, VelocityField);
 
     glutSetWindow(win_id);
     glutPostRedisplay();

@@ -1,0 +1,609 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AngularForce	AngularForce.cpp	/^AngularForce::AngularForce(Particle *p1, Particle *p2, Particle *p3, double angle, double ks, double kd) :$/;"	f	class:AngularForce
+AngularForce	AngularForce.h	/^class AngularForce : public Force$/;"	c
+CODE_CONSTRAINTSOLVER_H	ConstraintSolver.h	7;"	d
+CODE_MULTIPLY_H	Multiply.h	6;"	d
+CXX	Makefile	/^CXX = g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -O2 -Wall -Wno-sign-compare -Iinclude -DHAVE_CONFIG_H -g$/;"	m
+CalcForces	Solver.cpp	/^void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVector, std::vector< Constraint * > constraints) {$/;"	f
+CircularWireConstraint	CircularWireConstraint.cpp	/^CircularWireConstraint::CircularWireConstraint(Particle *p, const Vec2f &center, const double radius, std::vector<int> ids) :$/;"	f	class:CircularWireConstraint
+CircularWireConstraint	CircularWireConstraint.h	/^class CircularWireConstraint : public Constraint {$/;"	c
+ConjGrad	linearSolver.cpp	/^double ConjGrad(int n, implicitMatrix *A, double x[], double b[],$/;"	f
+Constraint	Constraint.h	/^class Constraint {$/;"	c
+DAMP	Solver.cpp	20;"	d	file:
+Drag	Gravity.cpp	/^Drag::Drag(Particle *p, float drag) :$/;"	f	class:Drag
+Drag	Gravity.h	/^class Drag : public Force $/;"	c
+Euler	Solver.cpp	/^void Euler(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {$/;"	f
+FEQ	include/gfx/gfx.h	/^inline bool  FEQ(double a, double b, double e=FEQ_EPS)  {return fabs(a-b)<e;}$/;"	f	namespace:gfx
+FEQ2	include/gfx/gfx.h	/^inline bool FEQ2(double a, double b, double e=FEQ_EPS2) {return fabs(a-b)<e;}$/;"	f	namespace:gfx
+FEQ_EPS	include/gfx/gfx.h	/^const double FEQ_EPS = 1e-6;$/;"	m	namespace:gfx
+FEQ_EPS2	include/gfx/gfx.h	/^const double FEQ_EPS2 = 1e-12;$/;"	m	namespace:gfx
+Force	Force.h	/^class Force$/;"	c
+GFXGEOM3D_INCLUDED	include/gfx/geom3d.h	2;"	d
+GFXGEOM4D_INCLUDED	include/gfx/geom4d.h	2;"	d
+GFXMAT2_INCLUDED	include/gfx/mat2.h	2;"	d
+GFXMAT3_INCLUDED	include/gfx/mat3.h	2;"	d
+GFXMAT4_INCLUDED	include/gfx/mat4.h	2;"	d
+GFXQUAT_INCLUDED	include/gfx/quat.h	2;"	d
+GFXSYMMAT2_INCLUDED	include/gfx/symmat2.h	2;"	d
+GFXSYMMAT3_INCLUDED	include/gfx/symmat3.h	2;"	d
+GFXSYMMAT4_INCLUDED	include/gfx/symmat4.h	2;"	d
+GFXVEC2_INCLUDED	include/gfx/vec2.h	2;"	d
+GFXVEC3_INCLUDED	include/gfx/vec3.h	2;"	d
+GFXVEC4_INCLUDED	include/gfx/vec4.h	2;"	d
+GFX_INCLUDED	include/gfx/gfx.h	2;"	d
+Gravity	Gravity.cpp	/^Gravity::Gravity(Particle *p, Vec2f gravity) :$/;"	f	class:Gravity
+Gravity	Gravity.h	/^class Gravity : public Force $/;"	c
+HAVE_BOOL	include/gfx/config.h	5;"	d
+HAVE_EXT_HASH_MAP	include/gfx/config.h	26;"	d
+HAVE_EXT_HASH_SET	include/gfx/config.h	27;"	d
+HAVE_GETRUSAGE	include/gfx/config.h	11;"	d
+HAVE_GL_GLEXT_H	include/gfx/config.h	73;"	d
+HAVE_LIBJPEG	include/gfx/config.h	59;"	d
+HAVE_LIBPNG	include/gfx/config.h	56;"	d
+HAVE_LIBTIFF	include/gfx/config.h	50;"	d
+HAVE_OPENGL	include/gfx/config.h	64;"	d
+HAVE_POLYOFFSET	include/gfx/config.h	70;"	d
+HAVE_RANDOM	include/gfx/config.h	17;"	d
+HAVE_RINT	include/gfx/config.h	8;"	d
+HAVE_SSTREAM	include/gfx/config.h	33;"	d
+HAVE_STRSTREAM	include/gfx/config.h	36;"	d
+HAVE_TIMES	include/gfx/config.h	14;"	d
+HAVE_VALARRAY	include/gfx/config.h	30;"	d
+HUGE	include/gfx/gfx.h	61;"	d
+IMAGE_IO_H	imageio.h	2;"	d
+MAX	include/gfx/gfx.h	47;"	d
+MAX	include/gfx/gfx.h	53;"	d
+MAX_STEPS	linearSolver.h	12;"	d
+MIN	include/gfx/gfx.h	46;"	d
+MIN	include/gfx/gfx.h	52;"	d
+M_PI	include/gfx/gfx.h	57;"	d
+Mat2	include/gfx/mat2.h	/^    Mat2() { *this = 0.0; }$/;"	f	class:gfx::Mat2
+Mat2	include/gfx/mat2.h	/^    Mat2(const Mat2 &m) { *this = m; }$/;"	f	class:gfx::Mat2
+Mat2	include/gfx/mat2.h	/^    Mat2(const Vec2 &r0,const Vec2 &r1) { row[0]=r0; row[1]=r1; }$/;"	f	class:gfx::Mat2
+Mat2	include/gfx/mat2.h	/^    Mat2(double a, double b, double c, double d)$/;"	f	class:gfx::Mat2
+Mat2	include/gfx/mat2.h	/^class Mat2$/;"	c	namespace:gfx
+Mat3	include/gfx/mat3.h	/^    Mat3() { *this = 0.0; }$/;"	f	class:gfx::Mat3
+Mat3	include/gfx/mat3.h	/^    Mat3(const Mat3& m) { *this = m; }$/;"	f	class:gfx::Mat3
+Mat3	include/gfx/mat3.h	/^    Mat3(const Vec3& r0,const Vec3& r1,const Vec3& r2)$/;"	f	class:gfx::Mat3
+Mat3	include/gfx/mat3.h	/^class Mat3$/;"	c	namespace:gfx
+Mat4	include/gfx/mat4.h	/^    Mat4() { *this = 0.0; }$/;"	f	class:gfx::Mat4
+Mat4	include/gfx/mat4.h	/^    Mat4(const Mat4& m) { *this = m; }$/;"	f	class:gfx::Mat4
+Mat4	include/gfx/mat4.h	/^    Mat4(const Vec4& r0,const Vec4& r1,const Vec4& r2,const Vec4& r3)$/;"	f	class:gfx::Mat4
+Mat4	include/gfx/mat4.h	/^class Mat4$/;"	c	namespace:gfx
+Midpoint	Solver.cpp	/^void Midpoint(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {$/;"	f
+MouseForce	MouseForce.cpp	/^MouseForce::MouseForce(std::vector<Particle*> particles, double dist, double ks, double kd, double radius) :$/;"	f	class:MouseForce
+MouseForce	MouseForce.h	/^class MouseForce : public Force $/;"	c
+Multiply	Multiply.h	/^class Multiply {$/;"	c
+N	TinkerToy.cpp	/^static int N;$/;"	v	file:
+NOMINMAX	include/gfx/gfx.h	50;"	d
+OBJS	Makefile	/^OBJS = Solver.o Particle.o TinkerToy.o RodConstraint.o SpringForce.o CircularWireConstraint.o imageio.o Gravity.o AngularForce.o MouseForce.o ConstraintSolver.o$/;"	m
+PI	CircularWireConstraint.cpp	5;"	d	file:
+Particle	Particle.cpp	/^Particle::Particle(const Vec2f & ConstructPos, float Mass) :$/;"	f	class:Particle
+Particle	Particle.h	/^class Particle$/;"	c
+Quat	include/gfx/quat.h	/^    Quat()                                       { v=0.0; s=1.0; }$/;"	f	class:gfx::Quat
+Quat	include/gfx/quat.h	/^    Quat(const Quat& q)                          { *this=q; }$/;"	f	class:gfx::Quat
+Quat	include/gfx/quat.h	/^    Quat(const Vec3& a, double b)                { v=a; s=b; }$/;"	f	class:gfx::Quat
+Quat	include/gfx/quat.h	/^    Quat(double x, double y, double z, double w) { v[0]=x;v[1]=y;v[2]=z; s=w; }$/;"	f	class:gfx::Quat
+Quat	include/gfx/quat.h	/^class Quat$/;"	c	namespace:gfx
+RAND	Solver.cpp	21;"	d	file:
+RodConstraint	RodConstraint.cpp	/^RodConstraint::RodConstraint(Particle *p1, Particle *p2, double dist, std::vector<int> ids) :$/;"	f	class:RodConstraint
+RodConstraint	RodConstraint.h	/^class RodConstraint : public Constraint {$/;"	c
+RungeKutta	Solver.cpp	/^void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {$/;"	f
+SpringForce	SpringForce.cpp	/^SpringForce::SpringForce(Particle *p1, Particle * p2, double dist, double ks, double kd) :$/;"	f	class:SpringForce
+SpringForce	SpringForce.h	/^class SpringForce : public Force $/;"	c
+SymMat2	include/gfx/symmat2.h	/^    SymMat2(const SymMat2& m) { *this = m; }$/;"	f	class:gfx::SymMat2
+SymMat2	include/gfx/symmat2.h	/^    SymMat2(double s=0.0) { *this = s; }$/;"	f	class:gfx::SymMat2
+SymMat2	include/gfx/symmat2.h	/^class SymMat2$/;"	c	namespace:gfx
+SymMat3	include/gfx/symmat3.h	/^    SymMat3(const SymMat3& m) { *this = m; }$/;"	f	class:gfx::SymMat3
+SymMat3	include/gfx/symmat3.h	/^    SymMat3(double s=0.0) { *this = s; }$/;"	f	class:gfx::SymMat3
+SymMat3	include/gfx/symmat3.h	/^class SymMat3$/;"	c	namespace:gfx
+SymMat4	include/gfx/symmat4.h	/^    SymMat4(const SymMat4 &m) {*this=m;}$/;"	f	class:gfx::SymMat4
+SymMat4	include/gfx/symmat4.h	/^    SymMat4(double s=0.0) { *this = 0.0; }$/;"	f	class:gfx::SymMat4
+SymMat4	include/gfx/symmat4.h	/^class SymMat4$/;"	c	namespace:gfx
+TIMING	include/gfx/gfx.h	95;"	d
+TVec2	include/gfx/vec2.h	/^    TVec2(T s=0) { *this = s; }$/;"	f	class:gfx::TVec2
+TVec2	include/gfx/vec2.h	/^    TVec2(T x, T y) { elt[0]=x; elt[1]=y; }$/;"	f	class:gfx::TVec2
+TVec2	include/gfx/vec2.h	/^    template<class U> TVec2(const TVec2<U>& v) { *this = v; }$/;"	f	class:gfx::TVec2
+TVec2	include/gfx/vec2.h	/^    template<class U> TVec2(const U v[2]) { elt[0]=v[0]; elt[1]=v[1]; }$/;"	f	class:gfx::TVec2
+TVec2	include/gfx/vec2.h	/^class TVec2 {$/;"	c	namespace:gfx
+TVec3	include/gfx/vec3.h	/^    TVec3(T s=0) { *this = s; }$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^    TVec3(T x, T y, T z) { elt[0]=x; elt[1]=y; elt[2]=z; }$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^    TVec3(const double *v) { elt[0]=v[0]; elt[1]=v[1]; elt[2]=v[2]; }$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^    TVec3(const float *v) { elt[0]=v[0]; elt[1]=v[1]; elt[2]=v[2]; }$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^    template<class U> TVec3(const TVec3<U>& v) { *this = v; }$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^    template<class U> TVec3(const U v[3])$/;"	f	class:gfx::TVec3
+TVec3	include/gfx/vec3.h	/^class TVec3 {$/;"	c	namespace:gfx
+TVec4	include/gfx/vec4.h	/^    TVec4(T s=0) { *this = s; }$/;"	f	class:gfx::TVec4
+TVec4	include/gfx/vec4.h	/^    TVec4(T x, T y, T z, T w) { elt[0]=x; elt[1]=y; elt[2]=z; elt[3]=w; }$/;"	f	class:gfx::TVec4
+TVec4	include/gfx/vec4.h	/^    template<class U> TVec4(const TVec3<U>& v,T w)$/;"	f	class:gfx::TVec4
+TVec4	include/gfx/vec4.h	/^    template<class U> TVec4(const TVec4<U>& v) { *this = v; }$/;"	f	class:gfx::TVec4
+TVec4	include/gfx/vec4.h	/^    template<class U> TVec4(const U v[4])$/;"	f	class:gfx::TVec4
+TVec4	include/gfx/vec4.h	/^class TVec4 {$/;"	c	namespace:gfx
+Vec2	include/gfx/vec2.h	/^typedef TVec2<double> Vec2;$/;"	t	namespace:gfx
+Vec2f	include/gfx/vec2.h	/^typedef TVec2<float>  Vec2f;$/;"	t	namespace:gfx
+Vec3	include/gfx/vec3.h	/^typedef TVec3<double> Vec3;$/;"	t	namespace:gfx
+Vec3f	include/gfx/vec3.h	/^typedef TVec3<float>  Vec3f;$/;"	t	namespace:gfx
+Vec4	include/gfx/vec4.h	/^typedef TVec4<double> Vec4;$/;"	t	namespace:gfx
+Vec4f	include/gfx/vec4.h	/^typedef TVec4<float>  Vec4f;$/;"	t	namespace:gfx
+_endsWith	imageio.cpp	/^bool _endsWith(char *s, char *postfix) {$/;"	f
+_loadImageRGBApng	imageio.cpp	/^unsigned char *_loadImageRGBApng(char *fileName, int *width, int *height) {$/;"	f
+_loadImgError	imageio.cpp	/^unsigned char *_loadImgError(int *width, int *height) {$/;"	f
+_saveImageRGBApng	imageio.cpp	/^bool _saveImageRGBApng(char *fileName, unsigned char *buffer, int width, int height) {$/;"	f
+act	AngularForce.cpp	/^void AngularForce::act()$/;"	f	class:AngularForce
+act	Gravity.cpp	/^void Drag::act()$/;"	f	class:Drag
+act	Gravity.cpp	/^void Gravity::act()$/;"	f	class:Gravity
+act	MouseForce.cpp	/^void MouseForce::act()$/;"	f	class:MouseForce
+act	SpringForce.cpp	/^void SpringForce::act(){$/;"	f	class:SpringForce
+adjoint	include/gfx/mat2.h	/^inline Mat2 adjoint(const Mat2 &m)$/;"	f	namespace:gfx
+bool	include/gfx/gfx.h	/^typedef int bool;$/;"	t
+calcC	CircularWireConstraint.cpp	/^float CircularWireConstraint::calcC(){$/;"	f	class:CircularWireConstraint
+calcC	RodConstraint.cpp	/^float RodConstraint::calcC() {$/;"	f	class:RodConstraint
+calcCD	CircularWireConstraint.cpp	/^float CircularWireConstraint::calcCD(){$/;"	f	class:CircularWireConstraint
+calcCD	RodConstraint.cpp	/^float RodConstraint::calcCD() {$/;"	f	class:RodConstraint
+clamp_to_bbox	include/gfx/geom3d.h	/^Vec clamp_to_bbox(Vec p, const Vec& min, const Vec& max)$/;"	f	namespace:gfx
+clear_data	TinkerToy.cpp	/^static void clear_data ( void )$/;"	f	file:
+col	include/gfx/mat2.h	/^    inline Vec2 col(int i) const {return Vec2(row[0][i],row[1][i]);}$/;"	f	class:gfx::Mat2
+col	include/gfx/mat3.h	/^    inline Vec3 col(int i) const {return Vec3(row[0][i],row[1][i],row[2][i]);}$/;"	f	class:gfx::Mat3
+col	include/gfx/mat4.h	/^    inline Vec4 col(int i) const$/;"	f	class:gfx::Mat4
+col	include/gfx/symmat2.h	/^inline Vec2 SymMat2::col(int j) const$/;"	f	class:gfx::SymMat2
+col	include/gfx/symmat3.h	/^inline Vec3 SymMat3::col(int j) const$/;"	f	class:gfx::SymMat3
+col	include/gfx/symmat4.h	/^inline Vec4 SymMat4::col(int j) const$/;"	f	class:gfx::SymMat4
+compute_bbox	include/gfx/geom3d.h	/^void compute_bbox(Vec& min, Vec& max, const List& items)$/;"	f	namespace:gfx
+conjugate	include/gfx/quat.h	/^inline Quat conjugate(const Quat& q) { return Quat(-q.vector(), q.scalar()); }$/;"	f	namespace:gfx
+create_grid	TinkerToy.cpp	/^static void create_grid(int size, bool diagonals)$/;"	f	file:
+cross	include/gfx/vec3.h	/^template<class T> inline TVec3<T> cross(const TVec3<T>& u, const TVec3<T>& v)$/;"	f	namespace:gfx
+cross	include/gfx/vec4.h	/^inline TVec4<T> cross(const TVec4<T>& a, const TVec4<T>& b, const TVec4<T>& c)$/;"	f	namespace:gfx
+d	TinkerToy.cpp	/^static float dt, d;$/;"	v	file:
+delete_this_dummy_rod	TinkerToy.cpp	/^static RodConstraint * delete_this_dummy_rod = NULL;$/;"	v	file:
+delete_this_dummy_wire	TinkerToy.cpp	/^static CircularWireConstraint * delete_this_dummy_wire = NULL;$/;"	v	file:
+det	include/gfx/mat2.h	/^inline double det(const Mat2 &m)$/;"	f	namespace:gfx
+det	include/gfx/mat3.h	/^inline double det(const Mat3& m) { return m[0] * (m[1] ^ m[2]); }$/;"	f	namespace:gfx
+det	include/gfx/mat4.h	/^inline double det(const Mat4& m) { return m[0] * cross(m[1], m[2], m[3]); }$/;"	f	namespace:gfx
+det	include/gfx/symmat2.h	/^inline double det(const SymMat2& m) { return m(0,0)*m(1,1) - 2*m(0,1); }$/;"	f	namespace:gfx
+det	include/gfx/symmat3.h	/^inline double det(const SymMat3& m) { return m.row(0) * (m.row(1)^m.row(2)); }$/;"	f	namespace:gfx
+dim	include/gfx/mat2.h	/^    static int dim() { return 2; }$/;"	f	class:gfx::Mat2
+dim	include/gfx/mat3.h	/^    static int dim() { return 3; }$/;"	f	class:gfx::Mat3
+dim	include/gfx/mat4.h	/^    static int dim() { return 4; }$/;"	f	class:gfx::Mat4
+dim	include/gfx/symmat2.h	/^    static int dim() { return 2; }$/;"	f	class:gfx::SymMat2
+dim	include/gfx/symmat3.h	/^    static int dim() { return 3; }$/;"	f	class:gfx::SymMat3
+dim	include/gfx/symmat4.h	/^    static int dim() { return 4; }$/;"	f	class:gfx::SymMat4
+dim	include/gfx/vec2.h	/^    static int dim() { return 2; }$/;"	f	class:gfx::TVec2
+dim	include/gfx/vec3.h	/^    static int dim() { return 3; }$/;"	f	class:gfx::TVec3
+dim	include/gfx/vec4.h	/^    static int dim() { return 4; }$/;"	f	class:gfx::TVec4
+disable	MouseForce.cpp	/^void MouseForce::disable()$/;"	f	class:MouseForce
+display_func	TinkerToy.cpp	/^static void display_func ( void )$/;"	f	file:
+draw	AngularForce.cpp	/^void AngularForce::draw()$/;"	f	class:AngularForce
+draw	CircularWireConstraint.cpp	/^void CircularWireConstraint::draw() {$/;"	f	class:CircularWireConstraint
+draw	Gravity.cpp	/^void Drag::draw()$/;"	f	class:Drag
+draw	Gravity.cpp	/^void Gravity::draw()$/;"	f	class:Gravity
+draw	MouseForce.cpp	/^void MouseForce::draw()$/;"	f	class:MouseForce
+draw	Particle.cpp	/^void Particle::draw()$/;"	f	class:Particle
+draw	RodConstraint.cpp	/^void RodConstraint::draw() {$/;"	f	class:RodConstraint
+draw	SpringForce.cpp	/^void SpringForce::draw()$/;"	f	class:SpringForce
+draw_circle	CircularWireConstraint.cpp	/^static void draw_circle(const Vec2f &vect, float radius) {$/;"	f	file:
+draw_constraints	TinkerToy.cpp	/^static void draw_constraints ( void )$/;"	f	file:
+draw_forces	TinkerToy.cpp	/^static void draw_forces ( void )$/;"	f	file:
+draw_particles	TinkerToy.cpp	/^static void draw_particles ( void )$/;"	f	file:
+dsim	TinkerToy.cpp	/^static int dsim;$/;"	v	file:
+dt	TinkerToy.cpp	/^static float dt, d;$/;"	v	file:
+dump_frames	TinkerToy.cpp	/^static int dump_frames;$/;"	v	file:
+elt	include/gfx/symmat2.h	/^    double elt[3];$/;"	m	class:gfx::SymMat2
+elt	include/gfx/symmat3.h	/^    double elt[6];$/;"	m	class:gfx::SymMat3
+elt	include/gfx/symmat4.h	/^    double elt[10];$/;"	m	class:gfx::SymMat4
+elt	include/gfx/vec2.h	/^    T elt[2];$/;"	m	class:gfx::TVec2
+elt	include/gfx/vec3.h	/^    T elt[3];$/;"	m	class:gfx::TVec3
+elt	include/gfx/vec4.h	/^    T elt[4];$/;"	m	class:gfx::TVec4
+enable	MouseForce.cpp	/^void MouseForce::enable(float x, float y)$/;"	f	class:MouseForce
+enabled	MouseForce.h	/^	bool enabled;$/;"	m	class:MouseForce
+fConstraint	TinkerToy.cpp	/^static std::vector<Constraint*> fConstraint;$/;"	v	file:
+fVector	TinkerToy.cpp	/^static std::vector<Force*> fVector;$/;"	v	file:
+false	include/gfx/gfx.h	/^const bool false = 0;$/;"	v
+frame_number	TinkerToy.cpp	/^static int frame_number;$/;"	v	file:
+free_data	TinkerToy.cpp	/^static void free_data ( void )$/;"	f	file:
+g	Gravity.h	/^  Vec2f g;$/;"	m	class:Gravity
+getParticleIDs	CircularWireConstraint.cpp	/^std::vector<int> CircularWireConstraint::getParticleIDs(){$/;"	f	class:CircularWireConstraint
+getParticleIDs	RodConstraint.cpp	/^std::vector< int > RodConstraint::getParticleIDs() {$/;"	f	class:RodConstraint
+get_from_UI	TinkerToy.cpp	/^static void get_from_UI ()$/;"	f	file:
+gfx	include/gfx/geom3d.h	/^namespace gfx$/;"	n
+gfx	include/gfx/geom4d.h	/^namespace gfx$/;"	n
+gfx	include/gfx/gfx.h	/^namespace gfx$/;"	n
+gfx	include/gfx/mat2.h	/^namespace gfx$/;"	n
+gfx	include/gfx/mat3.h	/^namespace gfx$/;"	n
+gfx	include/gfx/mat4.h	/^namespace gfx$/;"	n
+gfx	include/gfx/quat.h	/^namespace gfx$/;"	n
+gfx	include/gfx/symmat2.h	/^namespace gfx$/;"	n
+gfx	include/gfx/symmat3.h	/^namespace gfx$/;"	n
+gfx	include/gfx/symmat4.h	/^namespace gfx$/;"	n
+gfx	include/gfx/vec2.h	/^namespace gfx$/;"	n
+gfx	include/gfx/vec3.h	/^namespace gfx$/;"	n
+gfx	include/gfx/vec4.h	/^namespace gfx$/;"	n
+hmx	TinkerToy.cpp	/^static int hmx, hmy;$/;"	v	file:
+hmy	TinkerToy.cpp	/^static int hmx, hmy;$/;"	v	file:
+iVector	CircularWireConstraint.cpp	4;"	d	file:
+iVector	Constraint.h	4;"	d
+iVector	ConstraintSolver.cpp	7;"	d	file:
+iVector	RodConstraint.cpp	4;"	d	file:
+iVector	RodConstraint.h	7;"	d
+ident	include/gfx/mat2.h	/^    Mat2 &ident() { return diag(1.0); }$/;"	f	class:gfx::Mat2
+ident	include/gfx/mat3.h	/^    Mat3 &ident() { return diag(1.0); }$/;"	f	class:gfx::Mat3
+ident	include/gfx/quat.h	/^inline Quat Quat::ident() { return Quat(0, 0, 0, 1); }$/;"	f	class:gfx::Quat
+idle_func	TinkerToy.cpp	/^static void idle_func ( void )$/;"	f	file:
+implicitMatrix	linearSolver.h	/^    implicitMatrix(std::vector<std::vector<float> > *matrix) {$/;"	f	class:implicitMatrix
+implicitMatrix	linearSolver.h	/^class implicitMatrix {$/;"	c
+implicitMatrixWithTrans	linearSolver.h	/^class implicitMatrixWithTrans : public implicitMatrix {$/;"	c
+index	include/gfx/symmat2.h	/^    inline int index(int i, int j) const$/;"	f	class:gfx::SymMat2
+index	include/gfx/symmat3.h	/^    inline int index(int i, int j) const$/;"	f	class:gfx::SymMat3
+index	include/gfx/symmat4.h	/^    inline int index(int i, int j) const$/;"	f	class:gfx::SymMat4
+indxRGBA	imageio.h	25;"	d
+init_system	TinkerToy.cpp	/^static void init_system(void)$/;"	f	file:
+inverse	include/gfx/quat.h	/^inline Quat inverse(const Quat& q) { return conjugate(q)\/norm(q); }$/;"	f	namespace:gfx
+inverse_type	include/gfx/mat2.h	/^    typedef Mat2 inverse_type;$/;"	t	class:gfx::Mat2
+inverse_type	include/gfx/mat3.h	/^    typedef Mat3 inverse_type;$/;"	t	class:gfx::Mat3
+inverse_type	include/gfx/mat4.h	/^    typedef Mat4 inverse_type;$/;"	t	class:gfx::Mat4
+inverse_type	include/gfx/symmat2.h	/^    typedef Mat2 inverse_type;$/;"	t	class:gfx::SymMat2
+inverse_type	include/gfx/symmat3.h	/^    typedef Mat3 inverse_type;$/;"	t	class:gfx::SymMat3
+inverse_type	include/gfx/symmat4.h	/^    typedef Mat4 inverse_type;$/;"	t	class:gfx::SymMat4
+is_inside_bbox	include/gfx/geom3d.h	/^bool is_inside_bbox(const Vec& p, const Vec& min, Vec& max)$/;"	f	namespace:gfx
+j	CircularWireConstraint.cpp	/^std::vector<iVector> CircularWireConstraint::j(){$/;"	f	class:CircularWireConstraint
+j	RodConstraint.cpp	/^std::vector< iVector > RodConstraint::j() {$/;"	f	class:RodConstraint
+jD	CircularWireConstraint.cpp	/^std::vector<iVector> CircularWireConstraint::jD(){$/;"	f	class:CircularWireConstraint
+jD	RodConstraint.cpp	/^std::vector< iVector > RodConstraint::jD() {$/;"	f	class:RodConstraint
+key_func	TinkerToy.cpp	/^static void key_func ( unsigned char key, int x, int y )$/;"	f	file:
+loadImageRGBA	imageio.cpp	/^unsigned char *loadImageRGBA(char *fileName, int *width, int *height) {$/;"	f
+m	linearSolver.h	/^    std::vector<std::vector<float> > *m;$/;"	m	class:implicitMatrix
+m_ConstructPos	Particle.h	/^	Vec2f m_ConstructPos;$/;"	m	class:Particle
+m_ForceVector	Particle.h	/^	Vec2f m_ForceVector;$/;"	m	class:Particle
+m_Mass	Particle.h	/^	float m_Mass;$/;"	m	class:Particle
+m_Position	Particle.h	/^	Vec2f m_Position;$/;"	m	class:Particle
+m_Velocity	Particle.h	/^	Vec2f m_Velocity;$/;"	m	class:Particle
+m_angle	AngularForce.h	/^    double const m_angle;    \/\/ rest angle in degrees$/;"	m	class:AngularForce
+m_center	CircularWireConstraint.h	/^    Vec2f const m_center;$/;"	m	class:CircularWireConstraint
+m_dist	MouseForce.h	/^	double const m_dist;     \/\/ rest length$/;"	m	class:MouseForce
+m_dist	RodConstraint.h	/^    double const m_dist;$/;"	m	class:RodConstraint
+m_dist	SpringForce.h	/^  double const m_dist;     \/\/ rest length$/;"	m	class:SpringForce
+m_ids	CircularWireConstraint.h	/^    std::vector<int> m_ids;$/;"	m	class:CircularWireConstraint
+m_ids	RodConstraint.h	/^    std::vector<int> m_ids;$/;"	m	class:RodConstraint
+m_kd	AngularForce.h	/^    double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:AngularForce
+m_kd	Gravity.h	/^  float m_kd;$/;"	m	class:Drag
+m_kd	MouseForce.h	/^	double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:MouseForce
+m_kd	SpringForce.h	/^  double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:SpringForce
+m_ks	AngularForce.h	/^    double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:AngularForce
+m_ks	MouseForce.h	/^	double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:MouseForce
+m_ks	SpringForce.h	/^  double const m_ks, m_kd; \/\/ spring strength constants$/;"	m	class:SpringForce
+m_p	CircularWireConstraint.h	/^    Particle *const m_p;$/;"	m	class:CircularWireConstraint
+m_p	Gravity.h	/^  Particle * const m_p;$/;"	m	class:Drag
+m_p	Gravity.h	/^  Particle * const m_p;$/;"	m	class:Gravity
+m_p1	AngularForce.h	/^    Particle * const m_p1;   \/\/ particle 1$/;"	m	class:AngularForce
+m_p1	RodConstraint.h	/^    Particle *const m_p1;$/;"	m	class:RodConstraint
+m_p1	SpringForce.h	/^  Particle * const m_p1;   \/\/ particle 1$/;"	m	class:SpringForce
+m_p2	AngularForce.h	/^    Particle * const m_p2;   \/\/ particle 2$/;"	m	class:AngularForce
+m_p2	RodConstraint.h	/^    Particle *const m_p2;$/;"	m	class:RodConstraint
+m_p2	SpringForce.h	/^  Particle * const m_p2;   \/\/ particle 2 $/;"	m	class:SpringForce
+m_p3	AngularForce.h	/^    Particle * const m_p3;   \/\/ particle 3$/;"	m	class:AngularForce
+m_radius	CircularWireConstraint.h	/^    double const m_radius;$/;"	m	class:CircularWireConstraint
+m_radius	MouseForce.h	/^	double m_radius;$/;"	m	class:MouseForce
+main	TinkerToy.cpp	/^int main ( int argc, char ** argv )$/;"	f
+matVecMult	linearSolver.h	/^    virtual void matVecMult(double x[], double r[]) {$/;"	f	class:implicitMatrix
+motion_func	TinkerToy.cpp	/^static void motion_func ( int x, int y )$/;"	f	file:
+mousePos	MouseForce.h	/^	Vec2f mousePos;$/;"	m	class:MouseForce
+mouse_down	TinkerToy.cpp	/^static int mouse_down[3];$/;"	v	file:
+mouse_force	TinkerToy.cpp	/^static MouseForce * mouse_force = NULL;$/;"	v	file:
+mouse_func	TinkerToy.cpp	/^static void mouse_func ( int button, int state, int x, int y )$/;"	f	file:
+mouse_release	TinkerToy.cpp	/^static int mouse_release[3];$/;"	v	file:
+mouse_shiftclick	TinkerToy.cpp	/^static int mouse_shiftclick[3];$/;"	v	file:
+multiply	ConstraintSolver.cpp	/^std::vector< float > multiply(std::vector< float > A, float b) {$/;"	f
+multiply	ConstraintSolver.cpp	/^std::vector< float > multiply(std::vector< std::vector< float > > A, std::vector< float > B) {$/;"	f
+multiply	ConstraintSolver.cpp	/^std::vector< std::vector< float > > multiply(std::vector< std::vector< float > > A,$/;"	f
+multiply	Multiply.h	/^    std::vector<float> multiply(std::vector<float> A, float b){$/;"	f	class:Multiply
+multiply	Multiply.h	/^    std::vector<float> multiply(std::vector<std::vector<float>> A, std::vector<float> B){$/;"	f	class:Multiply
+multiply	Multiply.h	/^    std::vector<std::vector<float>> multiply (std::vector<std::vector<float>> A, std::vector<std::vector<float>> B){$/;"	f	class:Multiply
+mx	TinkerToy.cpp	/^static int omx, omy, mx, my;$/;"	v	file:
+my	TinkerToy.cpp	/^static int omx, omy, mx, my;$/;"	v	file:
+norm	include/gfx/quat.h	/^inline double norm(const Quat& q)$/;"	f	namespace:gfx
+norm	include/gfx/vec2.h	/^template<class T> inline T norm(const TVec2<T>& v)   { return sqrt(norm2(v)); }$/;"	f	namespace:gfx
+norm	include/gfx/vec3.h	/^template<class T> inline T norm(const TVec3<T>& v)   { return sqrt(norm2(v)); }$/;"	f	namespace:gfx
+norm	include/gfx/vec4.h	/^template<class T> inline T norm(const TVec4<T>& v)  { return sqrt(norm2(v)); }$/;"	f	namespace:gfx
+norm2	include/gfx/vec2.h	/^template<class T> inline T norm2(const TVec2<T>& v)  { return v*v; }$/;"	f	namespace:gfx
+norm2	include/gfx/vec3.h	/^template<class T> inline T norm2(const TVec3<T>& v)  { return v*v; }$/;"	f	namespace:gfx
+norm2	include/gfx/vec4.h	/^template<class T> inline T norm2(const TVec4<T>& v) { return v*v; }$/;"	f	namespace:gfx
+omx	TinkerToy.cpp	/^static int omx, omy, mx, my;$/;"	v	file:
+omy	TinkerToy.cpp	/^static int omx, omy, mx, my;$/;"	v	file:
+open_glut_window	TinkerToy.cpp	/^static void open_glut_window ( void )$/;"	f	file:
+operator ()	include/gfx/mat2.h	/^    double  operator()(int i, int j) const { return row[i][j]; }$/;"	f	class:gfx::Mat2
+operator ()	include/gfx/mat2.h	/^    double& operator()(int i, int j)       { return row[i][j]; }$/;"	f	class:gfx::Mat2
+operator ()	include/gfx/mat3.h	/^    double  operator()(int i, int j) const { return row[i][j]; }$/;"	f	class:gfx::Mat3
+operator ()	include/gfx/mat3.h	/^    double& operator()(int i, int j)       { return row[i][j]; }$/;"	f	class:gfx::Mat3
+operator ()	include/gfx/mat4.h	/^    double  operator()(int i, int j) const { return row[i][j]; }$/;"	f	class:gfx::Mat4
+operator ()	include/gfx/mat4.h	/^    double& operator()(int i, int j)       { return row[i][j]; }$/;"	f	class:gfx::Mat4
+operator ()	include/gfx/symmat2.h	/^    double  operator()(int i, int j) const { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat2
+operator ()	include/gfx/symmat2.h	/^    double& operator()(int i, int j)       { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat2
+operator ()	include/gfx/symmat3.h	/^    double  operator()(int i, int j) const { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat3
+operator ()	include/gfx/symmat3.h	/^    double& operator()(int i, int j)       { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat3
+operator ()	include/gfx/symmat4.h	/^    double  operator()(int i, int j) const { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat4
+operator ()	include/gfx/symmat4.h	/^    double& operator()(int i, int j)       { return elt[index(i,j)]; }$/;"	f	class:gfx::SymMat4
+operator *	include/gfx/mat2.h	/^inline Mat2 operator*(const Mat2 &m, double s)$/;"	f	namespace:gfx
+operator *	include/gfx/mat2.h	/^inline Mat2 operator*(double s, const Mat2 &m)$/;"	f	namespace:gfx
+operator *	include/gfx/mat2.h	/^inline Vec2 operator*(const Mat2 &m, const Vec2 &v)$/;"	f	namespace:gfx
+operator *	include/gfx/mat3.h	/^inline Mat3 operator*(const Mat3& m, double s)$/;"	f	namespace:gfx
+operator *	include/gfx/mat3.h	/^inline Mat3 operator*(double s, const Mat3& m)$/;"	f	namespace:gfx
+operator *	include/gfx/mat3.h	/^inline Vec3 operator*(const Mat3& m, const Vec3& v)$/;"	f	namespace:gfx
+operator *	include/gfx/mat4.h	/^inline Mat4 operator*(const Mat4& m, double s)$/;"	f	namespace:gfx
+operator *	include/gfx/mat4.h	/^inline Mat4 operator*(double s, const Mat4& m)$/;"	f	namespace:gfx
+operator *	include/gfx/mat4.h	/^inline Vec3 operator*(const Mat4& m, const Vec3& v)$/;"	f	namespace:gfx
+operator *	include/gfx/mat4.h	/^inline Vec4 operator*(const Mat4& m, const Vec4& v)$/;"	f	namespace:gfx
+operator *	include/gfx/quat.h	/^inline Quat operator*(const Quat& q, const Quat& r)$/;"	f	namespace:gfx
+operator *	include/gfx/quat.h	/^inline Quat operator*(const Quat& q, double s)$/;"	f	namespace:gfx
+operator *	include/gfx/quat.h	/^inline Quat operator*(double s, const Quat& q)$/;"	f	namespace:gfx
+operator *	include/gfx/symmat2.h	/^inline SymMat2 operator*(SymMat2 m, double s) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat2.h	/^inline SymMat2 operator*(double s, SymMat2 m) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat2.h	/^inline Vec2 operator*(const SymMat2& m, const Vec2& v)$/;"	f	namespace:gfx
+operator *	include/gfx/symmat3.h	/^inline SymMat3 operator*(SymMat3 m, double s) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat3.h	/^inline SymMat3 operator*(double s, SymMat3 m) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat3.h	/^inline Vec3 operator*(const SymMat3& m, const Vec3& v)$/;"	f	namespace:gfx
+operator *	include/gfx/symmat4.h	/^inline SymMat4 operator*(SymMat4 m, double s) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat4.h	/^inline SymMat4 operator*(double s, SymMat4 m) { m*=s; return m; }$/;"	f	namespace:gfx
+operator *	include/gfx/symmat4.h	/^inline Vec4 operator*(const SymMat4& m, const Vec4& v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec2.h	/^  template<class T, class N> inline TVec2<T> operator*(N s, const TVec2<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec2.h	/^  template<class T, class N> inline TVec2<T> operator*(const TVec2<T> &v, N s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec2.h	/^  template<class T> inline TVec2<T> operator*(T s, const TVec2<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec2.h	/^  template<class T> inline TVec2<T> operator*(const TVec2<T> &v, T s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec2.h	/^template<class T> inline T operator*(const TVec2<T> &u, const TVec2<T>& v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec3.h	/^  template<class T, class N> inline TVec3<T> operator*(N s, const TVec3<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec3.h	/^  template<class T, class N> inline TVec3<T> operator*(const TVec3<T> &v, N s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec3.h	/^  template<class T> inline TVec3<T> operator*(T s, const TVec3<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec3.h	/^  template<class T> inline TVec3<T> operator*(const TVec3<T> &v, T s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec3.h	/^template<class T> inline T operator*(const TVec3<T> &u, const TVec3<T>& v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec4.h	/^  template<class T, class N> inline TVec4<T> operator*(N s, const TVec4<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec4.h	/^  template<class T, class N> inline TVec4<T> operator*(const TVec4<T> &v, N s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec4.h	/^  template<class T> inline TVec4<T> operator*(T s, const TVec4<T> &v)$/;"	f	namespace:gfx
+operator *	include/gfx/vec4.h	/^  template<class T> inline TVec4<T> operator*(const TVec4<T> &v, T s)$/;"	f	namespace:gfx
+operator *	include/gfx/vec4.h	/^template<class T> inline T operator*(const TVec4<T> &u, const TVec4<T> &v)$/;"	f	namespace:gfx
+operator *=	include/gfx/mat2.h	/^inline Mat2& Mat2::operator*=(double s)$/;"	f	class:gfx::Mat2
+operator *=	include/gfx/mat3.h	/^inline Mat3& Mat3::operator*=(double s)$/;"	f	class:gfx::Mat3
+operator *=	include/gfx/mat4.h	/^inline Mat4& Mat4::operator*=(double s)$/;"	f	class:gfx::Mat4
+operator *=	include/gfx/quat.h	/^inline Quat& Quat::operator*=(double d) { v*=d; s*=d; return *this; }$/;"	f	class:gfx::Quat
+operator *=	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator*=(double s)$/;"	f	class:gfx::SymMat2
+operator *=	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator*=(double s)$/;"	f	class:gfx::SymMat3
+operator *=	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator*=(double s)$/;"	f	class:gfx::SymMat4
+operator *=	include/gfx/vec2.h	/^template<class T> inline TVec2<T>& TVec2<T>::operator*=(T s)$/;"	f	class:gfx::TVec2
+operator *=	include/gfx/vec3.h	/^template<class T> inline TVec3<T>& TVec3<T>::operator*=(T s)$/;"	f	class:gfx::TVec3
+operator *=	include/gfx/vec4.h	/^template<class T> inline TVec4<T>& TVec4<T>::operator*=(T s)$/;"	f	class:gfx::TVec4
+operator +	include/gfx/mat2.h	/^inline Mat2 operator+(const Mat2 &n, const Mat2 &m)$/;"	f	namespace:gfx
+operator +	include/gfx/mat3.h	/^inline Mat3 operator+(const Mat3& n, const Mat3& m)$/;"	f	namespace:gfx
+operator +	include/gfx/mat4.h	/^inline Mat4 operator+(const Mat4& n, const Mat4& m)$/;"	f	namespace:gfx
+operator +	include/gfx/quat.h	/^inline Quat operator+(const Quat& q, const Quat& r)$/;"	f	namespace:gfx
+operator +	include/gfx/symmat2.h	/^inline SymMat2 operator+(SymMat2 n, const SymMat2& m) { n += m; return n; }$/;"	f	namespace:gfx
+operator +	include/gfx/symmat3.h	/^inline SymMat3 operator+(SymMat3 n, const SymMat3& m) { n += m; return n; }$/;"	f	namespace:gfx
+operator +	include/gfx/symmat4.h	/^inline SymMat4 operator+(SymMat4 n, const SymMat4& m) { n += m; return n; }$/;"	f	namespace:gfx
+operator +	include/gfx/vec2.h	/^inline TVec2<T> operator+(const TVec2<T> &u, const TVec2<T> &v)$/;"	f	namespace:gfx
+operator +	include/gfx/vec3.h	/^inline TVec3<T> operator+(const TVec3<T> &u, const TVec3<T>& v)$/;"	f	namespace:gfx
+operator +	include/gfx/vec4.h	/^inline TVec4<T> operator+(const TVec4<T> &u, const TVec4<T> &v)$/;"	f	namespace:gfx
+operator +=	include/gfx/mat2.h	/^inline Mat2& Mat2::operator+=(const Mat2& m)$/;"	f	class:gfx::Mat2
+operator +=	include/gfx/mat3.h	/^inline Mat3& Mat3::operator+=(const Mat3& m)$/;"	f	class:gfx::Mat3
+operator +=	include/gfx/mat4.h	/^inline Mat4& Mat4::operator+=(const Mat4& m)$/;"	f	class:gfx::Mat4
+operator +=	include/gfx/quat.h	/^inline Quat& Quat::operator+=(const Quat& q) { v+=q.v; s+=q.s; return *this; }$/;"	f	class:gfx::Quat
+operator +=	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator+=(const SymMat2& m)$/;"	f	class:gfx::SymMat2
+operator +=	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator+=(const SymMat3& m)$/;"	f	class:gfx::SymMat3
+operator +=	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator+=(const SymMat4& m)$/;"	f	class:gfx::SymMat4
+operator +=	include/gfx/vec2.h	/^template<class T> inline TVec2<T>& TVec2<T>::operator+=(const TVec2<T>& v)$/;"	f	class:gfx::TVec2
+operator +=	include/gfx/vec3.h	/^template<class T> inline TVec3<T>& TVec3<T>::operator+=(const TVec3<T>& v)$/;"	f	class:gfx::TVec3
+operator +=	include/gfx/vec4.h	/^template<class T> inline TVec4<T>& TVec4<T>::operator+=(const TVec4<T>& v)$/;"	f	class:gfx::TVec4
+operator -	include/gfx/mat2.h	/^inline Mat2 operator-(const Mat2 &m)$/;"	f	namespace:gfx
+operator -	include/gfx/mat2.h	/^inline Mat2 operator-(const Mat2 &n, const Mat2 &m)$/;"	f	namespace:gfx
+operator -	include/gfx/mat3.h	/^inline Mat3 operator-(const Mat3& m)$/;"	f	namespace:gfx
+operator -	include/gfx/mat3.h	/^inline Mat3 operator-(const Mat3& n, const Mat3& m)$/;"	f	namespace:gfx
+operator -	include/gfx/mat4.h	/^inline Mat4 operator-(const Mat4& n)$/;"	f	namespace:gfx
+operator -	include/gfx/mat4.h	/^inline Mat4 operator-(const Mat4& n, const Mat4& m)$/;"	f	namespace:gfx
+operator -	include/gfx/symmat2.h	/^inline SymMat2 operator-(SymMat2 n, const SymMat2& m) { n -= m; return n; }$/;"	f	namespace:gfx
+operator -	include/gfx/symmat3.h	/^inline SymMat3 operator-(SymMat3 n, const SymMat3& m) { n -= m; return n; }$/;"	f	namespace:gfx
+operator -	include/gfx/symmat4.h	/^inline SymMat4 operator-(SymMat4 n, const SymMat4& m) { n -= m; return n; }$/;"	f	namespace:gfx
+operator -	include/gfx/symmat4.h	/^inline SymMat4 operator-(const SymMat4& m)$/;"	f	namespace:gfx
+operator -	include/gfx/vec2.h	/^inline TVec2<T> operator-(const TVec2<T> &u, const TVec2<T> &v)$/;"	f	namespace:gfx
+operator -	include/gfx/vec2.h	/^template<class T> inline TVec2<T> operator-(const TVec2<T> &v)$/;"	f	namespace:gfx
+operator -	include/gfx/vec3.h	/^inline TVec3<T> operator-(const TVec3<T> &u, const TVec3<T>& v)$/;"	f	namespace:gfx
+operator -	include/gfx/vec3.h	/^template<class T> inline TVec3<T> operator-(const TVec3<T> &v)$/;"	f	namespace:gfx
+operator -	include/gfx/vec4.h	/^inline TVec4<T> operator-(const TVec4<T> &u, const TVec4<T>& v)$/;"	f	namespace:gfx
+operator -	include/gfx/vec4.h	/^template<class T> inline TVec4<T> operator-(const TVec4<T> &u)$/;"	f	namespace:gfx
+operator -=	include/gfx/mat2.h	/^inline Mat2& Mat2::operator-=(const Mat2& m)$/;"	f	class:gfx::Mat2
+operator -=	include/gfx/mat3.h	/^inline Mat3& Mat3::operator-=(const Mat3& m)$/;"	f	class:gfx::Mat3
+operator -=	include/gfx/mat4.h	/^inline Mat4& Mat4::operator-=(const Mat4& m)$/;"	f	class:gfx::Mat4
+operator -=	include/gfx/quat.h	/^inline Quat& Quat::operator-=(const Quat& q) { v-=q.v; s-=q.s; return *this; }$/;"	f	class:gfx::Quat
+operator -=	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator-=(const SymMat2& m)$/;"	f	class:gfx::SymMat2
+operator -=	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator-=(const SymMat3& m)$/;"	f	class:gfx::SymMat3
+operator -=	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator-=(const SymMat4& m)$/;"	f	class:gfx::SymMat4
+operator -=	include/gfx/vec2.h	/^template<class T> inline TVec2<T>& TVec2<T>::operator-=(const TVec2<T>& v)$/;"	f	class:gfx::TVec2
+operator -=	include/gfx/vec3.h	/^template<class T> inline TVec3<T>& TVec3<T>::operator-=(const TVec3<T>& v)$/;"	f	class:gfx::TVec3
+operator -=	include/gfx/vec4.h	/^template<class T> inline TVec4<T>& TVec4<T>::operator-=(const TVec4<T>& v)$/;"	f	class:gfx::TVec4
+operator /	include/gfx/mat2.h	/^inline Mat2 operator\/(const Mat2 &m, double s)$/;"	f	namespace:gfx
+operator /	include/gfx/mat3.h	/^inline Mat3 operator\/(const Mat3& m, double s)$/;"	f	namespace:gfx
+operator /	include/gfx/mat4.h	/^inline Mat4 operator\/(const Mat4& m, double s)$/;"	f	namespace:gfx
+operator /	include/gfx/quat.h	/^inline Quat operator\/(const Quat& q, double s)$/;"	f	namespace:gfx
+operator /	include/gfx/symmat2.h	/^inline SymMat2 operator\/(SymMat2 m, double s) { m\/=s; return m; }$/;"	f	namespace:gfx
+operator /	include/gfx/symmat3.h	/^inline SymMat3 operator\/(SymMat3 m, double s) { m\/=s; return m; }$/;"	f	namespace:gfx
+operator /	include/gfx/symmat4.h	/^inline SymMat4 operator\/(SymMat4 m, double s) { m\/=s; return m; }$/;"	f	namespace:gfx
+operator /	include/gfx/vec2.h	/^  template<class T, class N> inline TVec2<T> operator\/(const TVec2<T> &v, N s)$/;"	f	namespace:gfx
+operator /	include/gfx/vec2.h	/^  template<class T> inline TVec2<T> operator\/(const TVec2<T> &v, T s)$/;"	f	namespace:gfx
+operator /	include/gfx/vec3.h	/^  template<class T, class N> inline TVec3<T> operator\/(const TVec3<T> &v, N s)$/;"	f	namespace:gfx
+operator /	include/gfx/vec3.h	/^  template<class T> inline TVec3<T> operator\/(const TVec3<T> &v, T s)$/;"	f	namespace:gfx
+operator /	include/gfx/vec4.h	/^  template<class T, class N> inline TVec4<T> operator\/(const TVec4<T> &v, N s)$/;"	f	namespace:gfx
+operator /	include/gfx/vec4.h	/^  template<class T> inline TVec4<T> operator\/(const TVec4<T> &v, T s)$/;"	f	namespace:gfx
+operator /=	include/gfx/mat2.h	/^inline Mat2& Mat2::operator\/=(double s)$/;"	f	class:gfx::Mat2
+operator /=	include/gfx/mat3.h	/^inline Mat3& Mat3::operator\/=(double s)$/;"	f	class:gfx::Mat3
+operator /=	include/gfx/mat4.h	/^inline Mat4& Mat4::operator\/=(double s)$/;"	f	class:gfx::Mat4
+operator /=	include/gfx/quat.h	/^inline Quat& Quat::operator\/=(double d) { v\/=d; s\/=d; return *this; }$/;"	f	class:gfx::Quat
+operator /=	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator\/=(double s)$/;"	f	class:gfx::SymMat2
+operator /=	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator\/=(double s)$/;"	f	class:gfx::SymMat3
+operator /=	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator\/=(double s)$/;"	f	class:gfx::SymMat4
+operator /=	include/gfx/vec2.h	/^template<class T> inline TVec2<T>& TVec2<T>::operator\/=(T s)$/;"	f	class:gfx::TVec2
+operator /=	include/gfx/vec3.h	/^template<class T> inline TVec3<T>& TVec3<T>::operator\/=(T s)$/;"	f	class:gfx::TVec3
+operator /=	include/gfx/vec4.h	/^template<class T> inline TVec4<T>& TVec4<T>::operator\/=(T s)$/;"	f	class:gfx::TVec4
+operator <<	include/gfx/mat2.h	/^inline std::ostream &operator<<(std::ostream &out, const Mat2& M)$/;"	f	namespace:gfx
+operator <<	include/gfx/mat3.h	/^inline std::ostream &operator<<(std::ostream &out, const Mat3& M)$/;"	f	namespace:gfx
+operator <<	include/gfx/mat4.h	/^inline std::ostream &operator<<(std::ostream &out, const Mat4& M)$/;"	f	namespace:gfx
+operator <<	include/gfx/quat.h	/^inline std::ostream &operator<<(std::ostream &out, const Quat& q)$/;"	f	namespace:gfx
+operator <<	include/gfx/vec2.h	/^inline std::ostream &operator<<(std::ostream &out, const TVec2<T> &v)$/;"	f	namespace:gfx
+operator <<	include/gfx/vec3.h	/^inline std::ostream &operator<<(std::ostream &out, const TVec3<T>& v)$/;"	f	namespace:gfx
+operator <<	include/gfx/vec4.h	/^inline std::ostream &operator<<(std::ostream &out, const TVec4<T>& v)$/;"	f	namespace:gfx
+operator =	include/gfx/mat2.h	/^inline Mat2& Mat2::operator=(const Mat2& m)$/;"	f	class:gfx::Mat2
+operator =	include/gfx/mat2.h	/^inline Mat2& Mat2::operator=(double s)$/;"	f	class:gfx::Mat2
+operator =	include/gfx/mat3.h	/^inline Mat3& Mat3::operator=(const Mat3& m)$/;"	f	class:gfx::Mat3
+operator =	include/gfx/mat3.h	/^inline Mat3& Mat3::operator=(double s)$/;"	f	class:gfx::Mat3
+operator =	include/gfx/mat4.h	/^inline Mat4& Mat4::operator=(const Mat4& m)$/;"	f	class:gfx::Mat4
+operator =	include/gfx/mat4.h	/^inline Mat4& Mat4::operator=(double s)$/;"	f	class:gfx::Mat4
+operator =	include/gfx/quat.h	/^inline Quat& Quat::operator=(const Quat& q) { v=q.v; s=q.s; return *this; }$/;"	f	class:gfx::Quat
+operator =	include/gfx/quat.h	/^inline Quat& Quat::operator=(double d)  { v=d;  s=d;  return *this; }$/;"	f	class:gfx::Quat
+operator =	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator=(const SymMat2& m)$/;"	f	class:gfx::SymMat2
+operator =	include/gfx/symmat2.h	/^inline SymMat2& SymMat2::operator=(double s)$/;"	f	class:gfx::SymMat2
+operator =	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator=(const SymMat3& m)$/;"	f	class:gfx::SymMat3
+operator =	include/gfx/symmat3.h	/^inline SymMat3& SymMat3::operator=(double s)$/;"	f	class:gfx::SymMat3
+operator =	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator=(const SymMat4& m)$/;"	f	class:gfx::SymMat4
+operator =	include/gfx/symmat4.h	/^inline SymMat4& SymMat4::operator=(double s)$/;"	f	class:gfx::SymMat4
+operator =	include/gfx/vec2.h	/^    TVec2& operator=(T s) { elt[0]=elt[1]=s; return *this; }$/;"	f	class:gfx::TVec2
+operator =	include/gfx/vec2.h	/^    template<class U> TVec2& operator=(const TVec2<U>& v)$/;"	f	class:gfx::TVec2
+operator =	include/gfx/vec3.h	/^    TVec3& operator=(T s) { elt[0]=elt[1]=elt[2]=s; return *this; }$/;"	f	class:gfx::TVec3
+operator =	include/gfx/vec3.h	/^    template<class U> TVec3& operator=(const TVec3<U>& v)$/;"	f	class:gfx::TVec3
+operator =	include/gfx/vec4.h	/^    TVec4& operator=(T s) { elt[0]=elt[1]=elt[2]=elt[3]=s; return *this; }$/;"	f	class:gfx::TVec4
+operator =	include/gfx/vec4.h	/^    template<class U> TVec4& operator=(const TVec4<U>& v)$/;"	f	class:gfx::TVec4
+operator >>	include/gfx/mat2.h	/^inline std::istream &operator>>(std::istream &in, Mat2& M)$/;"	f	namespace:gfx
+operator >>	include/gfx/mat3.h	/^inline std::istream &operator>>(std::istream &in, Mat3& M)$/;"	f	namespace:gfx
+operator >>	include/gfx/mat4.h	/^inline std::istream &operator>>(std::istream &in, Mat4& M)$/;"	f	namespace:gfx
+operator >>	include/gfx/quat.h	/^inline std::istream &operator>>(std::istream &in, Quat& q)$/;"	f	namespace:gfx
+operator >>	include/gfx/vec2.h	/^inline std::istream &operator>>(std::istream &in, TVec2<T>& v)$/;"	f	namespace:gfx
+operator >>	include/gfx/vec3.h	/^inline std::istream &operator>>(std::istream &in, TVec3<T>& v)$/;"	f	namespace:gfx
+operator >>	include/gfx/vec4.h	/^inline std::istream &operator>>(std::istream &in, TVec4<T>& v)$/;"	f	namespace:gfx
+operator T*	include/gfx/vec2.h	/^    operator       T*()       { return elt; }$/;"	f	class:gfx::TVec2
+operator T*	include/gfx/vec3.h	/^    operator       T*()       { return elt; }$/;"	f	class:gfx::TVec3
+operator T*	include/gfx/vec4.h	/^    operator       T*()       { return elt; }$/;"	f	class:gfx::TVec4
+operator []	include/gfx/mat2.h	/^    Vec2&       operator[](int i)       { return row[i]; }$/;"	f	class:gfx::Mat2
+operator []	include/gfx/mat2.h	/^    const Vec2& operator[](int i) const { return row[i]; }$/;"	f	class:gfx::Mat2
+operator []	include/gfx/mat3.h	/^    Vec3&       operator[](int i)       { return row[i]; }$/;"	f	class:gfx::Mat3
+operator []	include/gfx/mat3.h	/^    const Vec3& operator[](int i) const { return row[i]; }$/;"	f	class:gfx::Mat3
+operator []	include/gfx/mat4.h	/^    Vec4&       operator[](int i)       { return row[i]; }$/;"	f	class:gfx::Mat4
+operator []	include/gfx/mat4.h	/^    const Vec4& operator[](int i) const { return row[i]; }$/;"	f	class:gfx::Mat4
+operator []	include/gfx/vec2.h	/^    T  operator[](int i) const { return elt[i]; }$/;"	f	class:gfx::TVec2
+operator []	include/gfx/vec2.h	/^    T& operator[](int i)       { return elt[i]; }$/;"	f	class:gfx::TVec2
+operator []	include/gfx/vec3.h	/^    T  operator[](int i) const { return elt[i]; }$/;"	f	class:gfx::TVec3
+operator []	include/gfx/vec3.h	/^    T& operator[](int i)       { return elt[i]; }$/;"	f	class:gfx::TVec3
+operator []	include/gfx/vec4.h	/^    T  operator[](int i) const { return elt[i]; }$/;"	f	class:gfx::TVec4
+operator []	include/gfx/vec4.h	/^    T& operator[](int i)       { return elt[i]; }$/;"	f	class:gfx::TVec4
+operator ^	include/gfx/vec3.h	/^inline TVec3<T> operator^(const TVec3<T>& u, const TVec3<T>& v)$/;"	f	namespace:gfx
+operator const T*	include/gfx/vec2.h	/^    operator const T*()       { return elt; }$/;"	f	class:gfx::TVec2
+operator const T*	include/gfx/vec2.h	/^    operator const T*() const { return elt; }$/;"	f	class:gfx::TVec2
+operator const T*	include/gfx/vec3.h	/^    operator const T*()       { return elt; }$/;"	f	class:gfx::TVec3
+operator const T*	include/gfx/vec3.h	/^    operator const T*() const { return elt; }$/;"	f	class:gfx::TVec3
+operator const T*	include/gfx/vec4.h	/^    operator const T*()       { return elt; }$/;"	f	class:gfx::TVec4
+operator const T*	include/gfx/vec4.h	/^    operator const T*() const { return elt; }$/;"	f	class:gfx::TVec4
+operator const double*	include/gfx/mat2.h	/^    operator const double*()       { return row[0]; }$/;"	f	class:gfx::Mat2
+operator const double*	include/gfx/mat2.h	/^    operator const double*() const { return row[0]; }$/;"	f	class:gfx::Mat2
+operator const double*	include/gfx/mat3.h	/^    operator const double*()       { return row[0]; }$/;"	f	class:gfx::Mat3
+operator const double*	include/gfx/mat3.h	/^    operator const double*() const { return row[0]; }$/;"	f	class:gfx::Mat3
+operator const double*	include/gfx/mat4.h	/^    operator const double*()       { return row[0]; }$/;"	f	class:gfx::Mat4
+operator const double*	include/gfx/mat4.h	/^    operator const double*() const { return row[0]; }$/;"	f	class:gfx::Mat4
+operator const double*	include/gfx/symmat2.h	/^    operator const double*()       { return elt; }$/;"	f	class:gfx::SymMat2
+operator const double*	include/gfx/symmat2.h	/^    operator const double*() const { return elt; }$/;"	f	class:gfx::SymMat2
+operator const double*	include/gfx/symmat3.h	/^    operator const double*()       { return elt; }$/;"	f	class:gfx::SymMat3
+operator const double*	include/gfx/symmat3.h	/^    operator const double*() const { return elt; }$/;"	f	class:gfx::SymMat3
+operator const double*	include/gfx/symmat4.h	/^    operator const double*()       { return elt; }$/;"	f	class:gfx::SymMat4
+operator const double*	include/gfx/symmat4.h	/^    operator const double*() const { return elt; }$/;"	f	class:gfx::SymMat4
+operator double*	include/gfx/mat2.h	/^    operator       double*()       { return row[0]; }$/;"	f	class:gfx::Mat2
+operator double*	include/gfx/mat3.h	/^    operator       double*()       { return row[0]; }$/;"	f	class:gfx::Mat3
+operator double*	include/gfx/mat4.h	/^    operator       double*()       { return row[0]; }$/;"	f	class:gfx::Mat4
+operator double*	include/gfx/symmat2.h	/^    operator       double*()       { return elt; }$/;"	f	class:gfx::SymMat2
+operator double*	include/gfx/symmat3.h	/^    operator       double*()       { return elt; }$/;"	f	class:gfx::SymMat3
+operator double*	include/gfx/symmat4.h	/^    operator       double*()       { return elt; }$/;"	f	class:gfx::SymMat4
+outer_product	include/gfx/mat2.h	/^    static Mat2 outer_product(const Vec2 &u) { return outer_product(u,u); }$/;"	f	class:gfx::Mat2
+outer_product	include/gfx/mat2.h	/^    static Mat2 outer_product(const Vec2 &u, const Vec2 &v)$/;"	f	class:gfx::Mat2
+pVector	MouseForce.h	/^	std::vector<Particle*> pVector;$/;"	m	class:MouseForce
+pVector	TinkerToy.cpp	/^static std::vector<Particle*> pVector;$/;"	v	file:
+perp	include/gfx/vec2.h	/^template<class T> inline TVec2<T> perp(const TVec2<T> &v)$/;"	f	namespace:gfx
+post_display	TinkerToy.cpp	/^static void post_display ( void )$/;"	f	file:
+pre_display	TinkerToy.cpp	/^static void pre_display ( void )$/;"	f	file:
+proj	include/gfx/vec3.h	/^template<class T> inline TVec2<T> proj(const TVec3<T>& v)$/;"	f	namespace:gfx
+proj	include/gfx/vec4.h	/^template<class T> inline TVec3<T> proj(const TVec4<T>& v)$/;"	f	namespace:gfx
+random1	include/gfx/gfx.h	/^  inline double random1() { return (double)random() \/ (double)LONG_MAX; }$/;"	f	namespace:gfx
+random_byte	include/gfx/gfx.h	/^  inline char   random_byte() { return (char)(random() & 0xff); }$/;"	f	namespace:gfx
+remap_GUI	TinkerToy.cpp	/^static void remap_GUI()$/;"	f	file:
+reset	Particle.cpp	/^void Particle::reset()$/;"	f	class:Particle
+reshape_func	TinkerToy.cpp	/^static void reshape_func ( int width, int height )$/;"	f	file:
+rint	include/gfx/gfx.h	/^inline double rint(double x) { return floor(x + 0.5); }$/;"	f
+rotation_matrix_deg	include/gfx/mat4.h	/^inline Mat4 rotation_matrix_deg(double theta, const Vec3& axis)$/;"	f	namespace:gfx
+row	include/gfx/mat2.h	/^    Vec2 row[2];$/;"	m	class:gfx::Mat2
+row	include/gfx/mat3.h	/^    Vec3 row[3];$/;"	m	class:gfx::Mat3
+row	include/gfx/mat4.h	/^    Vec4 row[4];$/;"	m	class:gfx::Mat4
+row	include/gfx/symmat2.h	/^inline Vec2 SymMat2::row(int i) const$/;"	f	class:gfx::SymMat2
+row	include/gfx/symmat3.h	/^inline Vec3 SymMat3::row(int i) const$/;"	f	class:gfx::SymMat3
+row	include/gfx/symmat4.h	/^inline Vec4 SymMat4::row(int i) const$/;"	f	class:gfx::SymMat4
+row_extend	include/gfx/mat3.h	/^inline Mat3 row_extend(const Vec3& v) { return Mat3(v, v, v); }$/;"	f	namespace:gfx
+s	include/gfx/quat.h	/^    double s;			\/\/ Scalar component$/;"	m	class:gfx::Quat
+saveImageRGBA	imageio.cpp	/^bool saveImageRGBA(char *fileName, unsigned char *buffer, int width, int height) {$/;"	f
+scalar	include/gfx/quat.h	/^    double      scalar() const { return s; }$/;"	f	class:gfx::Quat
+scalar	include/gfx/quat.h	/^    double&     scalar()       { return s; }$/;"	f	class:gfx::Quat
+simulation_step	Solver.cpp	/^void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {$/;"	f
+size	include/gfx/symmat2.h	/^    static int size() { return 3; }$/;"	f	class:gfx::SymMat2
+size	include/gfx/symmat3.h	/^    static int size() { return 6; }$/;"	f	class:gfx::SymMat3
+size	include/gfx/symmat4.h	/^    static int size() {return 10;} $/;"	f	class:gfx::SymMat4
+solve	ConstraintSolver.cpp	/^void solve(std::vector< Particle * > particles, std::vector< Constraint * > constraints, float Ks, float Kd) {$/;"	f
+solver	TinkerToy.cpp	/^int solver = 1; \/\/ The solver to use: 1: Euler, 2: Midpoint, 3: Runge-Kutta$/;"	v
+subtract	ConstraintSolver.cpp	/^std::vector< float > subtract(std::vector< float > A, std::vector< float > B) {$/;"	f
+tet_normal	include/gfx/geom4d.h	/^inline Vec tet_normal(const Vec& v1, const Vec& v2, const Vec& v3, const Vec& v4)$/;"	f	namespace:gfx
+tet_raw_normal	include/gfx/geom4d.h	/^inline Vec tet_raw_normal(const Vec& v1, const Vec& v2, const Vec& v3, const Vec& v4)$/;"	f	namespace:gfx
+trace	include/gfx/mat2.h	/^inline double trace(const Mat2 &m)$/;"	f	namespace:gfx
+trace	include/gfx/mat3.h	/^inline double trace(const Mat3& m) { return m(0,0) + m(1,1) + m(2,2); }$/;"	f	namespace:gfx
+trace	include/gfx/mat4.h	/^inline double trace(const Mat4& m) { return m(0,0)+m(1,1)+m(2,2)+m(3,3); }$/;"	f	namespace:gfx
+trace	include/gfx/symmat2.h	/^inline double trace(const SymMat2& m) { return m(0,0) + m(1,1); }$/;"	f	namespace:gfx
+trace	include/gfx/symmat3.h	/^inline double trace(const SymMat3& m) { return m(0,0) + m(1,1) + m(2,2); }$/;"	f	namespace:gfx
+trace	include/gfx/symmat4.h	/^inline double trace(const SymMat4& m) { return m(0,0)+m(1,1)+m(2,2)+m(3,3); }$/;"	f	namespace:gfx
+transpose	include/gfx/mat2.h	/^inline Mat2 transpose(const Mat2 &m)$/;"	f	namespace:gfx
+transpose	include/gfx/mat3.h	/^inline Mat3 transpose(const Mat3& m)$/;"	f	namespace:gfx
+transpose	include/gfx/mat4.h	/^inline Mat4 transpose(const Mat4& m)$/;"	f	namespace:gfx
+transpose	include/gfx/symmat2.h	/^inline SymMat2 transpose(const SymMat2& m) { return m; }$/;"	f	namespace:gfx
+transpose	include/gfx/symmat3.h	/^inline SymMat3 transpose(const SymMat3& m) { return m; }$/;"	f	namespace:gfx
+transpose	include/gfx/symmat4.h	/^inline SymMat4 transpose(const SymMat4& m) { return m; }$/;"	f	namespace:gfx
+triangle_area	include/gfx/geom3d.h	/^    triangle_area(const Vec& v1,const Vec& v2,const Vec& v3)$/;"	f	namespace:gfx
+triangle_compactness	include/gfx/geom3d.h	/^    triangle_compactness(const Vec& v1, const Vec& v2, const Vec& v3)$/;"	f	namespace:gfx
+triangle_normal	include/gfx/geom3d.h	/^inline Vec triangle_normal(const Vec& v1, const Vec& v2, const Vec& v3)$/;"	f	namespace:gfx
+triangle_plane	include/gfx/geom3d.h	/^inline Plane triangle_plane(const Vec& v1, const Vec& v2, const Vec& v3)$/;"	f	namespace:gfx
+triangle_raw_normal	include/gfx/geom3d.h	/^inline Vec triangle_raw_normal(const Vec& v1, const Vec& v2, const Vec& v3)$/;"	f	namespace:gfx
+triangle_raw_plane	include/gfx/geom3d.h	/^inline Plane triangle_raw_plane(const Vec& v1, const Vec& v2, const Vec& v3)$/;"	f	namespace:gfx
+true	include/gfx/gfx.h	/^const bool true = 1;$/;"	v
+unitize	include/gfx/quat.h	/^inline Quat& unitize(Quat& q)  { q \/= sqrt(norm(q)); return q; }$/;"	f	namespace:gfx
+unitize	include/gfx/vec2.h	/^template<class T> inline void unitize(TVec2<T>& v)$/;"	f	namespace:gfx
+unitize	include/gfx/vec3.h	/^template<class T> inline void unitize(TVec3<T>& v)$/;"	f	namespace:gfx
+unitize	include/gfx/vec4.h	/^template<class T> inline void unitize(TVec4<T>& v)$/;"	f	namespace:gfx
+update_bbox	include/gfx/geom3d.h	/^void update_bbox(Vec& min, Vec& max, const List& items)$/;"	f	namespace:gfx
+v	include/gfx/quat.h	/^    Vec3 v;			\/\/ Vector component$/;"	m	class:gfx::Quat
+value_type	include/gfx/mat2.h	/^    typedef double value_type;$/;"	t	class:gfx::Mat2
+value_type	include/gfx/mat3.h	/^    typedef double value_type;$/;"	t	class:gfx::Mat3
+value_type	include/gfx/mat4.h	/^    typedef double value_type;$/;"	t	class:gfx::Mat4
+value_type	include/gfx/symmat2.h	/^    typedef double value_type;$/;"	t	class:gfx::SymMat2
+value_type	include/gfx/symmat3.h	/^    typedef double value_type;$/;"	t	class:gfx::SymMat3
+value_type	include/gfx/symmat4.h	/^    typedef double value_type;$/;"	t	class:gfx::SymMat4
+value_type	include/gfx/vec2.h	/^    typedef T value_type;$/;"	t	class:gfx::TVec2
+value_type	include/gfx/vec3.h	/^    typedef T value_type;$/;"	t	class:gfx::TVec3
+value_type	include/gfx/vec4.h	/^    typedef T value_type;$/;"	t	class:gfx::TVec4
+vecAddEqual	linearSolver.cpp	/^void vecAddEqual(int n, double r[], double v[])$/;"	f
+vecAssign	linearSolver.cpp	/^void vecAssign(int n, double v1[], double v2[])$/;"	f
+vecDiffEqual	linearSolver.cpp	/^void vecDiffEqual(int n, double r[], double v[])$/;"	f
+vecDot	linearSolver.cpp	/^double vecDot(int n, double v1[], double v2[])$/;"	f
+vecSqrLen	linearSolver.cpp	/^double vecSqrLen(int n, double v[])$/;"	f
+vecTimesScalar	linearSolver.cpp	/^void vecTimesScalar(int n, double v[], double s)$/;"	f
+vector	include/gfx/quat.h	/^    Vec3&       vector()       { return v; }$/;"	f	class:gfx::Quat
+vector	include/gfx/quat.h	/^    const Vec3& vector() const { return v; }$/;"	f	class:gfx::Quat
+vector_type	include/gfx/mat2.h	/^    typedef Vec2 vector_type;$/;"	t	class:gfx::Mat2
+vector_type	include/gfx/mat3.h	/^    typedef Vec3 vector_type;$/;"	t	class:gfx::Mat3
+vector_type	include/gfx/mat4.h	/^    typedef Vec4 vector_type;$/;"	t	class:gfx::Mat4
+vector_type	include/gfx/symmat2.h	/^    typedef Vec2 vector_type;$/;"	t	class:gfx::SymMat2
+vector_type	include/gfx/symmat3.h	/^    typedef Vec3 vector_type;$/;"	t	class:gfx::SymMat3
+vector_type	include/gfx/symmat4.h	/^    typedef Vec4 vector_type;$/;"	t	class:gfx::SymMat4
+win_id	TinkerToy.cpp	/^static int win_id;$/;"	v	file:
+win_x	TinkerToy.cpp	/^static int win_x, win_y;$/;"	v	file:
+win_y	TinkerToy.cpp	/^static int win_x, win_y;$/;"	v	file:
+~Constraint	Constraint.h	/^    virtual ~Constraint() { }$/;"	f	class:Constraint
+~Force	Force.h	/^	virtual ~Force(){}$/;"	f	class:Force
+~Particle	Particle.cpp	/^Particle::~Particle(void)$/;"	f	class:Particle
