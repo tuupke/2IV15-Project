@@ -4,6 +4,8 @@
 #include <gfx/vec2.h>
 #include <vector>
 
+extern bool VorticityConfinement;
+
 class RigidBody;
 
 class VectorField {

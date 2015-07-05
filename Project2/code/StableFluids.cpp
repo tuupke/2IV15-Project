@@ -48,6 +48,7 @@ extern void simulation_step(std::vector< Particle * > pVector, std::vector< Forc
 static std::vector< Particle * > pVector;
 static std::vector< Force * > fVector;
 static std::vector< Constraint * > fConstraint;
+bool VorticityConfinement = true;
 
 
 /*
@@ -356,6 +357,10 @@ static void key_func(unsigned char key, int x, int y) {
       	        pVector[i]->reset();
 	    break;
 	    
+	case '@':
+	    VorticityConfinement = !VorticityConfinement;
+	    printf("Vorticity confinement %s\n", VorticityConfinement ? "on" : "off");
+	    break;
 	    
         case 'f':
             drawLine = !drawLine;
@@ -495,6 +500,7 @@ int main(int argc, char **argv) {
     printf("\t Toggle particle display with the 'p' key ('P' resets particles)\n");
     printf("\t 's' creates a new particle system connected by springs (cloth)\n");
     printf("\t 'S' creates a new particle system without springs\n");
+    printf("\t '@' toggles vorticity confinement (It looks like a swirl :)\n");
     printf("\t Quit by pressing the 'q' key\n");
 
     dvel = 0;
