@@ -113,12 +113,14 @@ void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVecto
 	// Calculate fluid forces
 	mapped_position[0] = (int) ((pVector[i]->m_Position[0]) * gridsize);
 	mapped_position[1] = (int) ((pVector[i]->m_Position[1]) * gridsize);
-    
+
+	Vec2f relative_vel = Vec2f(0, 0);
 	// Simple segfault prevention
-	if (mapped_position[0] > 0 && mapped_position[1] > 0) {
-		Vec2f relative_vel = VelocityField->m_Field[IX_DIM(mapped_position[0], mapped_position[1])] - pVector[i]->m_Velocity;
-	        pVector[i]->m_ForceVector = pVector[i]->m_ForceVector + pVector[i]->m_Mass * relative_vel / dt;
-	}
+	if (mapped_position[0] > 0 && mapped_position[1] > 0 && mapped_position[0] < gridsize && mapped_position[1] < gridsize) {
+		relative_vel = VelocityField->m_Field[IX_DIM(mapped_position[0], mapped_position[1])] - pVector[i]->m_Velocity;
+	} 
+
+	pVector[i]->m_ForceVector = pVector[i]->m_ForceVector + pVector[i]->m_Mass * relative_vel / dt;
 
 	// Fix particles (point constraint). 
 	// TODO: Move this check to somewhere before all the calculations.
