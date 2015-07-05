@@ -181,6 +181,9 @@ void
 VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField, std::vector<RigidBody*> &bodies) {
     AddField(VelocityField);
 
+    if (VorticityConfinement) {
+        vorticityConfinement(a_SrcField);
+    }
 
     int N = a_SrcField->m_NumCells;
     float a = a_SrcField->m_Dt * VelocityField->m_Viscosity * N * N;
@@ -189,15 +192,8 @@ VectorField::TimeStep(VectorField *a_SrcField, VectorField *VelocityField, std::
     lin_solve(1, VelocityField, a_SrcField, 0, 0, a, 1 + 4 * a);
     lin_solve(2, VelocityField, a_SrcField, 1, 1, a, 1 + 4 * a);
 
-
-
     project(VelocityField, a_SrcField);
     // SWAP()
-
-
-    if (VorticityConfinement) {
-        vorticityConfinement(a_SrcField);
-    }
 
     advect(1, a_SrcField, VelocityField, VelocityField, VelocityField, 0, 0, 0, 1, a_SrcField->m_Dt);
     advect(2, a_SrcField, VelocityField, VelocityField, VelocityField, 1, 1, 0, 1, a_SrcField->m_Dt);
