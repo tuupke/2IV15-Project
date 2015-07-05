@@ -29,7 +29,7 @@
 static int N;
 static float dt, diff, visc;
 static float force, source;
-static int dvel;
+static int dvel, dpar;
 static int dump_frames;
 static int frame_number;
 bool drawLine = true;
@@ -48,6 +48,7 @@ extern void simulation_step(std::vector< Particle * > pVector, std::vector< Forc
 static std::vector< Particle * > pVector;
 static std::vector< Force * > fVector;
 static std::vector< Constraint * > fConstraint;
+bool VorticityConfinement = true;
 
 
 /*
@@ -81,13 +82,12 @@ static void clear_data(void) {
         bodies[i]->reset();
 }
 
-static void create_grid(int N)
+static void create_grid(int N, bool springs, bool diagonal_springs)
 {
-	bool diagonals = 0;
 
 	float screen_size = 0.9;
-	float ks_xy = 0.6;
-	float ks_diag = 1.0;
+	float ks_xy = 1.0;
+	float ks_diag = 1.3;
 	float particle_weight = 0.8;
 	float x, y, h;
 	int i, j;
@@ -103,42 +103,42 @@ static void create_grid(int N)
 			y = (j - 0.5f) * h;
 			position = Vec2f(x, y);
 
-//			printf("Position (%d, %d): %f, %f\n", i, j, x, y);
-
 			pVector.push_back(new Particle(position, particle_weight));
 		}
 	}
 
-	// X-springs
-	for (int y = 0; y < N; y++) {
-		for (int x = 0; x < N - 1; x++) {
-			fVector.push_back(new SpringForce(pVector[x + y * N],
-						pVector[x + 1 + y * N],
-						screen_size / (N - 1), ks_xy, 0.5));
-		}
- 	}
-
-	// Y-springs
-	for (int y = 0; y < N - 1; y++) {
-		for (int x = 0; x < N; x++) {
-			fVector.push_back(new SpringForce(pVector[x + y * N],
-						pVector[x + (y + 1) * N],
-						screen_size / (N - 1), ks_xy, 0.5));
-		}
-	}
-
-	// diagonal springs
-	if (diagonals) {
-		for (int y = 0; y < N - 1; y++) {
+	if (springs) {
+		// X-springs
+		for (int y = 0; y < N; y++) {
 			for (int x = 0; x < N - 1; x++) {
 				fVector.push_back(new SpringForce(pVector[x + y * N],
-						  pVector[x + 1 + (y + 1) * N],
-						  sqrt(2 * pow((screen_size / (N - 1)), 2)),
-						  ks_diag, 0.5));
-				fVector.push_back(new SpringForce(pVector[x + 1 + y * N],
-						  pVector[x + (y + 1) * N],
-						  sqrt(2 * pow((screen_size / (N - 1)), 2)),
-						  ks_diag, 0.5));
+							pVector[x + 1 + y * N],
+							screen_size / (N - 1), ks_xy, 0.5));
+			}
+		}
+
+		// Y-springs
+		for (int y = 0; y < N - 1; y++) {
+			for (int x = 0; x < N; x++) {
+				fVector.push_back(new SpringForce(pVector[x + y * N],
+							pVector[x + (y + 1) * N],
+							screen_size / (N - 1), ks_xy, 0.5));
+			}
+		}
+
+		// diagonal springs
+		if (diagonal_springs) {
+			for (int y = 0; y < N - 1; y++) {
+				for (int x = 0; x < N - 1; x++) {
+					fVector.push_back(new SpringForce(pVector[x + y * N],
+								pVector[x + 1 + (y + 1) * N],
+								sqrt(2 * pow((screen_size / (N - 1)), 2)),
+								ks_diag, 0.5));
+					fVector.push_back(new SpringForce(pVector[x + 1 + y * N],
+								pVector[x + (y + 1) * N],
+								sqrt(2 * pow((screen_size / (N - 1)), 2)),
+								ks_diag, 0.5));
+				}
 			}
 		}
 	}
@@ -151,8 +151,8 @@ static int allocate_data(void) {
     DensityField = new ScalarField(N, diff, dt);
     PrevDensityField = new ScalarField(N, diff, dt);
 
-    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.005f, 0.3f, 0.2f));
-    create_grid(8);
+    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.0f, 0.3f, 0.2f));
+    create_grid(32, false, true);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {
         fprintf(stderr, "cannot allocate data\n");
@@ -338,6 +338,33 @@ static void key_func(unsigned char key, int x, int y) {
         case 'V':
             dvel = !dvel;
             break;
+	case 'p':
+	    dpar = !dpar;
+	    break;
+	case 'P':
+	    for (int i = 0; i < pVector.size(); i++)
+      	        pVector[i]->reset();
+	    break;
+	case 's':
+	    pVector.clear();
+	    fVector.clear();
+	    create_grid(16, true, true);
+	    for (int i = 0; i < pVector.size(); i++)
+      	        pVector[i]->reset();
+	    break;
+	case 'S':
+	    pVector.clear();
+	    fVector.clear();
+	    create_grid(N, false, false);
+	    for (int i = 0; i < pVector.size(); i++)
+      	        pVector[i]->reset();
+	    break;
+	    
+	case '@':
+	    VorticityConfinement = !VorticityConfinement;
+	    printf("Vorticity confinement %s\n", VorticityConfinement ? "on" : "off");
+	    break;
+	    
         case 'f':
             drawLine = !drawLine;
             break;
@@ -385,9 +412,11 @@ static void display_func(void) {
     if (dvel) draw_velocity();
     else draw_density();
 
-//    draw_forces();
-//    draw_constraints();
-//    draw_particles();
+    if (dpar) {
+	    draw_forces();
+	    draw_constraints();
+	    draw_particles();
+    }
 
     for(int i = 0; i < bodies.size(); i++){
         bodies[i]->draw();
@@ -471,9 +500,14 @@ int main(int argc, char **argv) {
     printf("\t Add velocities with the left mouse button and dragging the mouse\n");
     printf("\t Toggle density/velocity display with the 'v' key\n");
     printf("\t Clear the simulation by pressing the 'c' key\n");
+    printf("\t Toggle particle display with the 'p' key ('P' resets particles)\n");
+    printf("\t 's' creates a new particle system connected by springs (cloth)\n");
+    printf("\t 'S' creates a new particle system without springs\n");
+    printf("\t '@' toggles vorticity confinement (It looks like a swirl :)\n");
     printf("\t Quit by pressing the 'q' key\n");
 
     dvel = 0;
+    dpar = 0;
 
     if (!allocate_data()) exit(1);
     clear_data();

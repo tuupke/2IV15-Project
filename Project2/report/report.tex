@@ -1,5 +1,5 @@
-\documentclass[a4paper,twoside,11pt]{article}
-\usepackage{a4wide,graphicx,fancyhdr,amsmath,amssymb,float,longtable, chronology}
+\documentclass[a4paper,twoside,11pt,twocolumn]{article}
+\usepackage{a4wide,graphicx,fancyhdr,amsmath,amssymb,float,longtable,chronology,caption,subcaption}
 \usepackage{algorithmic}
 \usepackage{hyperref}
 \usepackage{url}
@@ -14,30 +14,30 @@
 \newcommand{\ch}{\mathcal{CH}}
 \everymath{\displaystyle}
 \newcommand{\solution}[1]{\noindent{\bf Solution to Exercise #1:}}
-\newcommand{\rts}{Real-Time Systems}
+\newcommand{\scg}{Simulation in Computer Graphics}
 
 \fancypagestyle{plain}{%
-\fancyhf{}
-\fancyhead[LO,RE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
-\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \rts}
-\fancyfoot[LO,RE]{\sffamily\bfseries\large department of mathematics and computer science}
-\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
+	\fancyhf{}
+	\fancyhead[LO,RE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
+	\fancyhead[RO,LE]{\sffamily\bfseries\large 2IV15 \scg}
+	\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
+	\fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
 }
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[RO,LE]{\sffamily\bfseries\large Technische Universiteit Eindhoven}
 \fancyhead[LO,RE]{\sffamily\bfseries\large 2IV15 Simulation in Computer Graphics}
-\fancyfoot[LO,RE]{\sffamily\bfseries\large department of mathematics and computer science}
+\fancyfoot[LO,RE]{\sffamily\bfseries\large Department of Mathematics and Computer Science}
 \fancyfoot[RO,LE]{\sffamily\bfseries\thepage}
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\footrulewidth}{0pt}
 
 %-------------------------------- Title ----------------------------------
 
-\title{\sffamily\bfseries 2IV15 \rts\ - Project 1}
+\title{\sffamily\bfseries 2IV15 \scg\ - Project 1}
 \author{Arno Tiemersma \qquad Student number: 0716959 \\{\tt a.w.g.tiemersma@student.tue.nl}\\ \\Mart Pluijmaekers \qquad Student number: 0753117 \\{\tt m.h.l.pluijmaekers@student.tue.nl}}
 
 \date{\today}
@@ -46,7 +46,18 @@
 
 \begin{document}
 \maketitle
-\tableofcontents
-\newpage
+%\tableofcontents
+%\newpage
+\section{introduction}
+This paper describes our implementation of a fluid simulator based on papers by Jos Stam \cite{url:stam1, url:stam2}. It supports interaction with the fluid, interaction between the fluid and rigid bodies and interaction between the fluid and a particle system.
 
+\section{Density Advection}
+
+\begin{thebibliography}{9}
+ \bibitem{url:stam1}
+ Stam, Jos. \emph{''Stable Fluids''} Computer Graphics (SIGGRAPH 1999), ACM, 121-128. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf}
+ \bibitem{url:stam2}
+ Stam, Jos. \emph{''Real-Time Fluid Dynamics for Games''} Proceedings of the Game Developer
+Conference, March 2003. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf}
+\end{thebibliography}
 \end{document}
