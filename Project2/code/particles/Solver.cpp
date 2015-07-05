@@ -116,7 +116,7 @@ void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVecto
 
 	Vec2f relative_vel = Vec2f(0, 0);
 	// Simple segfault prevention
-	if (mapped_position[0] > 0 && mapped_position[1] > 0 && mapped_position[0] < gridsize && mapped_position[1] < gridsize) {
+	if (mapped_position[0] >= 0 && mapped_position[1] >= 0 && mapped_position[0] < gridsize && mapped_position[1] < gridsize) {
 		relative_vel = VelocityField->m_Field[IX_DIM(mapped_position[0], mapped_position[1])] - pVector[i]->m_Velocity;
 	} 
 

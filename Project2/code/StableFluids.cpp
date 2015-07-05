@@ -82,8 +82,8 @@ static void create_grid(int N, bool springs, bool diagonal_springs)
 {
 
 	float screen_size = 0.9;
-	float ks_xy = 0.6;
-	float ks_diag = 1.0;
+	float ks_xy = 1.0;
+	float ks_diag = 1.3;
 	float particle_weight = 0.8;
 	float x, y, h;
 	int i, j;
