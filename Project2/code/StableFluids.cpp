@@ -75,6 +75,67 @@ static void clear_data(void) {
     }
 }
 
+static void create_grid(int N)
+{
+	bool diagonals = 0;
+
+	float screen_size = 1.8;
+	float ks_xy = 0.6;
+	float ks_diag = 1.0;
+	float particle_weight = 0.8;
+	float x, y, i, j, h;
+	Vec2f position;
+
+	pVector.clear();
+
+	h = 1.0f / N;
+
+	for (i = 1; i <= N; i++) {
+		x = (i - 0.5f) * h;
+		for (j = 1; j <= N; j++) {
+			y = (j - 0.5f) * h;
+			position = Vec2f(x, y);
+
+			pVector.push_back(new Particle(position, particle_weight));
+
+		}
+	}
+
+	// X-springs
+	for (int y = 0; y < N; y++) {
+		for (int x = 0; x < N - 1; x++) {
+			fVector.push_back(new SpringForce(pVector[x + y * N],
+						pVector[x + 1 + y * N],
+						screen_size / (N - 1), ks_xy, 0.5));
+		}
+ 	}
+
+	// Y-springs
+	for (int y = 0; y < N - 1; y++) {
+		for (int x = 0; x < N; x++) {
+			fVector.push_back(new SpringForce(pVector[x + y * N],
+						pVector[x + (y + 1) * N],
+						screen_size / (N - 1), ks_xy, 0.5));
+		}
+	}
+
+	// diagonal springs
+	if (diagonals) {
+		for (int y = 0; y < N - 1; y++) {
+			for (int x = 0; x < N - 1; x++) {
+				fVector.push_back(new SpringForce(pVector[x + y * N],
+						  pVector[x + 1 + (y + 1) * N],
+						  sqrt(2 * pow((screen_size / (N - 1)), 2)),
+						  ks_diag, 0.5));
+				fVector.push_back(new SpringForce(pVector[x + 1 + y * N],
+						  pVector[x + (y + 1) * N],
+						  sqrt(2 * pow((screen_size / (N - 1)), 2)),
+						  ks_diag, 0.5));
+			}
+		}
+	}
+}
+
 static int allocate_data(void) {
     FieldToolbox::Create();
     VelocityField = new VectorField(N, visc, dt);
@@ -83,6 +144,7 @@ static int allocate_data(void) {
     PrevDensityField = new ScalarField(N, diff, dt);
 
     bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.0f, 0.3f, 0.2f));
+    create_grid(8);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {
         fprintf(stderr, "cannot allocate data\n");
@@ -186,6 +248,25 @@ static void draw_density(void) {
     glEnd();
 }
 
+static void draw_particles(void) {
+    int size = pVector.size();
+
+    for (int ii = 0; ii < size; ii++) {
+        pVector[ii]->draw();
+    }
+}
+
+static void draw_forces(void) {
+    for (int i = 0; i < fVector.size(); i++)
+        fVector[i]->draw();
+}
+
+static void draw_constraints(void) {
+    for (int i = 0; i < fConstraint.size(); i++) {
+        fConstraint[i]->draw();
+    }
+}
+ 
 /*
 ----------------------------------------------------------------------
 relates mouse movements to forces sources
@@ -295,6 +376,10 @@ static void display_func(void) {
 
     if (dvel) draw_velocity();
     else draw_density();
+
+    draw_forces();
+    draw_constraints();
+    draw_particles();
 
     for(int i = 0; i < bodies.size(); i++){
         bodies[i]->draw();
