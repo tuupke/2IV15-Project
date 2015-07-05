@@ -12,6 +12,7 @@ public:
 
     virtual void act(VectorField *oldField, VectorField *newField) = 0;
 
+    virtual void emptyBody(VectorField *oldField, VectorField *newField) = 0;
 
 
 };

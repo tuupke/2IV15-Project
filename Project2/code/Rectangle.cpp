@@ -67,6 +67,9 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
 
     Vec2f aggregate = Vec2f(0.0f, 0.0f);
 
+    inner.clear() ;// = new std::vector<int>();
+    edge.clear();// = new std::vector<int>();
+
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
             float iI = (float) i / 64;
@@ -88,27 +91,52 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
 
                         int index = IX(vv, hh);
                         if (!pnpoly(polyNum, vertices, vI, hI)) {
-                            aggregate += newField->m_Field[index];
+                            aggregate += oldField->m_Field[index];
                             newField->m_Field[index] += Velocity;
+                            std::vector<int>::iterator it = std::find(edge.begin(), edge.end(), index);
+                            if(it == edge.end())
+                                edge.push_back(index);
                         } else {
-                            newField->m_Field[index] = Vec2f(0.0f, 0.0f);
+//                            newField->m_Field[index] = Vec2f(0.0f, 0.0f);
+                            std::vector<int>::iterator it = std::find(inner.begin(), inner.end(), index);
+                            if(it == inner.end())
+                                inner.push_back(index);
                         }
                     }
                 }
-                newField->m_Field[IX(i, j)] = Vec2f(0.0f, 0.0f);
+                int index = IX(i, j);
+//                newField->m_Field[index] = Vec2f(0.0f, 0.0f);
+                std::vector<int>::iterator it = std::find(inner.begin(), inner.end(), index);
+                if(it == inner.end())
+                    inner.push_back(index);
             }
         }
     }
 
+    double offset = 12;
+
     if (aggregate[0] != 0 || aggregate[1] != 0) {
         aggregate /= n * 6;
         center += aggregate;
-        Velocity += (Velocity - aggregate) / 2000;
-        Velocity *= 0.00002f;
+        Velocity += (Velocity - aggregate) / offset;
+        Velocity *= (1-0.00002f);
         float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
         aggregateAngle = aggregateAngle < 0.002f ? 0 : aggregateAngle;
         angle += aggregateAngle*0.2f;
         angle = fmod(angle, M_PI);
+    }
+
+    for(int i = 0; i < edge.size(); i++){
+//        std::cout << "Setting edge value " << edge[i] << "\n";
+        oldField->m_Field[edge[i]] = -oldField->m_Field[edge[i]] + Velocity * offset;
+    }
+
+    std::cout << Velocity << "\n";
+}
+
+void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
+    for(int i = 0; i < inner.size(); i++){
+        newField->m_Field[inner[i]] = Vec2f(0.0f, 0.0f);
     }
 }
 
