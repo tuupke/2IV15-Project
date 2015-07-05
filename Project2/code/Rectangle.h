@@ -26,6 +26,7 @@ private:
     float width;
     float height;
     float angle;
+    float rotDif;
 
     std::vector<int> edge;
     std::vector<int> inner;

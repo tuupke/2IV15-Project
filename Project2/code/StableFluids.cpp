@@ -151,7 +151,7 @@ static int allocate_data(void) {
     DensityField = new ScalarField(N, diff, dt);
     PrevDensityField = new ScalarField(N, diff, dt);
 
-    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.0f, 0.3f, 0.2f));
+    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.01f, 0.3f, 0.2f));
     create_grid(32, false, true);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {

@@ -8,6 +8,7 @@
 Rectangle::Rectangle(const Vec2f &c, float i, float w, float h) :
         center(c), inertia(i), width(w), height(h), Velocity(Vec2f(0.0f, 0.0f)) {
     angle = 0;
+    rotDif = 0;
 }
 
 bool pnpoly(int nvert, Vec2f vertices[], float testx, float testy) {
@@ -91,6 +92,7 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
 
                         int index = IX(vv, hh);
                         if (!pnpoly(polyNum, vertices, vI, hI)) {
+//                            std::cout << "Adding to aggregate " << newField->m_Field[index] << "\n";
                             aggregate += oldField->m_Field[index];
                             std::vector<int>::iterator it = std::find(edge.begin(), edge.end(), index);
                             if(it == edge.end())
@@ -111,21 +113,17 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
         }
     }
 
-
     if (aggregate[0] != 0 || aggregate[1] != 0) {
-        aggregate /= n * 6;
+        aggregate /= n;
         Vec2f diff =  (Velocity - aggregate);
-        center += diff;
-        Velocity += diff * inertia * 0.1f;
+        Velocity += diff * inertia;
+//        std::cout << "Velocity " << Velocity << " diff " << diff << " inertia " << inertia << "\n";
+        center += Velocity;
         float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
-//        std<<
+        rotDif = aggregateAngle;
         angle += aggregateAngle * inertia;
         angle = fmod(angle, M_PI);
     }
-//
-//    for(int i = 0; i < edge.size(); i++){
-//        newField->m_Field[edge[i]] = -oldField->m_Field[edge[i]]*10000000000;// + Velocity * inertia;
-//    }
 }
 
 void Rectangle::reset(){
@@ -139,9 +137,26 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
         newField->m_Field[inner[i]] = Vec2f(0.0f, 0.0f);
     }
 
+    int centerXCell = (float) center[0] / 64;
+    int centerYCell = float(64 - center[1]) / 64;
+
+    int n = newField->m_NumCells;
+
     for(int i = 0; i < edge.size(); i++){
-//        std::cout << "Edge " << i << " has vector: " << newField->m_Field[edge[i]] << "\n";
-        newField->m_Field[edge[i]] = Velocity;
+        int vectX = edge[i] % n - centerXCell;
+        int vectY = edge[i] / n - centerYCell;
+
+        int length = sqrt(vectX * vectX + vectY * vectY);
+
+        Vec2f perp = Vec2f(-vectY, vectX);
+
+        perp /= length;
+
+        newField->m_Field[edge[i]] = Velocity - perp * rotDif / 100;
+//        newField->m_Field[edge[i]] *= 1.001f;
+
+        // v = P2 - P1
+        // P3 = (-v.y, v.x) / Sqrt(v.x^2 + v.y^2) * h
     }
 }
 
