@@ -14,5 +14,7 @@ public:
 
     virtual void emptyBody(VectorField *oldField, VectorField *newField) = 0;
 
+    virtual void reset() = 0;
+
 
 };

@@ -16,6 +16,8 @@ public :
 
     void emptyBody(VectorField *oldField, VectorField *newField);
 
+    void reset();
+
 private:
 
     Vec2f center;

@@ -270,8 +270,8 @@ static void draw_particles(void) {
     int size = pVector.size();
     static int count = 0;
 
-    if (count++ == 0)
-	    std::cout << pVector.size();
+//    if (count++ == 0)
+//	    std::cout << pVector.size();
 
     for (int ii = 0; ii < size; ii++) {
         pVector[ii]->draw();

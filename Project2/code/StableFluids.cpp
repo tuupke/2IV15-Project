@@ -76,6 +76,9 @@ static void clear_data(void) {
 
     for (i = 0; i < pVector.size(); i++)
 	    pVector[i]->reset();
+
+    for(i = 0; i < bodies.size(); i++)
+        bodies[i]->reset();
 }
 
 static void create_grid(int N)
@@ -100,7 +103,7 @@ static void create_grid(int N)
 			y = (j - 0.5f) * h;
 			position = Vec2f(x, y);
 
-			printf("Position (%d, %d): %f, %f\n", i, j, x, y);
+//			printf("Position (%d, %d): %f, %f\n", i, j, x, y);
 
 			pVector.push_back(new Particle(position, particle_weight));
 		}
@@ -148,7 +151,7 @@ static int allocate_data(void) {
     DensityField = new ScalarField(N, diff, dt);
     PrevDensityField = new ScalarField(N, diff, dt);
 
-    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.0f, 0.3f, 0.2f));
+    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.005f, 0.3f, 0.2f));
     create_grid(8);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {

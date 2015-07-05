@@ -103,28 +103,35 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
                     }
                 }
                 int index = IX(i, j);
+                std::vector<int>::iterator iv = std::find(edge.begin(), edge.end(), index);
                 std::vector<int>::iterator it = std::find(inner.begin(), inner.end(), index);
-                if(it == inner.end())
+                if(it == inner.end() && iv == edge.end())
                     inner.push_back(index);
             }
         }
     }
 
-    double offset = 20;
 
     if (aggregate[0] != 0 || aggregate[1] != 0) {
         aggregate /= n * 6;
-        center += aggregate;
-        Velocity += (Velocity - aggregate) / offset;
-        Velocity *= (1-0.00002f);
+        Vec2f diff =  (Velocity - aggregate);
+        center += diff;
+        Velocity += diff * inertia * 0.1f;
         float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
-        angle += aggregateAngle*0.2f;
+//        std<<
+        angle += aggregateAngle * inertia;
         angle = fmod(angle, M_PI);
     }
+//
+//    for(int i = 0; i < edge.size(); i++){
+//        newField->m_Field[edge[i]] = -oldField->m_Field[edge[i]]*10000000000;// + Velocity * inertia;
+//    }
+}
 
-    for(int i = 0; i < edge.size(); i++){
-        newField->m_Field[edge[i]] = -oldField->m_Field[edge[i]] + Velocity * offset;
-    }
+void Rectangle::reset(){
+    Velocity = Vec2f(0.0f, 0.0f);
+    angle = 0;
+    center = Vec2f(0.5f, 0.5f);
 }
 
 void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
@@ -132,7 +139,10 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
         newField->m_Field[inner[i]] = Vec2f(0.0f, 0.0f);
     }
 
-
+    for(int i = 0; i < edge.size(); i++){
+//        std::cout << "Edge " << i << " has vector: " << newField->m_Field[edge[i]] << "\n";
+        newField->m_Field[edge[i]] = Velocity;
+    }
 }
 
 void Rectangle::draw() {
