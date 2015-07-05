@@ -382,9 +382,9 @@ static void display_func(void) {
     if (dvel) draw_velocity();
     else draw_density();
 
-    draw_forces();
-    draw_constraints();
-    draw_particles();
+//    draw_forces();
+//    draw_constraints();
+//    draw_particles();
 
     for(int i = 0; i < bodies.size(); i++){
         bodies[i]->draw();
