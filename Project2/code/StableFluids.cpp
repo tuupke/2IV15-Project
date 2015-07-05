@@ -73,17 +73,21 @@ static void clear_data(void) {
         (*DensityField)[i] = 0.0f;
         (*PrevDensityField)[i] = 0.0f;
     }
+
+    for (i = 0; i < pVector.size(); i++)
+	    pVector[i]->reset();
 }
 
 static void create_grid(int N)
 {
 	bool diagonals = 0;
 
-	float screen_size = 1.8;
+	float screen_size = 0.9;
 	float ks_xy = 0.6;
 	float ks_diag = 1.0;
 	float particle_weight = 0.8;
-	float x, y, i, j, h;
+	float x, y, h;
+	int i, j;
 	Vec2f position;
 
 	pVector.clear();
@@ -96,8 +100,9 @@ static void create_grid(int N)
 			y = (j - 0.5f) * h;
 			position = Vec2f(x, y);
 
-			pVector.push_back(new Particle(position, particle_weight));
+			printf("Position (%d, %d): %f, %f\n", i, j, x, y);
 
+			pVector.push_back(new Particle(position, particle_weight));
 		}
 	}
 
