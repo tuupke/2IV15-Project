@@ -3,6 +3,8 @@
 #include "VectorField.h"
 #include "RigidBody.h"
 #include "gfx/vec2.h"
+#include <vector>
+#include <algorithm>
 
 class Rectangle : public RigidBody {
 public :
@@ -12,6 +14,8 @@ public :
 
     void act(VectorField *oldField, VectorField *newField);
 
+    void emptyBody(VectorField *oldField, VectorField *newField);
+
 private:
 
     Vec2f center;
@@ -20,5 +24,8 @@ private:
     float width;
     float height;
     float angle;
+
+    std::vector<int> edge;
+    std::vector<int> inner;
 
 };
