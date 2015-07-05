@@ -48,16 +48,51 @@
 \maketitle
 %\tableofcontents
 %\newpage
-\section{introduction}
-This paper describes our implementation of a fluid simulator based on papers by Jos Stam \cite{url:stam1, url:stam2}. It supports interaction with the fluid, interaction between the fluid and rigid bodies and interaction between the fluid and a particle system.
+\section{Introduction}
+This paper describes our implementation of a fluid simulator based on papers by Jos Stam \cite{url:stam1, url:stam2}. It supports interaction with the fluid, interaction between the fluid and rigid bodies and interaction between the fluid and a particle system. This text will focus on the changes we made to the skeleton code, and will not describe the skeleton code fully.
 
-\section{Density Advection}
+\section{Advection and Projection}
+Both the advection functions and the projection function we implemented follow the methods described in \cite{url:stam1} and \cite{url:stam2}.
+
+\subsection{Advection}
+The density advection function models the densities as a number of particles that are backtraced linearly. Using this method the density value in the middle of a grid cell can be calculated. The velocity advection function is implemented in the same way, only for two dimensions.
+
+\subsection{Projection}
+The projection function ensures that the velocity field conserves mass. This is done by subtracting the gradient field from the output of the advection steps. This is done by solving the Poisson equation as described in \cite{url:stam2}. Since this is a sparse system that can be solved using Gauss-Seidel relaxation. The \texttt{project()} function is called twice during the calculation of one time step, since the advection routine behaves more accurately when the velocity field conserves mass. 
+
+\section{Vorticity Confinement}
+Due to the numerical dissipation, small turbulences in the simulated fluid are damped out. Vorticity confinement is a technique that adds these small scale turbulences back to the simulation.
+ 
+The implementation of our vorticity confinement function is based on \cite{fedkiw}. It works by adding small-scale 'rolls' in places where they would physically occur, by looking at the vorticity \[ \mathbf{\omega} = \nabla \times \mathbf{u} \] which normally provides the small scale turbulence. The idea is to add back the dampened out vortices. This is done by calculating normalized vorticity location vectors \textbf{N},  \[\mathbf{\eta} = \nabla|\omega| \]\[ \mathbf{N} = \frac{\mathbf{\eta}}{|\mathbf{\eta}|} \] that indicate where higher vorticity concentrations are located. These are then used to calculate the force of the vortex \[ \mathbf{f_{conf}} = \epsilon\cdot h\cdot(\mathbf{N} \times \mathbf{\omega}) \] where $\epsilon > 0$ determines the amount of detail added back, and spacial discretization $h$ is used to make sure that the correct solution is obtained independent of the mesh resolution.
+
+\section{Particles and Fluids}
+We had to slightly adapt the particle system to be able to simulate the effect of the fluid flow. During the force accumulation, the force applied by the velocity field is calculated as a function of the relative speed of the particle compared to the particle's discretized position in the velocity field \[ \mathbf{F} = \mathbf{m\frac{v}{dt}} \]. Taking this force into account the particle system will follow the fluid streams as shown in Figure \ref{fig:particles}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.45\textwidth]{particles}
+	\caption{Particles overlayed on top of the fluid simulation}
+	\label{fig:particles}
+\end{figure}
+
+For solving the particle system we used the Runge-Kutta 4 solver we implemented during Lab 1, since that gives the most stable and accurate results. Using this particle system allowed us to simulate both uncoupled, unconstrained particles that affected buy the fluid and a primitive cloth simulation using particles connected by springs as shown in Figure \ref{fig:cloth}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.45\textwidth]{cloth}
+	\caption{Cloth affected by the fluid}
+	\label{fig:cloth}
+\end{figure}
+
+These results could be made more physically accurate by interpolating the particle's position instead of rounding it down, but since the current implementation gives visually accurate results we decided to focus on rigid bodies first.
 
 \begin{thebibliography}{9}
- \bibitem{url:stam1}
- Stam, Jos. \emph{''Stable Fluids''} Computer Graphics (SIGGRAPH 1999), ACM, 121-128. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf}
- \bibitem{url:stam2}
- Stam, Jos. \emph{''Real-Time Fluid Dynamics for Games''} Proceedings of the Game Developer
-Conference, March 2003. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf}
+	\bibitem{url:stam1}
+		Stam, Jos. \emph{''Stable Fluids''} Computer Graphics (SIGGRAPH 1999), ACM, 121-128. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf}
+	\bibitem{url:stam2}
+		Stam, Jos. \emph{''Real-Time Fluid Dynamics for Games''} Proceedings of the Game Developer Conference, March 2003. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf}
+	\bibitem{fedkiw}
+		Fedkiw, R., Stam, J., Jensen, H. \emph{Visual Simulation of Smoke.} Computer Graphics (SIGGRAPH 2001), ACM, 15-22.
+	
 \end{thebibliography}
 \end{document}

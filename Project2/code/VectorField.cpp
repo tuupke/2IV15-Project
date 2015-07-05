@@ -174,6 +174,7 @@ void vorticityConfinement(VectorField *slachtoffer) {
     }
 
     delete forces;
+    delete sign;
 }
 
 void
