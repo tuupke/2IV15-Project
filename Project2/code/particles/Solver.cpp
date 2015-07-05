@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#define IX_DIM(i, j) ((i)+(gridsize+2)*(j))
+
 extern int solver;
 
 
@@ -14,9 +16,11 @@ void Euler(std::vector< Particle * > pVector, std::vector< Force * > fVector, fl
 
 void Midpoint(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints);
 
-void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints);
+void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints, VectorField *VelocityField);
 
 void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVector, std::vector< Constraint * > constraints);
+
+void FluidVelocity(std::vector< Particle * > pVector, VectorField *VelocityField);
 
 #define DAMP 0.98f
 #define RAND (((rand()%2000)/1000.f)-1.f)
@@ -30,7 +34,7 @@ void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > f
  *     if (solver == 3)
  */
 	/* Always use RK4, since it's the most stable */
-        RungeKutta(pVector, fVector, dt, constraints);
+        RungeKutta(pVector, fVector, dt, constraints, VelocityField);
 }
 
 
@@ -70,7 +74,7 @@ void Midpoint(std::vector< Particle * > pVector, std::vector< Force * > fVector,
     }
 }
 
-void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints) {
+void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > constraints, VectorField *VelocityField) {
     int psize = pVector.size();
 
     std::vector< Vec2f > begin_pos;
@@ -126,6 +130,25 @@ void RungeKutta(std::vector< Particle * > pVector, std::vector< Force * > fVecto
         pVector[i]->m_Position = begin_pos[i] + dt / 6.0 * (l1[i] + 2 * l2[i] + 2 * l3[i] + l4[i]);
         pVector[i]->m_Velocity = begin_vel[i] + dt / 6.0 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
     }
+	
+    FluidVelocity(pVector, VelocityField);
+}
+
+void FluidVelocity(std::vector< Particle * > pVector, VectorField *VelocityField) 
+{
+	// Assume the particles are in a square grid
+	int N_particles = pVector.size();
+	int gridsize = VelocityField->m_NumCells;
+	TVec2<int> mapped_position;
+
+	for (int i = 0; i < N_particles; i++) {
+		mapped_position[0] = (int) ((pVector[i]->m_Position[0]) * gridsize);
+		mapped_position[1] = (int) ((pVector[i]->m_Position[1]) * gridsize);
+
+		// Simple segfault prevention
+		if (mapped_position[0] > 0 && mapped_position[1] > 0) 
+			pVector[i]->m_Velocity = pVector[i]->m_Velocity + 1*VelocityField->m_Field[IX_DIM(mapped_position[0], mapped_position[1])];
+	}
 }
 
 void CalcForces(std::vector< Particle * > pVector, std::vector< Force * > fVector, std::vector< Constraint * > constraints) {
