@@ -29,7 +29,7 @@
 static int N;
 static float dt, diff, visc;
 static float force, source;
-static int dvel;
+static int dvel, dpar;
 static int dump_frames;
 static int frame_number;
 bool drawLine = true;
@@ -80,7 +80,7 @@ static void clear_data(void) {
 
 static void create_grid(int N)
 {
-	bool diagonals = 0;
+	bool diagonals = true;
 
 	float screen_size = 0.9;
 	float ks_xy = 0.6;
@@ -149,7 +149,7 @@ static int allocate_data(void) {
     PrevDensityField = new ScalarField(N, diff, dt);
 
     bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.0f, 0.3f, 0.2f));
-    create_grid(8);
+    create_grid(16);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {
         fprintf(stderr, "cannot allocate data\n");
@@ -335,6 +335,14 @@ static void key_func(unsigned char key, int x, int y) {
         case 'V':
             dvel = !dvel;
             break;
+	case 'p':
+	    dpar = !dpar;
+	    break;
+	case 'P':
+	    for (int i = 0; i < pVector.size(); i++)
+      	        pVector[i]->reset();
+	    break;
+	    
         case 'f':
             drawLine = !drawLine;
             break;
@@ -382,9 +390,11 @@ static void display_func(void) {
     if (dvel) draw_velocity();
     else draw_density();
 
-//    draw_forces();
-//    draw_constraints();
-//    draw_particles();
+    if (dpar) {
+	    draw_forces();
+	    draw_constraints();
+	    draw_particles();
+    }
 
     for(int i = 0; i < bodies.size(); i++){
         bodies[i]->draw();
@@ -468,9 +478,11 @@ int main(int argc, char **argv) {
     printf("\t Add velocities with the left mouse button and dragging the mouse\n");
     printf("\t Toggle density/velocity display with the 'v' key\n");
     printf("\t Clear the simulation by pressing the 'c' key\n");
+    printf("\t Toggle particle display with the 'p' key ('P' resets particles)\n");
     printf("\t Quit by pressing the 'q' key\n");
 
     dvel = 0;
+    dpar = 0;
 
     if (!allocate_data()) exit(1);
     clear_data();
