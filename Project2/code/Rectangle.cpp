@@ -86,8 +86,8 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
                         int vv = i + v;
                         int hh = j + h;
 
-                        float vI = (float) vv / 64;
-                        float hI = float(64 - hh) / 64;
+                        float vI = (float) vv / n;
+                        float hI = float(n - hh) / n;
 
                         int index = IX(vv, hh);
                         if (!pnpoly(polyNum, vertices, vI, hI)) {
