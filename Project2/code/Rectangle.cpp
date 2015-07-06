@@ -15,9 +15,8 @@ bool pnpoly(int nvert, Vec2f vertices[], float testx, float testy) {
     int i, j;
     bool c = false;
     for (i = 0, j = nvert - 1; i < nvert; j = i++) {
-        if (((vertices[i][1] > testy) != (vertices[j][1] > testy)) &&
-            (testx < (vertices[j][0] - vertices[i][0]) * (testy - vertices[i][1]) / (vertices[j][1] - vertices[i][1]) +
-                     vertices[i][0]))
+        if (((vertices[i][1] > testy) != (vertices[j][1] > testy)) && 
+	     (testx < ((vertices[j][0] - vertices[i][0]) * (testy - vertices[i][1]) / (vertices[j][1] - vertices[i][1]) + vertices[i][0])))
             c = !c;
     }
     return c;
@@ -73,8 +72,8 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
 
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
-            float iI = (float) i / 64;
-            float jI = float(64 - j) / 64;
+            float iI = (float)	    i  / (float) n;
+            float jI = (float) (n - j) / (float) n;
 
             if (pnpoly(polyNum, vertices, iI, jI)) {
 
