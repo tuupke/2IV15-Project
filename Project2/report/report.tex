@@ -100,6 +100,21 @@ These results could be made more physically accurate by interpolating the partic
 Using the particle system in combination with the fluid simulation can result in complex, visually pleasing images, such as those shown in this paper.
 
 \section{Rigid Bodies}
+The rigid body system was implemented in a unique fashion. We decided to implement a rigid bodies in a simplified manner. Every rigid body has some properties: positition, velocity, current angle and inertia. The challenge was to update these properties using only the velocity field while making sure that not only the velocity field affects the rigid bodies but the rigid body also affects the velocity field such that a two-way coupling is achieved. We will tackle updating these properties separately; inertia -ofcourse - will not have to be updated. We assumed that the rigid bodies have a constant density and can therefore be - and is presumed to be -  precomputed.
+
+Since rigid bodies are assumed to be solid, we know that there should not be any fluid inside the rigid body. Therefor all interactions between the rigid body and the set density take place on the contact edge of the rigid body and the fluid. We need to start with defining a method to detect figure out the cells which are (partly) covered by the rigid body. For this we use the \emph{PNPOLY}\cite{url:pnpoly} method described by W. Randolph Franklin.
+
+Using his method we detect all grid cells which are on the edge. This detection is done by checking all neighbours of each cell. If a cell has at least one neighbour which does not lie in the rigid body we know we have an edge cell. We accumulate the velocities of these edge cells for updating our values. Note that we could scale them by the scalers stored in the density field. Assuming that the entire field initially is uniformly filled with a liquid and ``adding'' density only colours part of it, removes the need for this scaling. Since it enables us to only think of pressure - given by the velocities - instead of pressure given by a function of the velocity and density.
+
+After the summation we have to derive the coupling to our rigid body as described in the following sections.
+
+\subsection{Angle}
+
+\subsection{Velocity}
+
+\subsection{Position}
+
+\subsection{Updating the velocity field}
 
 \section{Conclusion}
 In this paper, we presented a fluid simulator following the methods described in \cite{url:stam1, url:stam2}, with added vorticity confinement, fluid interaction and interaction with rigid bodies and a particle system. There was not much visual difference between the simulation with and without vorticity confinement at the grid sizes and values for $\epsilon$ we experimented with.
@@ -114,6 +129,7 @@ The motion of the simulated fluid looks visually accurate, and using the particl
 		Stam, Jos. \emph{''Real-Time Fluid Dynamics for Games''} Proceedings of the Game Developer Conference, March 2003. \url{http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf}
 	\bibitem{fedkiw}
 		Fedkiw, R., Stam, J., Jensen, H. \emph{Visual Simulation of Smoke.} Computer Graphics (SIGGRAPH 2001), ACM, 15-22.
-	
+	\bibitem{url:pnpoly}
+		Franklin, W., Randolph. \url{http://www.ecse.rpi.edu/\~wrf/Research/Short\_Notes/pnpoly.html}
 \end{thebibliography}
 \end{document}
