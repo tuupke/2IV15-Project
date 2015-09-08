@@ -92,7 +92,7 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
                         int index = IX(vv, hh);
                         if (!pnpoly(polyNum, vertices, vI, hI)) {
 //                            std::cout << "Adding to aggregate " << newField->m_Field[index] << "\n";
-                            aggregate += oldField->m_Field[index];
+                            aggregate += newField->m_Field[index];
                             std::vector<int>::iterator it = std::find(edge.begin(), edge.end(), index);
                             if(it == edge.end())
                                 edge.push_back(index);
@@ -113,21 +113,22 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
     }
 
     if (aggregate[0] != 0 || aggregate[1] != 0) {
-        aggregate /= n;
+        aggregate /= n * n;
         Vec2f diff =  (Velocity - aggregate);
         Velocity += diff * inertia;
-//        std::cout << "Velocity " << Velocity << " diff " << diff << " inertia " << inertia << "\n";
+//        std::cout << "Aggregate " << aggregate << " Velocity " << Velocity << " diff " << diff << " inertia " << inertia << "\n";
         center += Velocity;
         float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
-        rotDif = aggregateAngle;
-        angle += aggregateAngle * inertia;
-        angle = fmod(angle, M_PI);
+        rotDif = aggregateAngle - angle;
+//        angle -= rotDif * inertia;
+//        angle = fmod(angle, 2*M_PI);
     }
 }
 
 void Rectangle::reset(){
     Velocity = Vec2f(0.0f, 0.0f);
     angle = 0;
+    rotDif = 0;
     center = Vec2f(0.5f, 0.5f);
 }
 
@@ -141,7 +142,7 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
 
     int n = newField->m_NumCells;
 
-    for(int i = 0; i < edge.size(); i++){
+    for(int i = 1; i < edge.size()-1; i++){
         int vectX = edge[i] % n - centerXCell;
         int vectY = edge[i] / n - centerYCell;
 
@@ -151,7 +152,7 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
 
         perp /= length;
 
-        newField->m_Field[edge[i]] = Velocity - perp * rotDif / 100;
+//        newField->m_Field[edge[i]] = Velocity - perp * rotDif / 100;
 //        newField->m_Field[edge[i]] *= 1.001f;
 
         // v = P2 - P1
