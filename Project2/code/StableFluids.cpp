@@ -44,6 +44,7 @@ static int mouse_down[3];
 static int omx, omy, mx, my;
 
 extern void simulation_step(std::vector< Particle * > pVector, std::vector< Force * > fVector, float dt, std::vector< Constraint * > fConstraint, VectorField *VelocityField);
+static void idle_func ( void );
 
 static std::vector< Particle * > pVector;
 static std::vector< Force * > fVector;
@@ -368,6 +369,10 @@ static void key_func(unsigned char key, int x, int y) {
         case 'f':
             drawLine = !drawLine;
             break;
+
+	case ' ':
+	    idle_func();
+	    break;
     }
 }
 
@@ -451,7 +456,7 @@ static void open_glut_window(void) {
     glutMouseFunc(mouse_func);
     glutMotionFunc(motion_func);
     glutReshapeFunc(reshape_func);
-    glutIdleFunc(idle_func);
+//    glutIdleFunc(idle_func);
     glutDisplayFunc(display_func);
 }
 
