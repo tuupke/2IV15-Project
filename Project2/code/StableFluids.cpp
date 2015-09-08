@@ -50,6 +50,7 @@ static std::vector< Particle * > pVector;
 static std::vector< Force * > fVector;
 static std::vector< Constraint * > fConstraint;
 bool VorticityConfinement = true;
+bool pause = false;
 
 
 /*
@@ -152,7 +153,7 @@ static int allocate_data(void) {
     DensityField = new ScalarField(N, diff, dt);
     PrevDensityField = new ScalarField(N, diff, dt);
 
-    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.01f, 0.3f, 0.2f));
+    bodies.push_back(new Rectangle(Vec2f(0.5f, 0.5f), 0.001f, 0.3f, 0.2f));
     create_grid(32, false, true);
 
     if (!VelocityField || !PrevVelocityField || !DensityField || !PrevDensityField) {
@@ -371,7 +372,7 @@ static void key_func(unsigned char key, int x, int y) {
             break;
 
 	case ' ':
-	    idle_func();
+	    pause = !pause;
 	    break;
     }
 }
@@ -402,13 +403,15 @@ static void reshape_func(int width, int height) {
 
 static void idle_func ( void )
 {
-	get_from_UI( PrevDensityField, PrevVelocityField );
-	VelocityField->TimeStep( VelocityField, PrevVelocityField, bodies);
-	DensityField->TimeStep( DensityField, PrevDensityField, VelocityField );
-	simulation_step(pVector, fVector, dt, fConstraint, VelocityField);
+	if (!pause) {
+		get_from_UI( PrevDensityField, PrevVelocityField );
+		VelocityField->TimeStep( VelocityField, PrevVelocityField, bodies);
+		DensityField->TimeStep( DensityField, PrevDensityField, VelocityField );
+		simulation_step(pVector, fVector, dt, fConstraint, VelocityField);
 
-    glutSetWindow(win_id);
-    glutPostRedisplay();
+		glutSetWindow(win_id);
+		glutPostRedisplay();
+	}
 }
 
 static void display_func(void) {
@@ -456,7 +459,7 @@ static void open_glut_window(void) {
     glutMouseFunc(mouse_func);
     glutMotionFunc(motion_func);
     glutReshapeFunc(reshape_func);
-//    glutIdleFunc(idle_func);
+    glutIdleFunc(idle_func);
     glutDisplayFunc(display_func);
 }
 
@@ -509,6 +512,7 @@ int main(int argc, char **argv) {
     printf("\t 's' creates a new particle system connected by springs (cloth)\n");
     printf("\t 'S' creates a new particle system without springs\n");
     printf("\t '@' toggles vorticity confinement (It looks like a swirl :)\n");
+    printf("\t Space pauses the simulation\n");
     printf("\t Quit by pressing the 'q' key\n");
 
     dvel = 0;
