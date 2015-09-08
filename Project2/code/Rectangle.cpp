@@ -92,7 +92,7 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
                         int index = IX(vv, hh);
                         if (!pnpoly(polyNum, vertices, vI, hI)) {
 //                            std::cout << "Adding to aggregate " << newField->m_Field[index] << "\n";
-                            aggregate += newField->m_Field[index] - Velocity;
+                            aggregate += Velocity - newField->m_Field[index];
                             std::vector<int>::iterator it = std::find(edge.begin(), edge.end(), index);
                             if(it == edge.end())
                                 edge.push_back(index);
@@ -113,15 +113,25 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
     }
 
     if (aggregate[0] != 0 || aggregate[1] != 0) {
-        aggregate /= n;//width * height * n * n;
+        aggregate[1] *= -1;
+        aggregate /= width * height * n * n;
         Vec2f diff =  (aggregate-Velocity);
         Velocity += diff * inertia;
-        std::cout << "Aggregate " << aggregate << " Velocity " << Velocity << " diff " << diff << " inertia " << inertia << "\n";
-        center += Velocity;
-        float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
-        rotDif = aggregateAngle - angle;
-        angle -= rotDif * inertia;
-        angle = fmod(angle, 2*M_PI);
+        center -= Velocity;
+        float length = norm(aggregate);
+        //2*M_PI-
+        Vec2f aangle = Vec2f(cos(angle), sin(angle));
+        unitize(aggregate);
+        unitize(aangle);
+
+        float inp = acos(aggregate[0] * aangle[0] + aggregate[1] * aangle[1]);
+
+        rotDif = inp * length;//angle - aggregateAngle;
+        //std::cout << "Current angle " << (angle / (2* M_PI)) << " aggregateAngle " << (aggregateAngle  / (2* M_PI))<< " rotDif " << (rotDif  / (2* M_PI))<< "\n"; 
+        //std::cout << "Aggregate " << aggregate << " rotDiff " << rotDif << " Velocity " << Velocity << " length " << norm(Velocity) << " diff " << diff << " inertia " << inertia << "\n";
+
+        angle += rotDif;
+//        angle = fmod(angle, 2*M_PI);
     }
 }
 
@@ -146,7 +156,7 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
         int vectX = edge[i] % n - centerXCell;
         int vectY = edge[i] / n - centerYCell;
 
-        int length = sqrt(vectX * vectX + vectY * vectY);
+        int length = 1;//sqrt(vectX * vectX + vectY * vectY);
 
         Vec2f perp = Vec2f(-vectY, vectX);
 
@@ -180,7 +190,7 @@ void Rectangle::draw() {
     float difX = startX - endX;
     float difY = startY - endY;
 
-//    angle *= -1;
+    angle *= -1;
 
     // Diagonal length from center to corner, equal for all corners
     float diagonalLength = sqrt(difX * difX + difY * difY) / 2;
@@ -202,7 +212,7 @@ void Rectangle::draw() {
     float blAngle = M_PI + innerAngle + angle;
     glVertex2f(center[0] + cos(blAngle) * diagonalLength, 1 - center[1] + sin(blAngle) * diagonalLength);
 
-//    angle *= -1;
+    angle *= -1;
 
     glEnd();
 
