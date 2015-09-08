@@ -120,8 +120,8 @@ void Rectangle::act(VectorField *newField, VectorField *oldField) {
         center += Velocity;
         float aggregateAngle = atan(aggregate[0] / aggregate[1]) - angle;
         rotDif = aggregateAngle - angle;
-//        angle -= rotDif * inertia;
-//        angle = fmod(angle, 2*M_PI);
+        angle -= rotDif * inertia;
+        angle = fmod(angle, 2*M_PI);
     }
 }
 
@@ -204,5 +204,14 @@ void Rectangle::draw() {
 
     angle *= -1;
 
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(1.0, 0.0, 0.0);
+
+    glVertex2f(center[0], 1 - center[1]);
+
+    glVertex2f(center[0] + 20*Velocity[0], 1 - center[1] - 20*Velocity[1]);
+    
     glEnd();
 }
