@@ -37,7 +37,7 @@
 
 %-------------------------------- Title ----------------------------------
 
-\title{\sffamily\bfseries 2IV15 \scg\ - Project 1}
+\title{\sffamily\bfseries 2IV15 \scg\ - Project 2}
 \author{Arno Tiemersma \qquad Student number: 0716959 \\{\tt a.w.g.tiemersma@student.tue.nl}\\ \\Mart Pluijmaekers \qquad Student number: 0753117 \\{\tt m.h.l.pluijmaekers@student.tue.nl}}
 
 \date{\today}
@@ -109,12 +109,16 @@ Using his method we detect all grid cells which are on the edge. This detection 
 After the summation we have to derive the coupling to our rigid body as described in the following sections.
 
 \subsection{Angle}
+The angle is updated by calculating the angle of the aggregate vector. Then taking the difference with the currently stored angle, and scaling the change in angle back using the inertia value. The calculated difference is then added to the currently stored angle. Lastly the modulus with pi is taken, making sure that the angle value never over- or underflows.
 
 \subsection{Velocity}
+The velocity vector is updated by taking the aggregate vector, scaling it back by the inertia scalar and then adding it to the already stored velocity.
 
 \subsection{Position}
+Since the timestep is known, we take the velocity, multiply it with the timestep and then add the resulting vector to the current position. No collision detection is built into the system at this point; this includes collissions with the outer edge of the field.
 
 \subsection{Updating the velocity field}
+
 
 \section{Conclusion}
 In this paper, we presented a fluid simulator following the methods described in \cite{url:stam1, url:stam2}, with added vorticity confinement, fluid interaction and interaction with rigid bodies and a particle system. There was not much visual difference between the simulation with and without vorticity confinement at the grid sizes and values for $\epsilon$ we experimented with.

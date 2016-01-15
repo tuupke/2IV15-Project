@@ -156,13 +156,13 @@ void Rectangle::emptyBody(VectorField *newField, VectorField *oldField) {
         int vectX = edge[i] % n - centerXCell;
         int vectY = edge[i] / n - centerYCell;
 
-        int length = 1;//sqrt(vectX * vectX + vectY * vectY);
+        int length = 1;//(sqrt(vectX * vectX + vectY * vectY)-35)/70+35;
 
         Vec2f perp = Vec2f(-vectY, vectX);
 
-        perp /= length;
+        unitize(perp);
 
-//        newField->m_Field[edge[i]] = Velocity - perp * rotDif / 100;
+        newField->m_Field[edge[i]] += (Velocity - perp * rotDif) * inertia;
 //        newField->m_Field[edge[i]] *= 1.001f;
 
         // v = P2 - P1
